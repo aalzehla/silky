@@ -37,8 +37,9 @@ namespace ITestApplication.Test
 
         [AllowAnonymous]
         [HttpGet("{id:long}")]
-        [GetCachingIntercept("id:{0}")]
-        Task<TestOut> Get([CacheKey(0)]long id);
+        //[GetCachingIntercept("id:{0}")]
+        [GetCachingIntercept("id:{id}")]
+        Task<TestOut> Get( /*[CacheKey(0)]*/ long id);
 
         [Obsolete]
         [HttpPut("modify")]
@@ -47,11 +48,11 @@ namespace ITestApplication.Test
         [RemoveCachingIntercept("ITestApplication.Test.Dtos.TestOut", "id:{0}")]
         [Governance(RetryTimes = 2)]
         [HttpDelete]
-        Task<string> DeleteAsync([CacheKey(0)]long id);
-        
+        Task<string> DeleteAsync([CacheKey(0)] long id);
+
         // [HttpGet]
         // Task<PagedList<TestOut>> Search1([FromQuery]string name, [FromQuery]string address,[FromQuery]int pageIndex = 1, [FromQuery]int pageSize = 10);
-        
+
         [HttpGet]
         Task<PagedList<TestOut>> Search2([FromQuery] SearchInput query);
 
