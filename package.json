@@ -1,7 +1,7 @@
 {
   "name": "silky-docs",
   "version": "1.0.0",
-  "description": "silky 微服务在线文档",
+  "description": "silky Microservices Online Documentation",
   "main": "index.js",
   "directories": {
     "doc": "docs"

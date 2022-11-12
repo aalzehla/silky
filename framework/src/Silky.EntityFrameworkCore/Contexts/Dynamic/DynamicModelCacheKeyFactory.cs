@@ -7,21 +7,21 @@ namespace Silky.EntityFrameworkCore.Contexts.Dynamic
     public class DynamicModelCacheKeyFactory : IModelCacheKeyFactory
     {
         /// <summary>
-        /// 动态模型缓存Key
+        /// Dynamic Model CachingKey
         /// </summary>
         private static int cacheKey;
 
         /// <summary>
-        /// 重写构建模型
+        /// Rewrite the build model
         /// </summary>
-        /// <remarks>动态切换表之后需要调用该方法</remarks>
+        /// <remarks>This method needs to be called after dynamically switching the table</remarks>
         public static void RebuildModels()
         {
             Interlocked.Increment(ref cacheKey);
         }
 
         /// <summary>
-        /// 更新模型缓存
+        /// Update model cache
         /// </summary>
         /// <param name="context"></param>
         /// <returns></returns>

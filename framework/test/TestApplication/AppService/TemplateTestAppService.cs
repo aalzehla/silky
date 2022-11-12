@@ -29,12 +29,12 @@ public class TemplateTestAppService : ITemplateTestAppService
 
     public async Task<dynamic> CallTest()
     {
-        // 1. 参数顺序与提供者一致
+        // 1. The parameter order is consistent with the provider
         // var result =
         //     await _invokeTemplate.PostForObjectAsync<dynamic>("api/another/test",
-        //         new { Name = "张三", Address = "beijing" });
+        //         new { Name = "Zhang San", Address = "beijing" });
 
-        // 2. 使用字典传递参数
+        // 2. Pass parameters using a dictionary
         var result =
             await _invokeTemplate.PostForObjectAsync<dynamic>("api/another/test", new Dictionary<string, object>()
             {

@@ -1,11 +1,11 @@
-﻿using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi.Models;
 
 namespace Silky.Http.Swagger.Internal
 {
     public sealed class SpecificationOpenApiSecurityRequirementItem
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public SpecificationOpenApiSecurityRequirementItem()
         {
@@ -13,12 +13,12 @@ namespace Silky.Http.Swagger.Internal
         }
 
         /// <summary>
-        /// 安全Schema
+        /// SafetySchema
         /// </summary>
         public OpenApiSecurityScheme Scheme { get; set; }
 
         /// <summary>
-        /// 权限
+        /// permission
         /// </summary>
         public string[] Accesses { get; set; }
     }

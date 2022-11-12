@@ -1,7 +1,7 @@
-﻿namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
+namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
 {
     /// <summary>
-    /// 多租户依赖接口（禁止外部继承）
+    /// Multi-tenant dependency interface（Forbid external inheritance）
     /// </summary>
     public interface IPrivateMultiTenant
     {

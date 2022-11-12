@@ -5,21 +5,21 @@ namespace Silky.Order.Application.Contracts.Orders.Dtos
     public class CreateOrderInput
     {
         /// <summary>
-        /// 账号Id
+        /// accountId
         /// </summary>
-        [Required(ErrorMessage = "账号Id不允许为空")]
+        [Required(ErrorMessage = "accountIdEmpty is not allowed")]
         public long AccountId { get; set; }
 
         /// <summary>
-        /// 产品Id
+        /// productId
         /// </summary>
-        [Required(ErrorMessage = "产品Id不允许为空")]
+        [Required(ErrorMessage = "productIdEmpty is not allowed")]
         public long ProductId { get; set; }
 
         /// <summary>
-        /// 购买数量
+        /// Purchase quantity
         /// </summary>
-        [Required(ErrorMessage = "产品数量不允许为空")]
+        [Required(ErrorMessage = "product数量Empty is not allowed")]
         public int Quantity { get; set; }
     }
 }

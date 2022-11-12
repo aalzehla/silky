@@ -1,30 +1,30 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using org.apache.zookeeper;
 
 namespace Silky.Zookeeper
 {
     /// <summary>
-    /// 连接状态变更事件参数。
+    /// Connection state change event parameters。
     /// </summary>
     public class ConnectionStateChangeArgs
     {
         /// <summary>
-        /// 连接状态。
+        /// Connection Status。
         /// </summary>
         public Watcher.Event.KeeperState State { get; set; }
     }
 
     /// <summary>
-    /// 节点变更参数。
+    /// Node change parameters。
     /// </summary>
     public abstract class NodeChangeArgs
     {
         /// <summary>
-        /// 创建一个新的节点变更参数。
+        /// 创建一个新的Node change parameters。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="type">事件类型。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="type">event type。</param>
         protected NodeChangeArgs(string path, Watcher.Event.EventType type)
         {
             Path = path;
@@ -32,27 +32,27 @@ namespace Silky.Zookeeper
         }
 
         /// <summary>
-        /// 变更类型。
+        /// change type。
         /// </summary>
         public Watcher.Event.EventType Type { get; private set; }
 
         /// <summary>
-        /// 节点路径。
+        /// node path。
         /// </summary>
         public string Path { get; private set; }
     }
 
     /// <summary>
-    /// 节点数据变更参数。
+    /// Node data change parameters。
     /// </summary>
     public sealed class NodeDataChangeArgs : NodeChangeArgs
     {
         /// <summary>
-        /// 创建一个新的节点数据变更参数。
+        /// 创建一个新的Node data change parameters。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="type">事件类型。</param>
-        /// <param name="currentData">最新的节点数据。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="type">event type。</param>
+        /// <param name="currentData">latest node data。</param>
         public NodeDataChangeArgs(string path, Watcher.Event.EventType type, IEnumerable<byte> currentData) : base(path,
             type)
         {
@@ -60,22 +60,22 @@ namespace Silky.Zookeeper
         }
 
         /// <summary>
-        /// 当前节点数据（最新的）
+        /// current node data（Newest）
         /// </summary>
         public IEnumerable<byte> CurrentData { get; private set; }
     }
 
     /// <summary>
-    /// 节点子节点变更参数。
+    /// 节点子Node change parameters。
     /// </summary>
     public sealed class NodeChildrenChangeArgs : NodeChangeArgs
     {
         /// <summary>
-        /// 创建一个新的节点子节点变更参数。
+        /// 创建一个新的节点子Node change parameters。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="type">事件类型。</param>
-        /// <param name="currentChildrens">最新的子节点集合。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="type">event type。</param>
+        /// <param name="currentChildrens">Newest子节点集合。</param>
         public NodeChildrenChangeArgs(string path, Watcher.Event.EventType type, IEnumerable<string> currentChildrens) :
             base(path, type)
         {
@@ -83,29 +83,29 @@ namespace Silky.Zookeeper
         }
 
         /// <summary>
-        /// 当前节点的子节点数据（最新的）
+        /// child node data of the current node（Newest）
         /// </summary>
         public IEnumerable<string> CurrentChildrens { get; private set; }
     }
 
     /// <summary>
-    /// 节点数据变更委托。
+    /// Node data change delegation。
     /// </summary>
-    /// <param name="client">ZooKeeper客户端。</param>
-    /// <param name="args">节点数据变更参数。</param>
+    /// <param name="client">ZooKeeperclient。</param>
+    /// <param name="args">Node data change parameters。</param>
     public delegate Task NodeDataChangeHandler(IZookeeperClient client, NodeDataChangeArgs args);
 
     /// <summary>
-    /// 节点子节点变更委托。
+    /// Node child node change delegate。
     /// </summary>
-    /// <param name="client">ZooKeeper客户端。</param>
-    /// <param name="args">节点子节点变更参数。</param>
+    /// <param name="client">ZooKeeperclient。</param>
+    /// <param name="args">节点子Node change parameters。</param>
     public delegate Task NodeChildrenChangeHandler(IZookeeperClient client, NodeChildrenChangeArgs args);
 
     /// <summary>
-    /// 连接状态变更委托。
+    /// Connection Status变更委托。
     /// </summary>
-    /// <param name="client">ZooKeeper客户端。</param>
-    /// <param name="args">连接状态变更参数。</param>
+    /// <param name="client">ZooKeeperclient。</param>
+    /// <param name="args">Connection Status变更参数。</param>
     public delegate Task ConnectionStateChangeHandler(IZookeeperClient client, ConnectionStateChangeArgs args);
 }

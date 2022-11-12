@@ -39,7 +39,7 @@ namespace Silky.Core.Extensions
         public static IDictionary<int, string> GetEnumSources(this Type type)
         {
             if (!type.GetTypeInfo().IsEnum)
-                throw new Exception("type 类型必须为枚举类型!");
+                throw new Exception("type Type must be an enumeration type!");
 
             var dict = new Dictionary<int, string>();
 
@@ -58,7 +58,7 @@ namespace Silky.Core.Extensions
         public static IDictionary<T, string> GetEnumSources<T>(this Type type) where T : Enum
         {
             if (!type.GetTypeInfo().IsEnum)
-                throw new Exception("type 类型必须为枚举类型!");
+                throw new Exception("type Type must be an enumeration type!");
 
             var dict = new Dictionary<T, string>();
 
@@ -78,7 +78,7 @@ namespace Silky.Core.Extensions
         // {
         //     var type = value.GetType();
         //     if (!type.GetTypeInfo().IsEnum)
-        //         throw new Exception("type 类型必须为枚举类型!");
+        //         throw new Exception("type Type must be an enumeration type!");
         //
         //     var list = new List<Tuple<string, string>>();
         //

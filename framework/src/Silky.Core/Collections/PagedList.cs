@@ -1,40 +1,40 @@
 namespace System.Collections.Generic
 {
     /// <summary>
-    /// 分页泛型集合
+    /// Paginated Generic Collections
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public class PagedList<TEntity>
         where TEntity : new()
     {
         /// <summary>
-        /// 总条数
+        /// total number
         /// </summary>
         public int TotalCount { get; set; }
 
         /// <summary>
-        /// 总页数
+        /// total pages
         /// </summary>
         public int TotalPages { get; set; }
 
         /// <summary>
-        /// 当前页集合
+        /// current page collection
         /// </summary>
         public IEnumerable<TEntity> Items { get; set; }
 
         /// <summary>
-        /// 是否有上一页
+        /// Is there a previous page
         /// </summary>
         public bool HasPrevPages { get; set; }
 
         /// <summary>
-        /// 是否有下一页
+        /// Is there a next page
         /// </summary>
         public bool HasNextPages { get; set; }
     }
 
     /// <summary>
-    /// 分页集合
+    /// Paginated collection
     /// </summary>
     public class PagedList : PagedList<object>
     {

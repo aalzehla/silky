@@ -90,34 +90,34 @@ namespace Silky.Http.Swagger.Builders
         public static void Build(SwaggerOptions swaggerOptions, SwaggerDocumentOptions swaggerDocumentOptions)
         {
             swaggerOptions.SerializeAsV2 = swaggerDocumentOptions.FormatAsV2;
-            // 配置路由模板
+            // Configure route templates
             swaggerOptions.RouteTemplate = RouteTemplate;
         }
 
         public static void BuildUI(SwaggerUIOptions swaggerUIOptions, SwaggerDocumentOptions swaggerDocumentOptions)
         {
-            // 配置分组终点路由
+            // Configure packet endpoint routing
             CreateEndpoint(swaggerUIOptions, swaggerDocumentOptions);
 
             InjectMiniProfilerPlugin(swaggerUIOptions);
 
-            // 配置多语言和自动登录token
+            // Configure multilingual and automatic logintoken
             AddDefaultInterceptor(swaggerUIOptions);
 
-            // 配置文档标题
+            // Configure document title
             swaggerUIOptions.DocumentTitle = swaggerDocumentOptions.Title;
 
 
-            // 配置UI地址
+            // configureUIaddress
             swaggerUIOptions.RoutePrefix = swaggerDocumentOptions.RoutePrefix;
 
-            // 文档展开设置
+            // Document expansion settings
             swaggerUIOptions.DocExpansion(swaggerDocumentOptions.DocExpansionState);
         }
 
         private static void AddDefaultInterceptor(SwaggerUIOptions swaggerUIOptions)
         {
-            // 配置多语言和自动登录token
+            // Configure multilingual and automatic logintoken
             swaggerUIOptions.UseRequestInterceptor("(request) => { return defaultRequestInterceptor(request); }");
             swaggerUIOptions.UseResponseInterceptor("(response) => { return defaultResponseInterceptor(response); }");
         }
@@ -186,26 +186,26 @@ namespace Silky.Http.Swagger.Builders
         private static void ConfigureSecurities(SwaggerGenOptions swaggerGenOptions,
             SwaggerDocumentOptions swaggerDocumentOptions)
         {
-            // 判断是否启用了授权
+            // Determine if authorization is enabled
             if (swaggerDocumentOptions.EnableAuthorized != true ||
                 swaggerDocumentOptions.SecurityDefinitions.Length == 0) return;
 
             var openApiSecurityRequirement = new OpenApiSecurityRequirement();
 
-            // 生成安全定义
+            // Generate security definitions
             foreach (var securityDefinition in swaggerDocumentOptions.SecurityDefinitions)
             {
-                // Id 必须定义
+                // Id must be defined
                 if (string.IsNullOrWhiteSpace(securityDefinition.Id)) continue;
 
-                // 添加安全定义
+                // Add security definition
                 var openApiSecurityScheme = securityDefinition as OpenApiSecurityScheme;
                 swaggerGenOptions.AddSecurityDefinition(securityDefinition.Id, openApiSecurityScheme);
 
-                // 添加安全需求
+                // Add security requirements
                 var securityRequirement = securityDefinition.Requirement;
 
-                // C# 9.0 模式匹配新语法
+                // C# 9.0 New syntax for pattern matching
                 if (securityRequirement is { Scheme: { Reference: not null } })
                 {
                     securityRequirement.Scheme.Reference.Id ??= securityDefinition.Id;
@@ -213,7 +213,7 @@ namespace Silky.Http.Swagger.Builders
                 }
             }
 
-            // 添加安全需求
+            // Add security requirements
             if (openApiSecurityRequirement.Count > 0)
             {
                 swaggerGenOptions.AddSecurityRequirement(openApiSecurityRequirement);
@@ -270,11 +270,11 @@ namespace Silky.Http.Swagger.Builders
 
         private static void InjectMiniProfilerPlugin(SwaggerUIOptions swaggerUIOptions)
         {
-            // 启用 MiniProfiler 组件
+            // enable MiniProfiler components
             var thisType = typeof(SwaggerUIOptions);
             var thisAssembly = thisType.Assembly;
 
-            // 自定义 Swagger 首页
+            // customize Swagger front page
             var customIndex = $"Silky.Swagger.Abstraction.SwaggerUI.index-mini-profiler.html";
             swaggerUIOptions.IndexStream = () => thisAssembly.GetManifestResourceStream(customIndex);
         }

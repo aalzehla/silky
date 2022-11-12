@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -11,60 +11,60 @@ using Silky.EntityFrameworkCore.Entities;
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 可更新仓储分部类
+    /// Updatable warehouse division class
     /// </summary>
     public partial class PrivateRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 更新一条记录
+        /// update a record
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> Update(TEntity entity, bool? ignoreNullValues = null)
         {
             var entityEntry = Entities.Update(entity);
 
-            // 忽略空值
+            // Ignore null values
             IgnoreNullValues(ref entity, ignoreNullValues);
 
             return entityEntry;
         }
 
         /// <summary>
-        /// 更新多条记录
+        /// Update multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void Update(params TEntity[] entities)
         {
             Entities.UpdateRange(entities);
         }
 
         /// <summary>
-        /// 更新多条记录
+        /// Update multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void Update(IEnumerable<TEntity> entities)
         {
             Entities.UpdateRange(entities);
         }
 
         /// <summary>
-        /// 更新一条记录
+        /// update a record
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateAsync(TEntity entity, bool? ignoreNullValues = null)
         {
             return Task.FromResult(Update(entity, ignoreNullValues));
         }
 
         /// <summary>
-        /// 更新多条记录
+        /// Update multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         public virtual Task UpdateAsync(params TEntity[] entities)
         {
@@ -73,9 +73,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录
+        /// Update multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         public virtual Task UpdateAsync(IEnumerable<TEntity> entities)
         {
@@ -84,11 +84,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并立即提交
+        /// update a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateNow(TEntity entity, bool? ignoreNullValues = null)
         {
             var entityEntry = Update(entity, ignoreNullValues);
@@ -97,12 +97,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并立即提交
+        /// update a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateNow(TEntity entity, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
         {
@@ -112,9 +112,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void UpdateNow(params TEntity[] entities)
         {
             Update(entities);
@@ -122,10 +122,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         public virtual void UpdateNow(TEntity[] entities, bool acceptAllChangesOnSuccess)
         {
             Update(entities);
@@ -133,9 +133,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void UpdateNow(IEnumerable<TEntity> entities)
         {
             Update(entities);
@@ -143,10 +143,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         public virtual void UpdateNow(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess)
         {
             Update(entities);
@@ -154,12 +154,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并立即提交
+        /// update a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entity">entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateNowAsync(TEntity entity, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
         {
@@ -169,13 +169,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并立即提交
+        /// update a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateNowAsync(TEntity entity, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
         {
@@ -185,9 +185,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         public virtual async Task UpdateNowAsync(params TEntity[] entities)
         {
@@ -196,10 +196,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns></returns>
         public virtual async Task UpdateNowAsync(TEntity[] entities, CancellationToken cancellationToken = default)
         {
@@ -208,11 +208,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task UpdateNowAsync(TEntity[] entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
@@ -222,10 +222,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task UpdateNowAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default)
@@ -235,11 +235,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新多条记录并立即提交
+        /// Update multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task UpdateNowAsync(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
@@ -249,12 +249,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中特定属性
+        /// update a record中特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateInclude(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -264,23 +264,23 @@ namespace Silky.EntityFrameworkCore.Repositories
                 EntityPropertyEntry(entity, propertyName).IsModified = true;
             }
 
-            // 忽略空值
+            // Ignore null values
             IgnoreNullValues(ref entity, ignoreNullValues);
 
             return entityEntry;
         }
 
         /// <summary>
-        /// 更新一条记录中特定属性
+        /// update a record中特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateInclude(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
-            // 判断是非参数只有一个，且是一个匿名类型
+            // Judging whether there is only one parameter，and is an anonymous type
             if (propertyPredicates?.Length == 1 && propertyPredicates[0].Body is NewExpression newExpression)
             {
                 var propertyNames = newExpression.Members.Select(u => u.Name);
@@ -294,7 +294,7 @@ namespace Silky.EntityFrameworkCore.Repositories
                     EntityPropertyEntry(entity, propertyPredicate).IsModified = true;
                 }
 
-                // 忽略空值
+                // Ignore null values
                 IgnoreNullValues(ref entity, ignoreNullValues);
 
                 return entityEntry;
@@ -302,12 +302,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中特定属性
+        /// update a record中特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateInclude(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -315,12 +315,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中特定属性
+        /// update a record中特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateInclude(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -328,12 +328,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性
+        /// update a record中的特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateIncludeAsync(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -341,12 +341,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性
+        /// update a record中的特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateIncludeAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -354,12 +354,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性
+        /// update a record中的特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateIncludeAsync(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -367,12 +367,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性
+        /// update a record中的特定属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateIncludeAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -380,12 +380,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -395,13 +395,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity, string[] propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null)
         {
@@ -411,12 +411,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中实体</returns>
+        /// <returns>数据库中entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -426,13 +426,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
@@ -443,12 +443,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -458,13 +458,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity, IEnumerable<string> propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null)
         {
@@ -474,12 +474,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -489,13 +489,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateIncludeNow(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
@@ -506,13 +506,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
         {
@@ -522,14 +522,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity, string[] propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -540,13 +540,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -557,14 +557,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
@@ -575,13 +575,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             IEnumerable<string> propertyNames, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -592,14 +592,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             IEnumerable<string> propertyNames, bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -610,13 +610,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -627,14 +627,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录中的特定属性并立即提交
+        /// update a record中的特定属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateIncludeNowAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
@@ -645,12 +645,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExclude(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -660,23 +660,23 @@ namespace Silky.EntityFrameworkCore.Repositories
                 EntityPropertyEntry(entity, propertyName).IsModified = false;
             }
 
-            // 忽略空值
+            // Ignore null values
             IgnoreNullValues(ref entity, ignoreNullValues);
 
             return entityEntry;
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExclude(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
-            // 判断是非参数只有一个，且是一个匿名类型
+            // Judging whether there is only one parameter，and is an anonymous type
             if (propertyPredicates?.Length == 1 && propertyPredicates[0].Body is NewExpression newExpression)
             {
                 var propertyNames = newExpression.Members.Select(u => u.Name);
@@ -690,7 +690,7 @@ namespace Silky.EntityFrameworkCore.Repositories
                     EntityPropertyEntry(entity, propertyPredicate).IsModified = false;
                 }
 
-                // 忽略空值
+                // Ignore null values
                 IgnoreNullValues(ref entity, ignoreNullValues);
 
                 return entityEntry;
@@ -698,12 +698,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExclude(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -711,12 +711,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExclude(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -724,12 +724,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateExcludeAsync(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -737,12 +737,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateExcludeAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -750,12 +750,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateExcludeAsync(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -763,12 +763,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性
+        /// update a record并排除属性
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理中的实体</returns>
+        /// <returns>代理中的entity</returns>
         public virtual Task<EntityEntry<TEntity>> UpdateExcludeAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -776,12 +776,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -791,13 +791,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity, string[] propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null)
         {
@@ -807,12 +807,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中实体</returns>
+        /// <returns>数据库中entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -822,13 +822,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
@@ -839,12 +839,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity, IEnumerable<string> propertyNames,
             bool? ignoreNullValues = null)
         {
@@ -854,13 +854,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity, IEnumerable<string> propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null)
         {
@@ -870,12 +870,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null)
         {
@@ -885,13 +885,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中的实体</returns>
+        /// <returns>数据库中的entity</returns>
         public virtual EntityEntry<TEntity> UpdateExcludeNow(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
@@ -902,13 +902,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity, string[] propertyNames,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
         {
@@ -918,14 +918,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity, string[] propertyNames,
             bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -936,13 +936,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -953,14 +953,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             Expression<Func<TEntity, object>>[] propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
@@ -971,13 +971,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             IEnumerable<string> propertyNames, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -988,14 +988,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyNames">属性名</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyNames">property name</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             IEnumerable<string> propertyNames, bool acceptAllChangesOnSuccess, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -1006,13 +1006,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
@@ -1023,14 +1023,14 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 更新一条记录并排除属性并立即提交
+        /// update a record并排除属性并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicates">属性表达式</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicates">property expression</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> UpdateExcludeNowAsync(TEntity entity,
             IEnumerable<Expression<Func<TEntity, object>>> propertyPredicates, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
@@ -1041,7 +1041,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 忽略空值属性
+        /// Ignore null values属性
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="ignoreNullValues"></param>
@@ -1050,7 +1050,7 @@ namespace Silky.EntityFrameworkCore.Repositories
             var isIgnore = ignoreNullValues ?? DynamicContext.InsertOrUpdateIgnoreNullValues;
             if (isIgnore == false) return;
 
-            // 获取所有的属性
+            // get all properties
             var properties = EntityType?.GetProperties();
             if (properties == null) return;
 
@@ -1060,7 +1060,7 @@ namespace Silky.EntityFrameworkCore.Repositories
                 var propertyValue = entityProperty?.CurrentValue;
                 var propertyType = entityProperty?.Metadata?.PropertyInfo?.PropertyType;
 
-                // 判断是否是无效的值，比如为 null，默认时间，以及空 Guid 值
+                // Determine whether it is an invalid value，such as null，default time，and empty Guid value
                 var isInvalid = propertyValue == null
                                 || (propertyType == typeof(DateTime) &&
                                     propertyValue?.ToString() == new DateTime().ToString())

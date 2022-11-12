@@ -1,25 +1,25 @@
 ---
-title: Silky服务主机
+title: Silkyservice host
 lang: zh-cn
 ---
 
-## Silky服务主机的概念
+## Silkyservice host的概念
 
-在Silky微服务框架中,[主机](host.html)用于托管微服务应用,在微服务主机启动时,最重要的任务就是构建服务提供者,并将服务提供者主机的信息以元数据的形式注册到 **服务注册**,集群中的每个微服务应用可以通过 **心跳** 或是 **订阅** 的方式从服务注册中心获取整个微服务集群最新的元数据信息。
+existSilkyin the microservice framework,[host](host.html)For hosting microservice applications,exist微service host启动时,The most important task is to build the service provider,并WillServesupply者hostInformation以元数据的形式注册到 **service registration**,Each microservice application in the cluster can be **heartbeat** or **subscription** 的方式fromservice registration中心Obtain整个Microservices集群最新的元数据信息。
 
-在Silky框架中,我们通过 [Server](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/Server.cs) 来定义Silky主机(也就是服务提供者)。一个微服务提供者的主要属性如下表所示:
+existSilkyin the frame,we pass [Server](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/Server.cs) to defineSilkyhost(service provider)。The main properties of a microservice provider are shown in the following table:
 
-| 属性名 | 名称  | 备注           |
+| property name | name  | Remark           |
 |:-------|:------|:--------------|
-| HostName | 微服务主机名称  |  等于应用程序的启动程序集的名称    |
-| Endpoints | 微服务提供者所有的终结点  | 在构建支持不同协议的服务时,动态的添加该服务主机的终结点   |
-| Services | 微服务提供者所有的服务描述符  |    |
+| HostName | 微service hostname  |  等于application程序的启动程序集的name    |
+| Endpoints | Endpoints owned by the microservice provider  | exist构建support不同agreement service时,动态的添加该service host的endpoint   |
+| Services | Service descriptors owned by the microservice provider  |    |
 
-在服务注册过程中,并不能直接注册`Server`的信息,所以我们定义了 **服务主机描述符** ,通过`服务主机描述符`[ServerDescriptor](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/ServerDescriptor.cs) 来描述Silky主机信息,并通过其将主机的信息注册到服务注册中心,服务主机`Server`与服务主机描述符`ServerDescriptor`可以相互转化。
+existservice registration过程中,cannot register directly`Server`Information,So we define **service host描述符** ,pass`service host描述符`[ServerDescriptor](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/ServerDescriptor.cs) to describeSilkyhost信息,并pass其WillhostInformation注册到service registration中心,service host`Server`与service host描述符`ServerDescriptor`can be converted into each other。
 
-## 创建Silky服务主机
+## createSilkyservice host
 
-Silky服务主机的解析由默认主机服务提供者`DefaultServerProvider`负责创建和维护;
+Silkyservice host的解析Depend on默认hostServesupply者`DefaultServerProvider`负责create和维护;
 
 ```csharp
     public class DefaultServerProvider : IServerProvider
@@ -86,15 +86,15 @@ Silky服务主机的解析由默认主机服务提供者`DefaultServerProvider`�
     }
 ```
 
-从上面的代码我们可以看出:
+From the above code we can see that:
 
-1. 由Server主机提供者的构造器创建`Server`主机;
+1. Depend onServerhostsupply者的构造器create`Server`host;
 
-2. Server主机提供者的构造器中注入服务管理器`IServiceManager`,由此,我们也可以得知:在应用启动时获取主机提供者的时候,实现了[服务和服务条目的解析](service-serviceentry.html);
+2. Serverhostsupply者的构造器中注入Serve管理器`IServiceManager`,Depend on此,We can also know:existapplication启动时Obtainhostsupply者的时候,Achieved[Resolution of Services and Service Entries](service-serviceentry.html);
 
-3. 主机服务提供者`DefaultServerProvider`提供三个核心的方法`AddRpcServices()`、`AddHttpServices()`、`AddWsServices()`; 在应用启动时,在指定的时刻查找指定协议的服务和相应的服务终结点;
+3. hostServesupply者`DefaultServerProvider`Provides three core methods`AddRpcServices()`、`AddHttpServices()`、`AddWsServices()`; existapplication启动时,exist指定的时刻查找指定agreement service和相应serviceendpoint;
   
-  3.1 由[web主机](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0)创建的Silky微服务应用,映射Silky路由的时候,调用`AddHttpServices()`方法,在应用启动成功时,添加该微服务应用的Http终结点;
+  3.1 Depend on[webhost](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0)create的SilkyMicroservice application,mapSilky路Depend on的时候,transfer`AddHttpServices()`method,existapplication启动成功时,添加该Microservice application的Httpendpoint;
   
   ```csharp
   public static class SilkyEndpointRouteBuilderExtensions
@@ -107,10 +107,10 @@ Silky服务主机的解析由默认主机服务提供者`DefaultServerProvider`�
             }
 
             var hostApplicationLifetime = endpoints.ServiceProvider.GetRequiredService<IHostApplicationLifetime>();
-            // 在应用启动后注册RegisterSilkyWebServer()方法
+            // existapplication启动后注册RegisterSilkyWebServer()method
             hostApplicationLifetime.ApplicationStarted.Register(async () =>
             {
-                // 注册支持Web服务的Silky微服务
+                // Sign up for supportWebServicesSilkyMicroservices
                 await RegisterSilkyWebServer(endpoints.ServiceProvider);
             });
             return GetOrCreateServiceEntryDataSource(endpoints).DefaultBuilder;
@@ -118,7 +118,7 @@ Silky服务主机的解析由默认主机服务提供者`DefaultServerProvider`�
 
         private static async Task RegisterSilkyWebServer(IServiceProvider serviceProvider)
         {
-            // 获取主机服务提供者实例
+            // ObtainhostServesupply者实例
             var serverRegisterProvider =
                 serviceProvider.GetRequiredService<IServerProvider>();
 
@@ -133,54 +133,54 @@ public class DefaultServerProvider : IServerProvider
 {
     public void AddHttpServices()
     {
-        // 获取 http 终结点
+        // Obtain http endpoint
         var webEndpoint = RpcEndpointHelper.GetLocalWebEndpoint();
-        if (webEndpoint == null) // 获取失败则抛出异常
+        if (webEndpoint == null) // Obtain失败则抛出异常
         {
             throw new SilkyException("Failed to obtain http service rpcEndpoint");
         }
-        // 将http 终结点添加的服务提供者的终结点列表中
+        // Willhttp endpoint添加servicesupply者的endpoint列表中
         _server.Endpoints.Add(webEndpoint);
     }
 
-   // 其他代码略...
+   // other codes...
 }
 
 ```
 
-  从上述代码我们可以看到,只有使用web主机构建(托管)应用的主机，在服务启动过程中才会有将http终结点添加到silky服务提供者的终结点列表中；Silky服务内部之间的通信是由dotnetty实现rpc框架,http终结点的用途是提供了对服务外部访问的入口;
+  From the above code we can see,only usewebhost构建(hosting)application的host，existServe启动过程中才会有Willhttpendpoint添加到silkyServesupply者的endpoint列表中；SilkyServe内部之间的communication是Depend ondotnettyaccomplishrpcframe,httpendpoint的用途是supply了对Serve外部访问的入口;
 
-::: tip 备注
+::: tip Remark
 
-如果是由[Web主机](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0) 托管的Silky应用,那么在在此时才会首次获取`DefaultServerProvider`的实例,也就是在此时才会进行服务与服务条目的解析;
+如果是Depend on[Webhost](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0) hosting的Silkyapplication,那么existexist此时才会首次Obtain`DefaultServerProvider`instance of,也就是exist此时才会进行Serve与Serve条目的解析;
 :::
 
-  3.2  在模块`DotNettyTcpModule`初始化任务的过程中,从Ioc容器中获取到消息监听者`DotNettyTcpServerMessageListener`实例后,完成监听任务后，添加支持RPC
-  协议的服务;
+  3.2  exist模块`DotNettyTcpModule`in the process of initializing the task,fromIoc容器中Obtain到消息监听者`DotNettyTcpServerMessageListener`after instance,After completing the monitoring task，add supportRPC
+  agreement service;
   
   ```csharp
    [DependsOn(typeof(RpcModule), typeof(DotNettyModule))]
     public class DotNettyTcpModule : SilkyModule
     {
-        // 其他代码略...
+        // other codes...
     
         public override async Task Initialize(ApplicationContext applicationContext)
         {
-            //获取消息监听者实例
+            //Obtain消息监听者实例
             var messageListener =
                 applicationContext.ServiceProvider.GetRequiredService<DotNettyTcpServerMessageListener>();
-            // 完成消息监听任务
+            // Complete the message monitoring task
             await messageListener.Listen();
-            // 获取silky主机服务提供者实例
+            // ObtainsilkyhostServesupply者实例
             var serverProvider =
                 applicationContext.ServiceProvider.GetRequiredService<IServerProvider>();
-            // 添加支持TCP协议的服务
+            // add supportTCPagreement service
             serverProvider.AddRpcServices();
         }
     }
   ```
 
-  通过上面的代码我们看到,只有在完成服务端消息监听任务之后,Silky服务主机才会完成添加支持RPC协议的服务,支持RPC的服务就是前文所述的[应用服务](service-serviceentry.html#应用服务的解析);Silky微服务之间的通信主要是由dotnetty实现的RPC框架完成的。
+  pass上面的代码我们看到,只有exist完成Serve端消息监听任务之后,Silkyservice host才会完成add supportRPCagreement service,supportRPCservices are as described above[applicationServe](service-serviceentry.html#applicationServices解析);SilkyMicroservices之间的communication主要是Depend ondotnettyaccomplish的RPCframe完成的。
   
   ```csharp
   public class DefaultServerProvider : IServerProvider
@@ -196,22 +196,22 @@ public class DefaultServerProvider : IServerProvider
         }
     }
 
-   // 其他代码略...
+   // other codes...
   }
   ```
 
-::: tip 备注
-如果是由[通用主机](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-6.0) 托管的Silky应用,那么在在此时才会首次获取`DefaultServerProvider`的实例,也就是在此时才会进行服务与服务条目的解析;
+::: tip Remark
+如果是Depend on[通用host](https://learn.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-6.0) hosting的Silkyapplication,那么existexist此时才会首次Obtain`DefaultServerProvider`instance of,也就是exist此时才会进行Serve与Serve条目的解析;
 :::
 
-   3.3  在模块`WebSocketModule`初始化任务的过程中,查找到所有支持`WebSocket`的服务,并通过`WebSocketServerBootstrap`的实例完成创建ws服务，这些服务将会提供`WebSocket`服务,任务完成后,将通过Silky主机服务提供者`DefaultServerProvider`的实例添加对`ws服务`;
+   3.3  exist模块`WebSocketModule`in the process of initializing the task,查找到所有support`WebSocket`service,并pass`WebSocketServerBootstrap`instance of完成createwsServe，这些ServeWill会supply`WebSocket`Serve,After the task is completed,WillpassSilkyhostServesupply者`DefaultServerProvider`instance of添加对`wsServe`;
  
    ```csharp
     [DependsOn(typeof(RpcModule))]
     public class WebSocketModule : SilkyModule
     {
 
-        // 其他代码略...
+        // other codes...
 
         public override async Task Initialize(ApplicationContext applicationContext)
         {
@@ -248,19 +248,19 @@ public class DefaultServerProvider : IServerProvider
         }
     }
 
- // 其他代码略...
+ // other codes...
 }
 ```
 
-websocket服务是如何解析,如何创建支持websocket的服务这个我们将会在之后的文档中介绍;
+websocketServe是如何解析,如何createsupportwebsocketservice这个我们Will会exist之后的文档中介绍;
 
-::: tip 备注
+::: tip Remark
 
-1. 只有依赖了`WebSocketModule`模块的Silky应用,才支持提供`WebSocket`服务,提供`WebSocket`服务必须要求继承`Silky.WebSocket.WsAppServiceBase`；
+1. only depend on`WebSocketModule`modularSilkyapplication,才supportsupply`WebSocket`Serve,supply`WebSocket`Serve必须要求继承`Silky.WebSocket.WsAppServiceBase`；
 
-2. silky框架的websocket是通过网关实现代理的,通过代理再与具体的Silky应用服务提供者进行连接;
+2. silkyframe的websocket是pass网关accomplish代理的,pass代理再与具体的SilkyapplicationServesupply者进行连接;
 
-3. websocket服务是由框架[websocket-sharp-core](https://github.com/ImoutoChan/websocket-sharp-core)提供的；
+3. websocketServe是Depend onframe[websocket-sharp-core](https://github.com/ImoutoChan/websocket-sharp-core)supply的；
 
-4. websocket服务提供的方法也会被解析为服务条目,也可以与其他微服务实例实现RPC通信;
+4. websocketServesupply的method也会被解析为Serve条目,也可以与其他Microservices实例accomplishRPCcommunication;
 :::

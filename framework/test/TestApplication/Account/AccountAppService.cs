@@ -23,7 +23,7 @@ namespace TestApplication.Account
         {
             if (!input.Password.Equals("123qwe"))
             {
-                throw new AuthenticationException("密码不正确");
+                throw new AuthenticationException("The password is incorrect");
             }
 
             var userIdRandom = new Random((int)DateTime.Now.Ticks);

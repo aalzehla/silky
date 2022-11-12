@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -148,7 +148,7 @@ namespace Silky.Caching.StackExchangeRedis
         {
             await ConnectAsync(token);
             var redisResult = await RedisDatabase.ScriptEvaluateAsync(LuaScript.Prepare(
-                //Redis的keys模糊查询：
+                //Redisofkeysfuzzy query：
                 " local res = redis.call('KEYS', @keyPattern) " +
                 " return res "), new { @keyPattern = Instance + pattern });
             if (redisResult == null)

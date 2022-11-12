@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
@@ -33,7 +33,7 @@ namespace Silky.WebSocket
                 Debug.Assert(businessSessionId != null);
                 if (BusinessSessionIsSingleton && businessSessionId.Count >= 1)
                 {
-                    Context.WebSocket.Send($"系统中已经存在{businessId}的会话");
+                    Context.WebSocket.Send($"already exists in the system{businessId}session");
                     Context.WebSocket.Close();
                 }
 

@@ -23,31 +23,31 @@ using Silky.EntityFrameworkCore.MultiTenants.Locators;
 namespace Silky.EntityFrameworkCore.Contexts.Builders
 {
     /// <summary>
-    /// 数据库上下文构建器
+    /// Database context builder
     /// </summary>
     internal static class AppDbContextBuilder
     {
         /// <summary>
-        /// 数据库实体相关类型
+        /// Database entity related types
         /// </summary>
         private static readonly IEnumerable<Type> EntityCorrelationTypes;
 
         /// <summary>
-        /// 数据库函数方法集合
+        /// Collection of database function methods
         /// </summary>
         private static readonly IEnumerable<MethodInfo> DbFunctionMethods;
 
         /// <summary>
-        /// 创建数据库实体方法
+        /// Create database entity method
         /// </summary>
         private static readonly MethodInfo ModelBuildEntityMethod;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         static AppDbContextBuilder()
         {
-            // 扫描程序集，获取数据库实体相关类型
+            // scan assembly，获取Database entity related types
             EntityCorrelationTypes = EngineContext.Current.TypeFinder.GetAssemblies().SelectMany(a => a.GetTypes())
                 .Where(t => (typeof(IPrivateEntity).IsAssignableFrom(t) ||
                              typeof(IPrivateModelBuilder).IsAssignableFrom(t))
@@ -59,12 +59,12 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
             {
                 DbContextLocatorCorrelationTypes = new ConcurrentDictionary<Type, DbContextCorrelationType>();
 
-                // 获取模型构建器 Entity<T> 方法
+                // Get ModelBuilder Entity<T> method
                 ModelBuildEntityMethod = typeof(ModelBuilder).GetMethods(BindingFlags.Public | BindingFlags.Instance)
                     .FirstOrDefault(u => u.Name == nameof(ModelBuilder.Entity) && u.GetParameters().Length == 0);
             }
 
-            // 查找所有数据库函数，必须是公开静态方法，且所在父类也必须是公开静态方法
+            // Find all database functions，必须是公开静态method，且所在父类也必须是公开静态method
             DbFunctionMethods = EngineContext.Current.TypeFinder.GetAssemblies()
                 .SelectMany(p => p.ExportedTypes)
                 .Where(t => t.IsAbstract && t.IsSealed && t.IsClass && !t.IsDefined(typeof(ManualAttribute), true))
@@ -74,85 +74,85 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置数据库上下文实体
+        /// Configure database context entities
         /// </summary>
-        /// <param name="modelBuilder">模型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
+        /// <param name="modelBuilder">model builder</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
         internal static void ConfigureDbContextEntity(ModelBuilder modelBuilder, DbContext dbContext,
             Type dbContextLocator)
         {
-            // 获取当前数据库上下文关联的类型
+            // 获取当前database context关联的type
             var dbContextCorrelationType = GetDbContextCorrelationType(dbContext, dbContextLocator);
 
-            // 如果没有数据，则跳过
+            // if no data，skip
             if (!dbContextCorrelationType.EntityTypes.Any()) goto EntityFunctions;
 
-            // 获取当前数据库上下文的 [DbContextAttributes] 特性
+            // 获取当前database context的 [DbContextAttributes] characteristic
             var dbContextType = dbContext.GetType();
             var appDbContextAttribute = DbProvider.GetAppDbContextAttribute(dbContextType);
 
-            // 初始化所有类型
+            // initialize all types
             foreach (var entityType in dbContextCorrelationType.EntityTypes)
             {
-                // 创建实体类型
+                // Create entity type
                 var entityBuilder = CreateEntityTypeBuilder(entityType, modelBuilder, dbContext, dbContextType,
                     dbContextLocator, dbContextCorrelationType, appDbContextAttribute);
                 if (entityBuilder == null) continue;
 
-                // 配置无键实体构建器
+                // Configure keyless entity builder
                 ConfigureEntityNoKeyType(entityType, entityBuilder, dbContextCorrelationType.EntityNoKeyTypes);
 
-                // 实体构建成功注入拦截
+                // Entity build successfully injected interception
                 LoadModelBuilderOnCreating(modelBuilder, entityBuilder, dbContext, dbContextLocator,
                     dbContextCorrelationType.ModelBuilderFilterInstances);
 
-                // 配置数据库实体类型构建器
+                // Config Database Entity Type Builder
                 ConfigureEntityTypeBuilder(entityType, entityBuilder, dbContext, dbContextLocator,
                     dbContextCorrelationType);
 
-                // 配置数据库实体种子数据
+                // Config database entity seed data
                 ConfigureEntitySeedData(entityType, entityBuilder, dbContext, dbContextLocator,
                     dbContextCorrelationType);
 
-                // 实体完成配置注入拦截
+                // Entity completes configuration injection interception
                 LoadModelBuilderOnCreated(modelBuilder, entityBuilder, dbContext, dbContextLocator,
                     dbContextCorrelationType.ModelBuilderFilterInstances);
             }
 
-            // 配置数据库函数
+            // Configure database functions
             EntityFunctions:
             ConfigureDbFunctions(modelBuilder, dbContextLocator);
         }
 
         /// <summary>
-        /// 创建实体类型构建器
+        /// Create entity type构建器
         /// </summary>
-        /// <param name="type">数据库关联类型</param>
-        /// <param name="modelBuilder">模型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextType">数据库上下文类型</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
+        /// <param name="type">database association type</param>
+        /// <param name="modelBuilder">model builder</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextType">database contexttype</param>
+        /// <param name="dbContextLocator">database context定位器</param>
         /// <param name="dbContextCorrelationType"></param>
-        /// <param name="appDbContextAttribute">数据库上下文特性</param>
+        /// <param name="appDbContextAttribute">database contextcharacteristic</param>
         /// <returns>EntityTypeBuilder</returns>
         private static EntityTypeBuilder CreateEntityTypeBuilder(Type type, ModelBuilder modelBuilder,
             DbContext dbContext, Type dbContextType, Type dbContextLocator,
             DbContextCorrelationType dbContextCorrelationType, AppDbContextAttribute appDbContextAttribute = null)
         {
-            // 反射创建实体类型构建器
+            // 反射Create entity type构建器
             var entityTypeBuilder =
                 ModelBuildEntityMethod.MakeGenericMethod(type).Invoke(modelBuilder, null) as EntityTypeBuilder;
 
-            // 配置动态表名
+            // Configure dynamic table names
             if (!ConfigureEntityMutableTableName(type, entityTypeBuilder, dbContext, dbContextLocator,
                     dbContextCorrelationType))
             {
-                // 配置实体表名
+                // Configure entity table name
                 ConfigureEntityTableName(type, appDbContextAttribute, entityTypeBuilder, dbContext, dbContextType);
             }
 
-            // 如果未启用多租户支持或租户设置为OnDatabase 或 OnSchema 方案，则忽略多租户字段，另外还需要排除多租户数据库上下文定位器
+            // If multi-tenancy support is not enabled or the tenant is set toOnDatabase or OnSchema Program，the multitenant field is ignored，另外还需要排除多租户database context定位器
             if (dbContextLocator != typeof(MultiTenantDbContextLocator)
                 && (!typeof(IPrivateMultiTenant).IsAssignableFrom(dbContextType) ||
                     typeof(IMultiTenantOnDatabase).IsAssignableFrom(dbContextType) ||
@@ -166,47 +166,47 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置实体表名
+        /// Configure entity table name
         /// </summary>
-        /// <param name="type">实体类型</param>
-        /// <param name="appDbContextAttribute">数据库上下文特性</param>
-        /// <param name="entityTypeBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextType">数据库上下文类型</param>
+        /// <param name="type">entity type</param>
+        /// <param name="appDbContextAttribute">database contextcharacteristic</param>
+        /// <param name="entityTypeBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextType">database contexttype</param>
         private static void ConfigureEntityTableName(Type type, AppDbContextAttribute appDbContextAttribute,
             EntityTypeBuilder entityTypeBuilder, DbContext dbContext, Type dbContextType)
         {
-            // 获取表是否定义 [Table] 特性
+            // Get whether the table is defined [Table] characteristic
             var tableAttribute = type.IsDefined(typeof(TableAttribute), true)
                 ? type.GetCustomAttribute<TableAttribute>(true)
                 : default;
 
-            // 排除无键实体或已经贴了 [Table] 特性的类型
+            // 排除无键实体or已经贴了 [Table] characteristic的type
             if (typeof(IPrivateEntityNotKey).IsAssignableFrom(type) ||
                 !string.IsNullOrWhiteSpace(tableAttribute?.Schema)) return;
 
-            // 获取真实表名
+            // Get real table name
             var tableName = tableAttribute?.Name ?? type.Name;
 
-            // 判断是否是启用了多租户模式，如果是，则获取 Schema
+            // Determine if multi-tenant mode is enabled，in the case of，then get Schema
             var dynamicSchema = !typeof(IMultiTenantOnSchema).IsAssignableFrom(dbContextType)
                 ? default
                 : dbContextType.GetMethod(nameof(IMultiTenantOnSchema.GetSchemaName)).Invoke(dbContext, null)
                     ?.ToString();
 
-            // 获取类型前缀 [TablePrefix] 特性
+            // get type prefix [TablePrefix] characteristic
             var tablePrefixAttribute = !type.IsDefined(typeof(TablePrefixAttribute), true)
                 ? default
                 : type.GetCustomAttribute<TablePrefixAttribute>(true);
 
-            // 判断是否启用全局表前后缀支持或个别表自定义了前缀
+            // 判断是否启用全局表前后缀支持or个别表自定义了前缀
             if (tablePrefixAttribute != null || appDbContextAttribute == null)
             {
                 entityTypeBuilder.ToTable($"{tablePrefixAttribute?.Prefix}{tableName}", dynamicSchema);
             }
             else
             {
-                // 添加表统一前后缀，排除视图
+                // Add table uniform prefix and suffix，Exclude view
                 if (!string.IsNullOrWhiteSpace(appDbContextAttribute.TablePrefix) ||
                     !string.IsNullOrWhiteSpace(appDbContextAttribute.TableSuffix))
                 {
@@ -215,7 +215,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
 
                     if (!string.IsNullOrWhiteSpace(tablePrefix))
                     {
-                        // 如果前缀中找到 . 字符
+                        // if found in prefix . character
                         if (tablePrefix.IndexOf(".") > 0)
                         {
                             var schema = tablePrefix.EndsWith(".") ? tablePrefix[0..^1] : tablePrefix;
@@ -231,19 +231,19 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置实体动态表名
+        /// Configure entity dynamic table name
         /// </summary>
-        /// <param name="entityType">实体类型</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="dbContextCorrelationType">数据库实体关联类型</param>
+        /// <param name="entityType">entity type</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="dbContextCorrelationType">Database entity association type</param>
         private static bool ConfigureEntityMutableTableName(Type entityType, EntityTypeBuilder entityBuilder,
             DbContext dbContext, Type dbContextLocator, DbContextCorrelationType dbContextCorrelationType)
         {
             var isSet = false;
 
-            // 获取实体动态配置表配置
+            // Get entity dynamic configuration table configuration
             var entityMutableTableTypes = dbContextCorrelationType.EntityMutableTableTypes
                 .Where(u => u.GetInterfaces()
                     .Any(i => i.HasImplementedRawGeneric(typeof(IPrivateEntityMutableTable<>)) &&
@@ -251,7 +251,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
 
             if (!entityMutableTableTypes.Any()) return isSet;
 
-            // 只应用于扫描的最后配置
+            // Applies only to the last configuration of the scan
             var lastEntityMutableTableType = entityMutableTableTypes.Last();
 
             var instance = Activator.CreateInstance(lastEntityMutableTableType);
@@ -259,7 +259,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
             var tableName = getTableNameMethod.Invoke(instance, new object[] { dbContext, dbContextLocator });
             if (tableName != null)
             {
-                // 设置动态表名
+                // Set dynamic table name
                 entityBuilder.ToTable(tableName.ToString());
                 isSet = true;
             }
@@ -268,75 +268,75 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置无键实体类型
+        /// 配置无键entity type
         /// </summary>
-        /// <param name="entityType">实体类型</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="EntityNoKeyTypes">无键实体列表</param>
+        /// <param name="entityType">entity type</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="EntityNoKeyTypes">List of keyless entities</param>
         private static void ConfigureEntityNoKeyType(Type entityType, EntityTypeBuilder entityBuilder,
             List<Type> EntityNoKeyTypes)
         {
             if (!EntityNoKeyTypes.Contains(entityType)) return;
 
-            // 配置视图、存储过程、函数无键实体
+            // configuration view、stored procedure、function keyless entity
             entityBuilder.HasNoKey();
             entityBuilder.ToView((Activator.CreateInstance(entityType) as IPrivateEntityNotKey).GetName());
         }
 
         /// <summary>
-        /// 加载模型构建筛选器创建之前拦截
+        /// Load model build filter intercept before creation
         /// </summary>
-        /// <param name="modelBuilder">模型构建器</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="modelBuilderFilterInstances">模型构建器筛选器实例</param>
+        /// <param name="modelBuilder">model builder</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="modelBuilderFilterInstances">model builder筛选器实例</param>
         private static void LoadModelBuilderOnCreating(ModelBuilder modelBuilder, EntityTypeBuilder entityBuilder,
             DbContext dbContext, Type dbContextLocator, List<IPrivateModelBuilderFilter> modelBuilderFilterInstances)
         {
             if (modelBuilderFilterInstances.Count == 0) return;
 
-            // 创建过滤器
+            // Create filter
             foreach (var filterInstance in modelBuilderFilterInstances)
             {
-                // 执行构建之后
+                // After executing the build
                 filterInstance.OnCreating(modelBuilder, entityBuilder, dbContext, dbContextLocator);
             }
         }
 
         /// <summary>
-        /// 加载模型构建筛选器创建之后拦截
+        /// Load model build filter intercept after creation
         /// </summary>
-        /// <param name="modelBuilder">模型构建器</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="modelBuilderFilterInstances">模型构建器筛选器实例</param>
+        /// <param name="modelBuilder">model builder</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="modelBuilderFilterInstances">model builder筛选器实例</param>
         private static void LoadModelBuilderOnCreated(ModelBuilder modelBuilder, EntityTypeBuilder entityBuilder,
             DbContext dbContext, Type dbContextLocator, List<IPrivateModelBuilderFilter> modelBuilderFilterInstances)
         {
             if (modelBuilderFilterInstances.Count == 0) return;
 
-            // 创建过滤器
+            // Create filter
             foreach (var filterInstance in modelBuilderFilterInstances)
             {
-                // 执行构建之后
+                // After executing the build
                 filterInstance.OnCreated(modelBuilder, entityBuilder, dbContext, dbContextLocator);
             }
         }
 
         /// <summary>
-        /// 配置数据库实体类型构建器
+        /// Config Database Entity Type Builder
         /// </summary>
-        /// <param name="entityType">实体类型</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="dbContextCorrelationType">数据库实体关联类型</param>
+        /// <param name="entityType">entity type</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="dbContextCorrelationType">Database entity association type</param>
         private static void ConfigureEntityTypeBuilder(Type entityType, EntityTypeBuilder entityBuilder,
             DbContext dbContext, Type dbContextLocator, DbContextCorrelationType dbContextCorrelationType)
         {
-            // 获取该实体类型的配置类型
+            // 获取该entity type的配置type
             var entityTypeBuilderTypes = dbContextCorrelationType.EntityTypeBuilderTypes
                 .Where(u => u.GetInterfaces()
                     .Any(i => i.HasImplementedRawGeneric(typeof(IPrivateEntityTypeBuilder<>)) &&
@@ -344,7 +344,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
 
             if (!entityTypeBuilderTypes.Any()) return;
 
-            // 调用数据库实体自定义配置
+            // Invoke database entity custom configuration
             foreach (var entityTypeBuilderType in entityTypeBuilderTypes)
             {
                 var instance = Activator.CreateInstance(entityTypeBuilderType);
@@ -360,17 +360,17 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置数据库实体种子数据
+        /// Config database entity seed data
         /// </summary>
-        /// <param name="entityType">实体类型</param>
-        /// <param name="entityBuilder">实体类型构建器</param>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="dbContextCorrelationType">数据库实体关联类型</param>
+        /// <param name="entityType">entity type</param>
+        /// <param name="entityBuilder">entity type构建器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="dbContextCorrelationType">Database entity association type</param>
         private static void ConfigureEntitySeedData(Type entityType, EntityTypeBuilder entityBuilder,
             DbContext dbContext, Type dbContextLocator, DbContextCorrelationType dbContextCorrelationType)
         {
-            // 获取该实体类型的种子配置
+            // 获取该entity type的种子配置
             var entitySeedDataTypes = dbContextCorrelationType.EntitySeedDataTypes
                 .Where(u => u.GetInterfaces()
                     .Any(i => i.HasImplementedRawGeneric(typeof(IPrivateEntitySeedData<>)) &&
@@ -380,7 +380,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
 
             var data = new List<object>();
 
-            // 加载种子配置数据
+            // Load seed configuration data
             foreach (var entitySeedDataType in entitySeedDataTypes)
             {
                 var instance = Activator.CreateInstance(entitySeedDataType);
@@ -397,10 +397,10 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 配置数据库函数
+        /// Configure database functions
         /// </summary>
-        /// <param name="modelBuilder">模型构建起</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
+        /// <param name="modelBuilder">model build</param>
+        /// <param name="dbContextLocator">database context定位器</param>
         private static void ConfigureDbFunctions(ModelBuilder modelBuilder, Type dbContextLocator)
         {
             var dbContextFunctionMethods = DbFunctionMethods.Where(u => IsInThisDbContext(dbContextLocator, u));
@@ -413,88 +413,88 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
         }
 
         /// <summary>
-        /// 判断当前类型是否在数据库上下文中
+        /// 判断当前type是否在database context中
         /// </summary>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="entityCorrelationType">数据库实体关联类型</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="entityCorrelationType">Database entity association type</param>
         /// <returns>bool</returns>
         private static bool IsInThisDbContext(Type dbContextLocator, Type entityCorrelationType)
         {
-            // 处理自定义多租户的情况
+            // Handling custom multi-tenancy cases
             if (dbContextLocator == typeof(MultiTenantDbContextLocator) && Db.CustomizeMultiTenants &&
                 typeof(ITenant).IsAssignableFrom(entityCorrelationType)) return false;
 
-            // 获取所有祖先类型
+            // Get all ancestor types
             var ancestorTypes = entityCorrelationType.GetAncestorTypes();
-            // 获取所有接口
+            // get all interfaces
             var interfaces = entityCorrelationType.GetInterfaces().Where(u =>
                 typeof(IPrivateEntity).IsAssignableFrom(u) || typeof(IPrivateModelBuilder).IsAssignableFrom(u));
 
-            // 祖先是泛型且泛型参数包含数据库上下文定位器
+            // 祖先是泛型且泛型参数包含database context定位器
             if (ancestorTypes.Any(u => u.IsGenericType && u.GenericTypeArguments.Contains(dbContextLocator)))
                 return true;
 
-            // 接口是泛型且泛型参数包含数据库上下文定位器
+            // interface是泛型且泛型参数包含database context定位器
             if (interfaces.Any(u => u.IsGenericType && u.GenericTypeArguments.Contains(dbContextLocator))) return true;
 
             return false;
         }
 
         /// <summary>
-        /// 判断当前函数是否在数据库上下文中
+        /// 判断当前函数是否在database context中
         /// </summary>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
-        /// <param name="method">标识为数据库的函数</param>
+        /// <param name="dbContextLocator">database context定位器</param>
+        /// <param name="method">A function identified as a database</param>
         /// <returns>bool</returns>
         private static bool IsInThisDbContext(Type dbContextLocator, MethodInfo method)
         {
             var queryableFunctionAttribute = method.GetCustomAttribute<QueryableFunctionAttribute>(true);
 
-            // 如果数据库上下文定位器为默认定位器且该函数没有定义数据库上下文定位器，则返回 true
+            // 如果database context定位器为默认定位器且该函数没有定义database context定位器，then return true
             if (dbContextLocator == typeof(MasterDbContextLocator) &&
                 queryableFunctionAttribute.DbContextLocators.Length == 0) return true;
 
-            // 判断是否包含当前数据库上下文
+            // 判断是否包含当前database context
             if (queryableFunctionAttribute.DbContextLocators.Contains(dbContextLocator)) return true;
 
             return false;
         }
 
         /// <summary>
-        /// 数据库上下文定位器关联类型集合
+        /// database context定位器关联type集合
         /// </summary>
         internal static ConcurrentDictionary<Type, DbContextCorrelationType> DbContextLocatorCorrelationTypes;
 
         /// <summary>
-        /// 获取当前数据库上下文关联类型
+        /// 获取当前database context关联type
         /// </summary>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context定位器</param>
         /// <returns>DbContextCorrelationType</returns>
         private static DbContextCorrelationType GetDbContextCorrelationType(DbContext dbContext, Type dbContextLocator)
         {
-            // 读取缓存
+            // read cache
             return DbContextLocatorCorrelationTypes.GetOrAdd(dbContextLocator, Function(dbContext, dbContextLocator));
 
-            // 本地静态方法
+            // 本地静态method
             static DbContextCorrelationType Function(DbContext dbContext, Type dbContextLocator)
             {
                 var result = new DbContextCorrelationType { DbContextLocator = dbContextLocator };
 
-                // 获取当前数据库上下文关联类型
+                // 获取当前database context关联type
                 var dbContextEntityCorrelationTypes =
                     EntityCorrelationTypes.Where(u => IsInThisDbContext(dbContextLocator, u));
 
-                // 组装对象
+                // assembly object
                 foreach (var entityCorrelationType in dbContextEntityCorrelationTypes)
                 {
-                    // 只要继承 IEntityDependency 接口，都是实体
+                    // just inherit IEntityDependency interface，all entities
                     if (typeof(IPrivateEntity).IsAssignableFrom(entityCorrelationType))
                     {
-                        // 添加实体
+                        // add entity
                         result.EntityTypes.Add(entityCorrelationType);
 
-                        // 添加无键实体
+                        // Add keyless entity
                         if (typeof(IPrivateEntityNotKey).IsAssignableFrom(entityCorrelationType))
                         {
                             result.EntityNoKeyTypes.Add(entityCorrelationType);
@@ -503,21 +503,21 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
 
                     if (typeof(IPrivateModelBuilder).IsAssignableFrom(entityCorrelationType))
                     {
-                        // 添加模型构建器
+                        // 添加model builder
                         if (entityCorrelationType.HasImplementedRawGeneric(typeof(IPrivateEntityTypeBuilder<>)))
                         {
                             result.EntityTypeBuilderTypes.Add(entityCorrelationType);
                         }
 
-                        // 添加全局筛选器
+                        // Add global filter
                         if (entityCorrelationType.HasImplementedRawGeneric(typeof(IPrivateModelBuilderFilter)))
                         {
                             result.ModelBuilderFilterTypes.Add(entityCorrelationType);
 
-                            // 判断是否是 DbContext 类型，
+                            // determine whether DbContext type，
                             if (typeof(DbContext).IsAssignableFrom(entityCorrelationType))
                             {
-                                // 判断是否已经注册了上下文并且是否等于当前上下文
+                                // Determine whether the context has been registered and is equal to the current context
                                 if (Penetrates.DbContextWithLocatorCached.Values.Contains(entityCorrelationType) &&
                                     entityCorrelationType == dbContext.GetType())
                                 {
@@ -529,19 +529,19 @@ namespace Silky.EntityFrameworkCore.Contexts.Builders
                                     Activator.CreateInstance(entityCorrelationType) as IPrivateModelBuilderFilter);
                         }
 
-                        // 添加种子数据
+                        // Add seed data
                         if (entityCorrelationType.HasImplementedRawGeneric(typeof(IPrivateEntitySeedData<>)))
                         {
                             result.EntitySeedDataTypes.Add(entityCorrelationType);
                         }
 
-                        // 添加动态表类型
+                        // 添加动态表type
                         if (entityCorrelationType.HasImplementedRawGeneric(typeof(IPrivateEntityMutableTable<>)))
                         {
                             result.EntityMutableTableTypes.Add(entityCorrelationType);
                         }
 
-                        // 添加实体数据改变监听
+                        // add entity数据改变监听
                         if (entityCorrelationType.HasImplementedRawGeneric(typeof(IPrivateEntityChangedListener<>)))
                         {
                             result.EntityChangedTypes.Add(entityCorrelationType);

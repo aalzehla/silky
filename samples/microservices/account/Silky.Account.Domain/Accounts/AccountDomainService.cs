@@ -45,13 +45,13 @@ namespace Silky.Account.Domain.Accounts
             var exsitAccountCount = await _accountRepository.CountAsync(p => p.UserName == input.UserName);
             if (exsitAccountCount > 0)
             {
-                throw new BusinessException($"已经存在{input.UserName}名称的账号");
+                throw new BusinessException($"already exists{input.UserName}account name");
             }
 
             exsitAccountCount = await _accountRepository.CountAsync(p => p.Email == input.Email);
             if (exsitAccountCount > 0)
             {
-                throw new BusinessException($"已经存在{input.Email}Email的账号");
+                throw new BusinessException($"already exists{input.Email}Email's account");
             }
 
             var account = input.Adapt<Account>();
@@ -65,7 +65,7 @@ namespace Silky.Account.Domain.Accounts
             var accountEntry = _accountRepository.FirstOrDefault(p => p.UserName == name);
             if (accountEntry == null)
             {
-                throw new BusinessException($"不存在名称为{name}的账号");
+                throw new BusinessException($"does not exist with the name{name}'s account");
             }
 
             return accountEntry;
@@ -76,7 +76,7 @@ namespace Silky.Account.Domain.Accounts
             var accountEntry = _accountRepository.FirstOrDefault(p => p.Id == id);
             if (accountEntry == null)
             {
-                throw new BusinessException($"不存在Id为{id}的账号");
+                throw new BusinessException($"does not existIdfor{id}'s account");
             }
 
             return accountEntry;
@@ -90,7 +90,7 @@ namespace Silky.Account.Domain.Accounts
                 var exsitAccountCount = await _accountRepository.CountAsync(p => p.Email == input.Email);
                 if (exsitAccountCount > 0)
                 {
-                    throw new BusinessException($"系统中已经存在Email为{input.Email}的账号");
+                    throw new BusinessException($"系统中already existsEmailfor{input.Email}'s account");
                 }
             }
 
@@ -99,7 +99,7 @@ namespace Silky.Account.Domain.Accounts
                 var exsitAccountCount = await _accountRepository.CountAsync(p => p.UserName == input.UserName);
                 if (exsitAccountCount > 0)
                 {
-                    throw new BusinessException($"系统中已经存在Name为{input.UserName}的账号");
+                    throw new BusinessException($"系统中already existsNamefor{input.UserName}'s account");
                 }
             }
 
@@ -182,12 +182,12 @@ namespace Silky.Account.Domain.Accounts
                                                                              || p.Email == input.Account);
             if (userInfo == null)
             {
-                throw new AuthenticationException($"不存在账号为{input.Account}的用户");
+                throw new AuthenticationException($"does not exist账号for{input.Account}User");
             }
 
             if (!userInfo.Password.Equals(_passwordHelper.EncryptPassword(userInfo.UserName, input.Password)))
             {
-                throw new AuthenticationException("密码不正确");
+                throw new AuthenticationException("The password is incorrect");
             }
 
             var payload = new Dictionary<string, object>()
@@ -205,7 +205,7 @@ namespace Silky.Account.Domain.Accounts
             var userInfo = await _accountRepository.FindOrDefaultAsync(_session.UserId.To<long>());
             if (userInfo == null)
             {
-                throw new AuthenticationException($"当前系统不存在用户{_session.UserId}");
+                throw new AuthenticationException($"当前系统does not exist用户{_session.UserId}");
             }
 
             return userInfo.Adapt<GetAccountOutput>();

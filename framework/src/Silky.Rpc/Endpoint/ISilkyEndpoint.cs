@@ -8,37 +8,37 @@ namespace Silky.Rpc.Endpoint
     public interface ISilkyEndpoint
     {
         /// <summary>
-        /// 地址(Ip或是域名)
+        /// address(Ipor domain name)
         /// </summary>
         string Host { get; }
 
         /// <summary>
-        /// 指定的端口号
+        /// specified port number
         /// </summary>
         int Port { get; }
 
         /// <summary>
-        /// 地址类型
+        /// address类型
         /// </summary>
         ServiceProtocol ServiceProtocol { get; }
 
         /// <summary>
-        /// ip终结点
+        /// ipendpoint
         /// </summary>
         IPEndPoint IPEndPoint { get; }
 
         /// <summary>
-        ///  该地址是否可用
+        ///  该address是否可用
         /// </summary>
         bool Enabled { get; }
 
         /// <summary>
-        /// 上次不可用时间
+        /// Last unavailable time
         /// </summary>
         DateTime? LastDisableTime { get; }
 
         /// <summary>
-        /// 让地址熔断
+        /// 让address熔断
         /// </summary>
         void MakeFusing(int fuseSleepDuration);
 
@@ -47,7 +47,7 @@ namespace Silky.Rpc.Endpoint
         int FuseTimes { get; }
 
         /// <summary>
-        /// 地址描述符
+        /// address描述符
         /// </summary>
         SilkyEndpointDescriptor Descriptor { get; }
     }

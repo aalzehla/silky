@@ -4,12 +4,12 @@ using System.Data;
 namespace Silky.EntityFrameworkCore.Values
 {
     /// <summary>
-    /// 存储过程输出返回值
+    /// Stored procedure output return value
     /// </summary>
     public sealed class ProcedureOutputResult : ProcedureOutputResult<DataSet>
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public ProcedureOutputResult() : base()
         {
@@ -17,13 +17,13 @@ namespace Silky.EntityFrameworkCore.Values
     }
 
     /// <summary>
-    /// 存储过程输出返回值
+    /// Stored procedure output return value
     /// </summary>
-    /// <typeparam name="TResult">泛型版本</typeparam>
+    /// <typeparam name="TResult">generic version</typeparam>
     public class ProcedureOutputResult<TResult>
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public ProcedureOutputResult()
         {
@@ -31,17 +31,17 @@ namespace Silky.EntityFrameworkCore.Values
         }
 
         /// <summary>
-        /// 输出值
+        /// output value
         /// </summary>
         public IEnumerable<ProcedureOutputValue> OutputValues { get; set; }
 
         /// <summary>
-        /// 返回值
+        /// return value
         /// </summary>
         public object ReturnValue { get; set; }
 
         /// <summary>
-        /// 结果集
+        /// result set
         /// </summary>
         public TResult Result { get; set; }
     }

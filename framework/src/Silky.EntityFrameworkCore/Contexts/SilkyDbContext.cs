@@ -14,14 +14,14 @@ using Silky.EntityFrameworkCore.Locators;
 namespace Silky.EntityFrameworkCore.Contexts
 {
     /// <summary>
-    /// 默认应用数据库上下文
+    /// Default application database context
     /// </summary>
-    /// <typeparam name="TDbContext">数据库上下文</typeparam>
+    /// <typeparam name="TDbContext">database context</typeparam>
     public abstract class SilkyDbContext<TDbContext> : SilkyDbContext<TDbContext, MasterDbContextLocator>
         where TDbContext : DbContext
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="options"></param>
         protected SilkyDbContext(DbContextOptions<TDbContext> options) : base(options)
@@ -40,7 +40,7 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 数据库上下文提交更改之前执行事件
+        /// database context提交更改之前执行事件
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -49,7 +49,7 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 数据库上下文提交更改成功执行事件
+        /// database context提交更改成功执行事件
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -58,7 +58,7 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 数据库上下文提交更改失败执行事件
+        /// database context提交更改失败执行事件
         /// </summary>
         /// <param name="eventData"></param>
         protected virtual void SaveChangesFailedEvent(DbContextErrorEventData eventData)
@@ -66,7 +66,7 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 数据库上下文初始化调用方法
+        /// database context初始化调用方法
         /// </summary>
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -75,55 +75,55 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 数据库上下文配置模型调用方法
+        /// database context配置模型调用方法
         /// </summary>
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // 配置数据库上下文实体
+            // 配置database context实体
             AppDbContextBuilder.ConfigureDbContextEntity(modelBuilder, this, typeof(TDbContextLocator));
         }
 
         /// <summary>
-        /// 新增或更新忽略空值（默认值）
+        /// Add or update ignore null values（Defaults）
         /// </summary>
         public virtual bool InsertOrUpdateIgnoreNullValues { get; protected set; } = false;
 
         /// <summary>
-        /// 启用实体跟踪（默认值）
+        /// Enable entity tracking（Defaults）
         /// </summary>
         public virtual bool EnabledEntityStateTracked { get; protected set; } = true;
 
         /// <summary>
-        /// 启用实体数据更改监听
+        /// Enable entity data change listening
         /// </summary>
         public virtual bool EnabledEntityChangedListener { get; protected set; } = false;
 
         /// <summary>
-        /// 保存失败自动回滚
+        /// Automatic rollback if save fails
         /// </summary>
         public virtual bool FailedAutoRollback { get; protected set; } = true;
         
         /// <summary>
-        /// 正在更改并跟踪的数据
+        /// Data being changed and tracked
         /// </summary>
         private Dictionary<EntityEntry, PropertyValues> ChangeTrackerEntities { get; set; }
 
         /// <summary>
-        /// 内部数据库上下文提交更改之前执行事件
+        /// 内部database context提交更改之前执行事件
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
         internal void SavingChangesEventInner(DbContextEventData eventData, InterceptionResult<int> result)
         {
-            // 附加实体更改通知
+            // Additional Entity Change Notification
             if (EnabledEntityChangedListener)
             {
                 var dbContext = eventData.Context;
 
-                // 获取获取数据库操作上下文，跳过贴了 [NotChangedListener] 特性的实体
+                // get get database operation context，skip the post [NotChangedListener] Properties of Properties
                 ChangeTrackerEntities = (dbContext).ChangeTracker.Entries()
                     .Where(u => !u.Entity.GetType().IsDefined(typeof(SuppressChangedListenerAttribute), true) &&
                                 (u.State == EntityState.Added || u.State == EntityState.Modified ||
@@ -136,13 +136,13 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 内部数据库上下文提交更改成功执行事件
+        /// 内部database context提交更改成功执行事件
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
         internal void SavedChangesEventInner(SaveChangesCompletedEventData eventData, int result)
         {
-            // 附加实体更改通知
+            // Additional Entity Change Notification
             if (EnabledEntityChangedListener)
                 AttachEntityChangedListener(eventData.Context, "OnChanged", ChangeTrackerEntities);
 
@@ -150,12 +150,12 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 内部数据库上下文提交更改失败执行事件
+        /// 内部database context提交更改失败执行事件
         /// </summary>
         /// <param name="eventData"></param>
         internal void SaveChangesFailedEventInner(DbContextErrorEventData eventData)
         {
-            // 附加实体更改通知
+            // Additional Entity Change Notification
             if (EnabledEntityChangedListener)
                 AttachEntityChangedListener(eventData.Context, "OnChangeFailed", ChangeTrackerEntities);
 
@@ -163,7 +163,7 @@ namespace Silky.EntityFrameworkCore.Contexts
         }
 
         /// <summary>
-        /// 附加实体改变监听
+        /// Additional entity change listener
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="triggerMethodName"></param>
@@ -171,18 +171,18 @@ namespace Silky.EntityFrameworkCore.Contexts
         private static void AttachEntityChangedListener(DbContext dbContext, string triggerMethodName,
             Dictionary<EntityEntry, PropertyValues> changeTrackerEntities = null)
         {
-            // 获取所有改变的类型
+            // Get all changed types
             var entityChangedTypes = AppDbContextBuilder.DbContextLocatorCorrelationTypes[typeof(TDbContextLocator)]
                 .EntityChangedTypes;
             if (!entityChangedTypes.Any()) return;
 
-            // 遍历所有的改变的实体
+            // iterate over all changed entities
             foreach (var trackerEntities in changeTrackerEntities)
             {
                 var entryEntity = trackerEntities.Key;
                 var entity = entryEntity.Entity;
 
-                // 获取该实体类型的种子配置
+                // Get the seed configuration for this entity type
                 var entitiesTypeByChanged = entityChangedTypes
                     .Where(u => u.GetInterfaces()
                         .Any(i => i.HasImplementedRawGeneric(typeof(IPrivateEntityChangedListener<>)) &&
@@ -190,7 +190,7 @@ namespace Silky.EntityFrameworkCore.Contexts
 
                 if (!entitiesTypeByChanged.Any()) continue;
 
-                // 通知所有的监听类型
+                // Notify all listener types
                 foreach (var entityChangedType in entitiesTypeByChanged)
                 {
                     var OnChangeMethod = entityChangedType.GetMethods(BindingFlags.Public | BindingFlags.Instance)
@@ -202,10 +202,10 @@ namespace Silky.EntityFrameworkCore.Contexts
 
                     var instance = Activator.CreateInstance(entityChangedType);
 
-                    // 对 OnChanged 进行特别处理
+                    // right OnChanged special treatment
                     if (triggerMethodName.Equals("OnChanged"))
                     {
-                        // 获取实体旧值
+                        // get entity old value
                         var oldEntity = trackerEntities.Value?.ToObject();
 
                         OnChangeMethod.Invoke(instance,

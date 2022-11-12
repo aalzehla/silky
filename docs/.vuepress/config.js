@@ -1,6 +1,6 @@
 module.exports = {
-    title: 'Silky微服务框架在线文档',
-    description: 'Silky框架是一个旨在通过.net平台快速构建微服务开发的框架。具有稳定、安全、高性能、易扩展、使用方便的特点。',
+    title: 'Silky Microservice Framework Online Documentation',
+    description: 'Silky framework is a .net platform quickly builds a framework for microservice development。stable、Safety、high performance、Easy to expand、Easy-to-use features。',
     port: 8081,
     plugins: [['social-share', {
         networks: ['qq', 'weibo', 'douban', 'wechat', 'email', 'twitter', 'facebook', 'reddit', 'telegram'],
@@ -47,7 +47,7 @@ module.exports = {
     }],
     ['sitemap', {
         hostname: 'http://docs.silky-fk.com',
-        // 排除无实际内容的页面
+        // Exclude pages with no actual content
         exclude: ["/404.html"]
     }
     ]
@@ -70,7 +70,7 @@ var _hmt = _hmt || [];
             "meta",
             {
                 name: "keywords",
-                content: 'silky微服务,silky文档,silky微服务框架,silky docs,微服务架构,.net微服务框架,dotnetcore微服务'
+                content: 'silky Microservices,silky Documentation,silkyMicroservices framework,silky docs,Microservices架构,.netMicroservices框架,dotnetcoreMicroservices'
             }
         ],
         [
@@ -123,17 +123,17 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
         docsBranch: 'main',
         docsDir: 'docs',
         editLinks: true,
-        editLinkText: '编辑当前页',
+        editLinkText: 'Edit current page',
         edit: {
             docsDir: 'src',
         },
-        lastUpdated: '最后更新时间',
+        lastUpdated: 'Last update time',
         nav: [
-            { text: '首页', link: '/' },
-            { text: '文档', link: '/silky/' },
-            { text: '配置', link: '/config/' },
-            { text: '源码解析', link: '/source/' },
-            { text: '博文', link: '/blog/' },
+            { text: 'front page', link: '/' },
+            { text: 'Documentation', link: '/silky/' },
+            { text: 'configure', link: '/config/' },
+            { text: 'Source code analysis', link: '/source/' },
+            { text: 'blog post', link: '/blog/' },
             {
                 text: 'github', link: 'https://github.com/liuhll/silky'
             },
@@ -144,7 +144,7 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
         sidebar: {
             '/silky/': [
                 {
-                    title: '简介',
+                    title: 'Introduction',
                     collapsable: false,
                     children: [
                         ''
@@ -152,7 +152,7 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
 
                 },
                 {
-                    title: '开发文档',
+                    title: '开发Documentation',
                     collapsable: false,
                     children: [
                         'dev-docs/quick-start',
@@ -181,7 +181,7 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
             ],
             '/blog/': [
                 {
-                    title: '博文',
+                    title: 'blog post',
                     collapsable: false,
                     children: [
                         'silky-microservice-profile',
@@ -193,7 +193,7 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
 
             ],
             '/source/': [{
-                title: '启动时',
+                title: 'at startup',
                 collapsable: false,
                 children: [
                     'startup/host',
@@ -204,7 +204,7 @@ document.write('<script src="' + src + '" id="sozz"><\/script>');
                 ]
             },
             {
-                title: '运行时',
+                title: 'Runtime',
                 collapsable: false,
                 children: [
                     'runtime/routing'

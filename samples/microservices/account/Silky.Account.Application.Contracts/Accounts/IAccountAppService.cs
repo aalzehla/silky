@@ -10,20 +10,20 @@ using Silky.Transaction;
 namespace Silky.Account.Application.Contracts.Accounts
 {
     /// <summary>
-    /// 账号服务
+    /// Account service
     /// </summary>
     [ServiceRoute]
     public interface IAccountAppService
     {
         /// <summary>
-        /// 新增账号
+        /// Add account
         /// </summary>
-        /// <param name="input">账号信息</param>
+        /// <param name="input">account information</param>
         /// <returns></returns>
         Task<GetAccountOutput> Create(CreateAccountInput input);
         
         /// <summary>
-        /// 登陆接口
+        /// login interface
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -35,7 +35,7 @@ namespace Silky.Account.Application.Contracts.Accounts
         Task<string> DashboardLogin(DashboardLoginInput input);
 
         /// <summary>
-        /// 获取当前登陆用户
+        /// Get the current logged in user
         /// </summary>
         /// <returns></returns>
         [HttpGet("current/userinfo")]
@@ -43,25 +43,25 @@ namespace Silky.Account.Application.Contracts.Accounts
         Task<GetAccountOutput> GetLoginUserInfo();
 
         /// <summary>
-        /// 通过账号名称获取账号
+        /// Get account by account name
         /// </summary>
-        /// <param name="name">账号名称</param>
+        /// <param name="name">Account Name</param>
         /// <returns></returns>
         [GetCachingIntercept("Account:UserName:{0}")]
         [HttpGet("{name}")]
         Task<GetAccountOutput> GetAccountByName([CacheKey(0)] string name);
 
         /// <summary>
-        /// 通过Id获取账号信息
+        /// passId获取account information
         /// </summary>
-        /// <param name="id">账号Id</param>
+        /// <param name="id">accountId</param>
         /// <returns></returns>
         [GetCachingIntercept("Account:Id:{0}")]
         [HttpGet("{id:long}")]
         Task<GetAccountOutput> GetAccountById([CacheKey(0)] long id);
 
         /// <summary>
-        /// 更新账号信息
+        /// 更新account information
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -69,16 +69,16 @@ namespace Silky.Account.Application.Contracts.Accounts
         Task<GetAccountOutput> Update(UpdateAccountInput input);
 
         /// <summary>
-        /// 删除账号信息
+        /// 删除account information
         /// </summary>
-        /// <param name="id">账号Id</param>
+        /// <param name="id">accountId</param>
         /// <returns></returns>
         [RemoveCachingIntercept("GetAccountOutput","Account:Id:{0}")]
         [HttpDelete("{id:long}")]
         Task Delete([CacheKey(0)]long id);
 
         /// <summary>
-        /// 订单扣款
+        /// Order debit
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

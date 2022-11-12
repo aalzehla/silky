@@ -1,122 +1,122 @@
 ---
-title: silky框架分布式事务使用简介
+title: silkyIntroduction to the use of framework distributed transactions
 lang: zh-cn
 ---
 
-silky框架的分布式事务解决方案采用的TCC事务模型。在开发过程中参考和借鉴了[hmily](https://github.com/dromara/hmily)。使用AOP的编程思想,在rpc通信过程中通过拦截器的方式对全局事务或是分支事务进行管理和协调。
+silkyThe framework's distributed transaction solution adoptsTCCtransaction model。Referenced and borrowed from the development process[hmily](https://github.com/dromara/hmily)。useAOPprogramming ideas,existrpcDuring the communication process; the global transaction or branch transaction is managed and coordinated by means of interceptors。
 
-本文通过silky.samples 订单接口给大家介绍silky框架分布式事务的基本使用。
+This article passessilky.samples Introduce the order interface to yousilky框架分布式事务of基本use。
 
 
-## silky分布式事务的使用
+## silky分布式事务ofuse
 
-在silky框架中,在应用服务接口通过`[Transaction]`特性标识该接口是一个分布式事务接口(应用接口层需要安装包`Silky.Transaction`)。应用服务接口的实现必须需要通过`   [TccTransaction(ConfirmMethod = "ConfirmMethod", CancelMethod = "CancelMethod")]`特性指定Confirm阶段和Cancel阶段的方法(需要再应用层安装包`Silky.Transaction.Tcc`)。
+existsilkyin the frame,exist应用服务接口pass`[Transaction]`The attribute identifies the interface as a distributed transaction interface(Application interface layer requires installation package`Silky.Transaction`)。The implementation of the application service interface must pass`   [TccTransaction(ConfirmMethod = "ConfirmMethod", CancelMethod = "CancelMethod")]`property assignmentConfirmstage andCancelstage method(Reapplication layer installation package is required`Silky.Transaction.Tcc`)。
 
-::: warning 注意
+::: warning Notice
 
-一个应用接口被分布式事务`[Transaction]`特性标识,那么这个应用接口的实现也必须要使用`TccTransaction`特性来标识。否则,应用在启动时会抛出异常。
+An application interface is distributed transaction`[Transaction]`Feature ID,So这个应用接口of实现也必须要use`TccTransaction`feature to identify。otherwise,应用exist启动时会抛出异常。
 
 :::
 
 
-在一个分布式事务处理过程中,会存在如下两种角色的事务。
+exist一个分布式事务处理in the process,会存exist如下两种角色of事务。
 
-### 事务角色
+### transaction role
 
-1. 全局事务
+1. global transaction
 
-在Silky框架中,第一个执行的事务被认为是全局事务(事务角色为`TransactionRole.Start`)。换句话说,在一个业务处理过程中,执行的第一个被标识为`TccTransaction`(应用接口需要被标识为`Transaction`)的方法为全局事务。
+existSilkyin the frame,第一个执行of事务被认for是global transaction(transaction rolefor`TransactionRole.Start`)。in other words,exist一个业务处理in the process,The first one executed is identified as`TccTransaction`(Application interfaces need to be identified as`Transaction`)ofmethodforglobal transaction。
 
-当然,全局事务也作为事务的一特殊的事务参与者,在全局事务开始后,作为事务参与者注册到事务上下文中。
+certainly,global transaction也作for事务of一特殊of事务participate者,existglobal transaction开始后,Registering in the transaction context as a transaction participant。
 
-2. 分支事务
+2. branch transaction
 
-在开始的一个分布式事务中,参与rpc通信,且被特性`[Transaction]`标识的应用服务,被认为是分支事务(事务角色为:`TransactionRole.Participant`)。
+exist开始of一个分布式事务中,participaterpccommunication,and is characterized`[Transaction]`Identified App Service,被认for是branch transaction(transaction rolefor:`TransactionRole.Participant`)。
 
-### 事务的执行
+### execution of transactions
 
-1. 在开启一个全局事务之后,在全局事务的`try`过程中，首先将全局事务作为一个事务参与者添加到事务上下文中。如果遇到一个分支事务,那么首先会调用分支事务的`try`方法。如果`try`方法执行成功，那么分支事务作为一个事务参与者被注册到事务上下文中,并且分支的事务状态为变更为`trying`。
+1. exist开启一个global transaction之后,existglobal transactionof`try`in the process，first将global transaction作for一个事务participate者添加到事务上下文中。if遇到一个branch transaction,Sofirst会transferbranch transactionof`try`method。if`try`method执行success，Sobranch transaction作for一个事务participate者被注册到事务上下文中,and the transaction status of the branch is changed to`trying`。
  
-2. 如果在全局事务的try方法执行过程中发生异常,那么全局事务的`Cancel`方法和被加入事务上下文且状态为`trying`的分支事务参与者的`Cancel`方法将会被调用,在`Cancel`方法中实现数据回滚。也就是说,全局事务的`Cancel`不管`try`方法是否执行成功,全局事务的`Cancel`方法都会被执行。分支事务只有被加入到事务上下文,且状态为`trying`(分支事务已经执行过`try`方法),那么分支事务的`Cancel`方法才会被执行。
+2. ifexistglobal transactionoftrymethod执行in the process发生异常,Soglobal transactionof`Cancel`methodand被加入事务上下文and the status is`trying`ofbranch transactionparticipate者of`Cancel`method将will be called,exist`Cancel`method中实现数据回滚。That is to say,global transactionof`Cancel`in spite of`try`method是否执行success,global transactionof`Cancel`method都会被执行。branch transaction只有被加入到事务上下文,and the status is`trying`(branch transaction已经执行过`try`method),Sobranch transactionof`Cancel`method才会被执行。
  
-3. 全局事务的try方法执行成功,那么全局事务的`Confirm`和各个分支事务的`Confirm`方法将会得到执行。
+3. global transactionoftrymethod执行success,Soglobal transactionof`Confirm`and各个branch transactionof`Confirm`method将会得到执行。
 
-4. 换句话说,所有全局事务(事务主分支)以及分支事务的try方法都执行成功,才会依次执行所有事务参与者的`Confirm`方法,如果分布式事务的`try`阶段执行失败,那么主分支事务的`Cancel`方法一定会被调用;而分支事务看是否有被添加到事务上下文中且已经执行成功`try`阶段的方法,只有这样的分支事务才会调用`Cancel`方法。
+4. in other words,所有global transaction(Transaction master branch)以及branch transactionoftrymethod都执行success,才会依次执行所有事务participate者of`Confirm`method,if分布式事务of`try`Stage execution failed,So主branch transactionof`Cancel`method一定will be called;而branch transaction看是否有被添加到事务上下文中且已经执行success`try`stage method,只有这样ofbranch transaction才会transfer`Cancel`method。
 
-5. 如果分支事务存在分支事务的情况下,这种业务场景会相对特殊,这个时候的分支事务相对于它的分支事务就是一个特殊的全局事务。它会在特殊的`try`阶段执行孙子辈的分支事务的`try`和`confirm`(成功)或是`try`和`cancel`(失败)。并且会将执行成功与否返回给父分支事务(全局事务)。
+5. ifbranch transaction存existbranch transactionof情况下,This business scenario will be relatively special,这个时候ofbranch transaction相对于它ofbranch transaction就是一个特殊ofglobal transaction。它会exist特殊of`try`stage执行孙子辈ofbranch transactionof`try`and`confirm`(success)or`try`and`cancel`(fail)。并且会将执行success与否返回给父branch transaction(global transaction)。
 
-::: warning 注意
+::: warning Notice
 
-无论是全局事务还是分支事务的各个阶段,如果涉及到多个表的操作,那么,对应的数据库操作的都需要放到本地事务进行操作。
-
-:::
-
-## 分布式事务案例-- silky.samples订单接口
-
-下面,我们通过silky.samples的订单接口来熟悉通过silky框架如何实现分布式事务。
-
-### silky.samples 订单接口的业务流程介绍
-
-在上一篇博文[通过silky.samples熟悉silky微服务框架的使用](https://www.cnblogs.com/bea084100123/p/14631609.html)，给大家介绍了silky.samples样例项目的基本情况。本文通过大家熟悉的一个订单接口,熟悉silky的分布式事务是如何使用。
-
-下面，给大家梳理一下订单接口的业务流程。
-
-1. 判断和锁定订单产品库存: 在下订单之前需要判断是否存在相应的产品,产品的剩余数量是否足够，如果产品数量足够的话,扣减产品库存,锁定订单的库存数量(分支事务)
-
-2. 创建一个订单记录,订单状态为NoPay(全局事务)
-
-3. 判断用户的账号是否存在,账户余额是否充足,如果账户余额充足的话,则需要锁定订单金额，创建一个账户流水记录。
-
-4. 如果1,2,3都成功,释放产品锁定的订单库存
-
-5. 如果1,2,3都成功,释放账号锁定的金额,修改账号流水记录相关状态
-
-6. 如果1,2,3都成功,修改订单状态为Payed
-
-7. 如果在**步骤1**就出现异常(例如:产品的库存不足或是rpc通信失败,或是访问数据库出现异常等),库存分支事务(`DeductStockCancel`)和账号分支事务(`DeductBalanceCancel`)指定的`Cancel`方法都不会被执行。但是全局事务指定的`Cancel`方法(`OrderCreateCancel`)会被调用
-
-8. 如果在**步骤2**就出现异常(下订单访问数据库出现异常),库存分支事务指定的`Cancel`方法(`DeductStockCancel`)以及全局事务指定的`Cancel`方法(`OrderCreateCancel`)会被调用，账号分支事务指定(`DeductBalanceCancel`)的`Cancel`方法都不会被执行。
-
-9. 如果在**步骤3**就出现异常(用户的账号余额不足,访问数据库出现异常等),那么库存分支事务(`DeductStockCancel`)和账号分支事务指定(`DeductBalanceCancel`)全局事务指定的`Cancel`方法(`OrderCreateCancel`)都会被调用。
-
-::: tip 提示
-
-1. 如果在一个分布式事务处理失败,全局事务的`Cancel`方法一定会被调用。分支事务的`Try`方法得到执行(分支事务的状态为`trying`),那么将会执行分支事务指定的`Cancel`方法。如果分支事务的分支事务的`Try`方法没有得到执行(分支事务的状态为`pretry`),那么不会执行分支事务指定的`Cancel`方法。
-
-2. 上述的业务流程过程中,步骤1,2,3为`try`阶段,步骤4,5,6为`confirm`阶段,步骤7,8,9为`concel`阶段。
+无论是global transaction还是branch transactionof各个stage,if涉及到多个表of操作,So,The corresponding database operations need to be placed in the local transaction for operation。
 
 :::
 
-### 全局事务--订单接口
+## Distributed transaction case-- silky.samplesOrder interface
 
-通过[silky分布式事务的使用](#silky分布式事务的使用)节点的介绍,我们知道在服务之间的rpc通信调用中,执行的第一个被标识为`Transaction`的应用方法即为全局事务(即:事务的开始)。
+under,we passsilky.samplesofOrder interface来familiarpasssilkyHow the framework implements distributed transactions。
 
-首先， 我们需要在订单应用接口中通过`[Transaction]`来标识这是一个分布式事务的应用接口。
+### silky.samples Order interfaceof业务流程介绍
+
+exist上一篇博文[passsilky.samplesfamiliarsilky微服务框架ofuse](https://www.cnblogs.com/bea084100123/p/14631609.html)，Introduced to yousilky.samplesBasics of the sample project。This article passes大家familiarof一个Order interface,familiarsilkyof分布式事务是如何use。
+
+under，给大家梳理一下Order interfaceof业务流程。
+
+1. 判断and锁定Order产品库存: exist下Order之前需要判断是否存exist相应of产品,Whether the remaining quantity of the product is sufficient，if产品数量足够of话,Deduct product inventory,Inventory quantity for locked order(branch transaction)
+
+2. Create an order record,The order status isNoPay(global transaction)
+
+3. 判断用户of账号是否存exist,Is the account balance sufficient?,if账户余额充足of话,you need to lock the order amount，Create an account flow record。
+
+4. if1,2,3都success,Release product-locked order inventory
+
+5. if1,2,3都success,Release the amount locked in the account,Modify the related status of the account flow record
+
+6. if1,2,3都success,修改The order status isPayed
+
+7. ifexist**step1**exception occurs(E.g:产品of库存不足orrpccommunicationfail,orAn exception occurs when accessing the database; etc.),库存branch transaction(`DeductStockCancel`)and账号branch transaction(`DeductBalanceCancel`)Specified`Cancel`method都不会被执行。但是global transactionSpecified`Cancel`method(`OrderCreateCancel`)will be called
+
+8. ifexist**step2**exception occurs(An exception occurred when placing an order to access the database),库存branch transactionSpecified`Cancel`method(`DeductStockCancel`)以及global transactionSpecified`Cancel`method(`OrderCreateCancel`)will be called，账号branch transaction指定(`DeductBalanceCancel`)of`Cancel`method都不会被执行。
+
+9. ifexist**step3**exception occurs(用户ofInsufficient account balance,An exception occurs when accessing the database; etc.),So库存branch transaction(`DeductStockCancel`)and账号branch transaction指定(`DeductBalanceCancel`)global transactionSpecified`Cancel`method(`OrderCreateCancel`)都will be called。
+
+::: tip hint
+
+1. ifexist一个分布式事务处理fail,global transactionof`Cancel`method一定will be called。branch transactionof`Try`method得到执行(branch transactionof状态for`trying`),So将会执行branch transactionSpecified`Cancel`method。ifbranch transactionofbranch transactionof`Try`method没有得到执行(branch transactionof状态for`pretry`),So不会执行branch transactionSpecified`Cancel`method。
+
+2. 上述of业务流程in the process,step1,2,3for`try`stage,step4,5,6for`confirm`stage,step7,8,9for`concel`stage。
+
+:::
+
+### global transaction--Order interface
+
+pass[silky分布式事务ofuse](#silky分布式事务ofuse)节点of介绍,我们知道exist服务之间ofrpccommunicationtransfer中,The first one executed is identified as`Transaction`of应用methodwhich isforglobal transaction(which is:事务of开始)。
+
+first， 我们需要existOrder应用接口中pass`[Transaction]`来标识这是一个分布式事务of应用接口。
 
 ```csharp
   [Transaction]
   Task<GetOrderOutput> Create(CreateOrderInput input);
 ```
 
-其次,在应用接口的实现通过`[TccTransaction]`特性指定`ConfirmMethod`方法和`CancelMethod`。
-- 指定的`ConfirmMethod`和`CancelMethod`必须为`public`类型,但是不需要在应用接口中声明。
-- 全局事务的`ConfirmMethod`和`CancelMethod`必定有一个会被执行,如果try方法(`Create`)执行成功,那么执行`ConfirmMethod`方法,执行失败,那么则会执行`CancelMethod`。
-- 可以将`try`、`confirm`、`cancel`阶段的方法放到领域服务中实现。
-- 全局事务可以通过`RpcContext`的`Attachments`向分支事务或是`confirm`、`cancel`阶段的方法传递Attachment参数。但是分支事务不能够通过`RpcContext`的`Attachments`向全局事务传递Attachment参数。
+Second,exist应用接口of实现pass`[TccTransaction]`property assignment`ConfirmMethod`methodand`CancelMethod`。
+- Specified`ConfirmMethod`and`CancelMethod`必须for`public`type,但是不需要exist应用接口中声明。
+- global transactionof`ConfirmMethod`and`CancelMethod`one must be executed,iftrymethod(`Create`)执行success,So执行`ConfirmMethod`method,执行fail,So则会执行`CancelMethod`。
+- can`try`、`confirm`、`cancel`stage method放到领域服务中实现。
+- global transaction可以pass`RpcContext`of`Attachments`向branch transactionor`confirm`、`cancel`stage method传递Attachmentparameter。但是branch transaction不能够pass`RpcContext`of`Attachments`向global transaction传递Attachmentparameter。
 
 ```csharp
 /// <summary>
-/// try阶段的方法
+/// trystage method
 /// </summary>
 /// <param name="input"></param>
 /// <returns></returns>
 [TccTransaction(ConfirmMethod = "OrderCreateConfirm", CancelMethod = "OrderCreateCancel")]
 public async Task<GetOrderOutput> Create(CreateOrderInput input)
 {
-    return await _orderDomainService.Create(input); //具体的业务放到领域层实现
+    return await _orderDomainService.Create(input); //具体of业务放到领域层实现
 }
 
-// confirm阶段的方法
+// confirmstage method
 public async Task<GetOrderOutput> OrderCreateConfirm(CreateOrderInput input)
 {
     var orderId = RpcContext.GetContext().GetAttachment("orderId");
@@ -126,14 +126,14 @@ public async Task<GetOrderOutput> OrderCreateConfirm(CreateOrderInput input)
     return order.MapTo<GetOrderOutput>();
 }
 
-// cancel阶段的方法
+// cancelstage method
 public async Task OrderCreateCancel(CreateOrderInput input)
 {
     var orderId = RpcContext.GetContext().GetAttachment("orderId");
-    // 如果不为空证明已经创建了订单
+    // if不for空证明已经创建了Order
     if (orderId != null)
     {
-        // 是否保留订单可以根据具体的业务来确定。
+        // 是否保留Order可以根据具体of业务来确定。
         // await _orderDomainService.Delete(orderId.To<long>());
         var order = await _orderDomainService.GetById(orderId.To<long>());
         order.Status = OrderStatus.UnPay;
@@ -143,31 +143,31 @@ public async Task OrderCreateCancel(CreateOrderInput input)
 
 ```
 
-下订单的具体业务(订单try阶段的实现)
+下Orderof具体业务(Ordertrystageof实现)
 
 ```csharp
 public async Task<GetOrderOutput> Create(CreateOrderInput input)
 {
-    // 扣减库存
+    // deducted inventory
     var product = await _productAppService.DeductStock(new DeductStockInput()
     {
         Quantity = input.Quantity,
         ProductId = input.ProductId
-    }); // rpc调用,DeductStock被特性[Transaction]标记,是一个分支事务
+    }); // rpctransfer,DeductStockbe characterized[Transaction]mark,是一个branch transaction
 
-    // 创建订单
+    // 创建Order
     var order = input.MapTo<Domain.Orders.Order>();
     order.Amount = product.UnitPrice * input.Quantity;
     order = await Create(order);
-    RpcContext.GetContext().SetAttachment("orderId", order.Id); //分支事务或是主分支事务的confirm或是cancel阶段可以从RpcContext获取到Attachment参数。
+    RpcContext.GetContext().SetAttachment("orderId", order.Id); //branch transactionor主branch transactionofconfirmorcancelstage可以从RpcContextgetAttachmentparameter。
 
-    //扣减账户余额
+    //Deduct account balance
     var deductBalanceInput = new DeductBalanceInput()
         {OrderId = order.Id, AccountId = input.AccountId, OrderBalance = order.Amount};
-    var orderBalanceId = await _accountAppService.DeductBalance(deductBalanceInput); // rpc调用,DeductStock被特性[Transaction]标记,是一个分支事务
+    var orderBalanceId = await _accountAppService.DeductBalance(deductBalanceInput); // rpctransfer,DeductStockbe characterized[Transaction]mark,是一个branch transaction
     if (orderBalanceId.HasValue)
     {
-        RpcContext.GetContext().SetAttachment("orderBalanceId", orderBalanceId.Value);//分支事务或是主分支事务的confirm或是cancel阶段可以从RpcContext获取到Attachment参数。
+        RpcContext.GetContext().SetAttachment("orderBalanceId", orderBalanceId.Value);//branch transactionor主branch transactionofconfirmorcancelstage可以从RpcContextgetAttachmentparameter。
     }
 
     return order.MapTo<GetOrderOutput>();
@@ -175,21 +175,21 @@ public async Task<GetOrderOutput> Create(CreateOrderInput input)
 ```
 
 
-### 分支事务--扣减库存
+### branch transaction--deducted inventory
 
-首先,需要在应用接口层标识这个是一个分布式事务接口。
+first,需要exist应用接口层Identifies that this is a distributed transaction interface。
 
 ```csharp
-// 标识这个是一个分布式事务接口
+// Identifies that this is a distributed transaction interface
 [Transaction]
-// 执行成功,清除缓存数据
+// 执行success,clear cache data
 [RemoveCachingIntercept("GetProductOutput","Product:Id:{0}")]
-// 该接口不对集群外部发布
+// This interface is not published outside the cluster
 [Governance(ProhibitExtranet = true)]
 Task<GetProductOutput> DeductStock(DeductStockInput input);
 ```
 
-其次,应用接口的实现指定`Confirm`阶段和`Cancel`阶段的方法。
+Second,应用接口of实现指定`Confirm`stage and`Cancel`stage method。
 
 ```csharp
 [TccTransaction(ConfirmMethod = "DeductStockConfirm", CancelMethod = "DeductStockCancel")]
@@ -198,7 +198,7 @@ public async Task<GetProductOutput> DeductStock(DeductStockInput input)
     var product = await _productDomainService.GetById(input.ProductId);
     if (input.Quantity > product.Stock)
     {
-        throw new BusinessException("订单数量超过库存数量,无法完成订单");
+        throw new BusinessException("Order数量超过库存数量,无法完成Order");
     }
 
     product.LockStock += input.Quantity;
@@ -210,22 +210,22 @@ public async Task<GetProductOutput> DeductStock(DeductStockInput input)
 
 public async Task<GetProductOutput> DeductStockConfirm(DeductStockInput input)
 {
-    //Confirm阶段的具体业务放在领域层实现
+    //Confirmstageof具体业务放exist领域层实现
     var product = await _productDomainService.DeductStockConfirm(input);
     return product.MapTo<GetProductOutput>();
 }
 
 public Task DeductStockCancel(DeductStockInput input)
 {
-    //Cancel阶段的具体业务放在领域层实现
+    //Cancelstageof具体业务放exist领域层实现
     return _productDomainService.DeductStockCancel(input);
    
 }
 ```
 
-### 分支事务--扣减账户余额
+### branch transaction--Deduct account balance
 
-首先,需要在应用接口层标识这个是一个分布式事务接口。
+first,需要exist应用接口层Identifies that this is a distributed transaction interface。
 
 ```csharp
  [Governance(ProhibitExtranet = true)]
@@ -235,7 +235,7 @@ Task<long?> DeductBalance(DeductBalanceInput input);
 ```
 
 
-其次,应用接口的实现指定`Confirm`阶段和`Cancel`阶段的方法。
+Second,应用接口of实现指定`Confirm`stage and`Cancel`stage method。
 
 ```csharp
 [TccTransaction(ConfirmMethod = "DeductBalanceConfirm", CancelMethod = "DeductBalanceCancel")]
@@ -244,7 +244,7 @@ public async Task<long?> DeductBalance(DeductBalanceInput input)
     var account = await _accountDomainService.GetAccountById(input.AccountId);
     if (input.OrderBalance > account.Balance)
     {
-        throw new BusinessException("账号余额不足");
+        throw new BusinessException("Insufficient account balance");
     }
     return await _accountDomainService.DeductBalance(input, TccMethodType.Try);
 }
@@ -261,13 +261,13 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
   
 ```
 
-第三, 领域层的业务实现
+third, 领域层of业务实现
 
 ```csharp
  public async Task<long?> DeductBalance(DeductBalanceInput input, TccMethodType tccMethodType)
  {
     var account = await GetAccountById(input.AccountId);
-    //涉及多张表,所有每一个阶段的都放到一个本地事务中执行  
+    //Involves multiple tables,所有每一个stageof都放到一个本地事务中执行  
     var trans = await _repository.BeginTransactionAsync();
      BalanceRecord balanceRecord = null;
      switch (tccMethodType)
@@ -310,25 +310,25 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
     
      await _repository.UpdateAsync(account);
      await trans.CommitAsync();
-     // 将受影响的缓存数据移除。
+     // 将受影响of缓存数据移除。
      await _accountCache.RemoveAsync($"Account:Name:{account.Name}");
      return balanceRecord?.Id;
  }
 ```
 
-## 订单接口测试
+## Order interface测试
 
-**前提**
+**premise**
 
-存在如下账号和产品:
+存exist如下账号and产品:
 
 ![tcc-account.png](/assets/imgs/tcc-account.png)
 
 ![tcc-product.png](/assets/imgs/tcc-product.png)
 
-### 模拟库存不足
+### Simulate low inventory
 
-**请求参数:**
+**请求parameter:**
 
 ```json
 {
@@ -338,35 +338,35 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
 }
 ```
 
-**响应:**
+**response:**
 
 ```json
 {
   "data": null,
   "status": 1000,
   "statusCode": "BusinessError",
-  "errorMessage": "订单数量超过库存数量,无法完成订单",
+  "errorMessage": "Order数量超过库存数量,无法完成Order",
   "validErrors": null
 }
 ```
 
-**数据库变化**
+**Database changes**
 
-查看数据库,并没有生成订单信息,账户余额和产品库存也没有修改：
+View database,并没有生成Order信息,账户余额and产品库存也没有修改：
 
 ![tcc-account1.png](/assets/imgs/tcc-account1.png)
 
 ![tcc-product1.png](/assets/imgs/tcc-product1.png)
 
-**测试结果:**
+**Test Results:**
 
-库存和账户余额均为变化,也未创建订单信息
+库存and账户余额均for变化,也未创建Order信息
 
-达到期望
+meet expectations
 
-### 模拟账号余额不足
+### 模拟Insufficient account balance
 
-**请求参数:**
+**请求parameter:**
 
 ```json
 {
@@ -376,35 +376,35 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
 }
 ```
 
-**响应:**
+**response:**
 
 ```json
 {
   "data": null,
   "status": 1000,
   "statusCode": "BusinessError",
-  "errorMessage": "账号余额不足",
+  "errorMessage": "Insufficient account balance",
   "validErrors": null
 }
 ```
 
-**数据库变化**
+**Database changes**
 
-1. 新增了一个产品订单,订单状态为未支付状态
+1. 新增了一个产品Order,The order status is未支付状态
 ![tcc-order2.png](/assets/imgs/tcc-order2.png)
 
-2. 产品库存和账户余额并未变更
+2. 产品库存and账户余额并未变更
 ![tcc-account2.png](/assets/imgs/tcc-account2.png)
 
 ![tcc-product2.png](/assets/imgs/tcc-product2.png)
 
-**测试结果:**
+**Test Results:**
 
-创建了一个新的订单,状态为未支付,用户账号余额,产品订单均未变化。
+创建了一个新ofOrder,状态for未支付,User account balance,产品Order均未变化。
 
-达到测试期望
+meet test expectations
 
-### 正常下订单
+### 正常下Order
 
 ```json
 {
@@ -414,7 +414,7 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
 }
 ```
 
-**响应:**
+**response:**
 
 ```json
 {
@@ -433,24 +433,24 @@ public Task DeductBalanceCancel(DeductBalanceInput input)
 }
 ```
 
-**数据库变化**
+**Database changes**
 
-1. 创建了一个订单,该订单状态为已支付
+1. 创建了一个Order,该The order status is已支付
 
 ![tcc-product3.png](/assets/imgs/tcc-order3.png)
 
-2. 库存扣减成功
+2. 库存扣减success
 
 ![tcc-product3.png](/assets/imgs/tcc-product3.png)
 
-3. 账户金额扣减成功,并且创建了一个流水记录
+3. 账户金额扣减success,and create a flow record
 
 ![tcc-account3.png](/assets/imgs/tcc-account3.png)
 
 ![tcc-balance-record3.png](/assets/imgs/tcc-balance-record3.png)
 
-**测试结果:**
+**Test Results:**
 
-创建了一个新的订单,状态为支付,用户账号余额,产品订单均被扣减,且也创建了交易流水记录。
+创建了一个新ofOrder,状态for支付,User account balance,产品Order均被扣减,And also created a transaction flow record。
 
-达到期望结果。
+meet expectations结果。

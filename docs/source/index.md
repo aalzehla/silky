@@ -1,31 +1,31 @@
 ---
-title: silky框架源码解析
+title: silkyFramework source code analysis
 lang: zh-cn
 ---
 
-## 启动时
+## at startup
 
-### 主机的构建
+### host build
 
-### 服务引擎
+### service engine
 
-### 模块的解析与依赖以及执行
+### Module resolution; dependencies and execution
 
-### 服务以及服务条目的解析
+### Services and Resolution of Service Entries
 
-### 服务注册
+### service registration
 
-## 运行时
+## Runtime
 
-### 终结点与路由
+### Endpoints and Routing
 
-### 接受Http请求的处理
+### acceptHttpprocessing of requests
 
-### 服务内部的通信(通过Dotnetty实现的RPC通信)
+### Communication within the service(passDotnettyrealizedRPCcommunication)
 
-### 缓存拦截
+### cache interception
 
-### 服务治理
+### Service Governance
 
-## 分布式事务
+## Distributed transaction
 

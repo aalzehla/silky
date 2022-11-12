@@ -9,7 +9,7 @@ namespace Silky.Order.Application.Contracts.Orders
     public interface IOrderAppService
     {
         /// <summary>
-        /// 新增订单接口
+        /// Add order interface
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

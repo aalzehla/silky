@@ -82,7 +82,7 @@ namespace Silky.Rpc.Utils
                         break;
                     }
                     default:
-                        throw new SilkyException("解析websocketPath失败");
+                        throw new SilkyException("ParsewebsocketPathfail");
                 }
             }
 

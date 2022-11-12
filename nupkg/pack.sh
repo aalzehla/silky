@@ -5,18 +5,18 @@ set -euo pipefail
 usage()
 {
     cat <<END
-pack.sh: linux环境下打包微服务组件脚本
+pack.sh: linuxPackaging microservice component scripts in the environment
 Parameters:
     -r | --repo <nuget repo>
-       nuget 仓库地址
+       nuget Warehouse Address
     -p | --push <push>
-       是否推送组件
+       Whether to push components
     --ship-build <ship build>
-       是否跳过build
+       whether to skipbuild
     -k | --apikey <api key>
        nuget repo apikey
     -h | --help
-       显示帮助
+       show help
 END
 }
 nuget_repo=""
@@ -46,7 +46,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-command -v dotnet >/dev/null 2>&1 || { echo >&2 "请先安装dotcore sdk"; exit 1; }
+command -v dotnet >/dev/null 2>&1 || { echo >&2 "Please install firstdotcore sdk"; exit 1; }
 
 function pack() {
   echo "this is ${packageName}"
@@ -79,7 +79,7 @@ fi
 
 if [[ $push ]]; then
    if [[ -z "$apikey" ]]; then
-        echo "未设置nuget仓库的APIKEY"
+        echo "not setnugetwarehouseAPIKEY"
         exit 1
    fi
    pkgs=(`ls *.nupkg`)

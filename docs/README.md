@@ -1,42 +1,42 @@
 ---
 home: true
-heroText: Silky框架
+heroText: Silkyframe
 heroImage: /assets/logo/logo.svg
-tagline:  基于.net平台的微服务开发框架
-actionText: 快速上手 →
+tagline:  based on.net平台的微服务开发frame
+actionText: Get started quickly →
 actionLink: /silky/index
 features:
-- title: RPC通信
-  details: 基于Dotnetty实现的面向接口代理的高性能RPC调用
+- title: RPCcommunication
+  details: based onDotnettyImplemented high performance interface-oriented proxyRPCtransfer
 
-- title: 负载均衡
-  details: 内置轮询、随机、哈希一致性等负载均衡算法
+- title: load balancing
+  details: Built-in polling、random、哈希一致性等load balancing算法
 
-- title: 服务自动注册和发现
-  details: 支持Zookeeper、Consul、Nacos作为服务注册中心,服务实例上下线实时感知
+- title: Service auto-registration and discovery
+  details: supportZookeeper、Consul、Nacosas a service registry,Real-time perception of service instance online and offline
 
-- title: 缓存拦截
-  details: RPC通信过程中,支持缓存拦截,提高通信性能
+- title: cache interception
+  details: RPCcommunication过程中,supportcache interception,提高communication性能
 
-- title: 分布式事务
-  details: 通过拦截器和todo日志实现TCC分布式事务,保证数据的最终一致性
+- title: Distributed transaction
+  details: through interceptors andtodolog implementationTCCDistributed transaction,Ensure eventual consistency of data
 
-- title: 高度可扩展
-  details: 可方便的替换silky框架提供的组件(例如:底层通信框架或是服务注册中心等);也可方便的与第三方组件整合
+- title: Highly scalable
+  details: easy replacementsilkyframe提供的组件(E.g:底层communicationframe或是服务注册中心等);Can also be easily integrated with third-party components
 
-- title: 链路跟踪
-  details: 通过SkyApm实现通信过程的链路跟踪
+- title: link tracking
+  details: passSkyApm实现communication过程的link tracking
 
-- title: 在线文档
-  details: 通过swagger生成webapi在线文档
+- title: online documentation
+  details: passswaggergeneratewebapionline documentation
 
-- title: 控制台
-  details: 通过查看和管理微服务集群的控制台
+- title: console
+  details: pass查看和管理微服务集group的console
 
 footer: MIT Licensed | Copyright © 2021-present Liuhll
 ---
 
-## 足够简单、方便的构建您的微服务应用
+## simple enough、Easily build your microservice applications
 
 ```csharp
 public class Program
@@ -55,12 +55,12 @@ public class Program
 }
 ```
 
-## 在线示例
+## Online example
 
-- [Hero权限管理系统(https://hero.silky-fk.com)](https://hero.silky-fk.com)
+- [HeroRights management system(https://hero.silky-fk.com)](https://hero.silky-fk.com)
 
-## 加入我们
+## join us
 
-- QQ群： 934306776
+- QQgroup： 934306776
 
   ![qq-group.jpg](/assets/imgs/qq-group.jpg)

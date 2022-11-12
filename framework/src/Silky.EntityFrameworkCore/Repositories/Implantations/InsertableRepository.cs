@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -7,67 +7,67 @@ using Silky.EntityFrameworkCore.Entities;
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 可插入仓储分部类
+    /// Pluggable warehouse subclasses
     /// </summary>
     public partial class PrivateRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 新增一条记录
+        /// add a record
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>代理的实体</returns>
+        /// <returns>代理的entity</returns>
         public virtual EntityEntry<TEntity> Insert(TEntity entity, bool? ignoreNullValues = null)
         {
             var entryEntity = Entities.Add(entity);
 
-            // 忽略空值
+            // Ignore null values
             IgnoreNullValues(ref entity, ignoreNullValues);
 
             return entryEntity;
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void Insert(params TEntity[] entities)
         {
             Entities.AddRange(entities);
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void Insert(IEnumerable<TEntity> entities)
         {
             Entities.AddRange(entities);
         }
 
         /// <summary>
-        /// 新增一条记录
+        /// add a record
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>代理的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>代理的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> InsertAsync(TEntity entity, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
         {
             var entityEntry = await Entities.AddAsync(entity, cancellationToken);
 
-            // 忽略空值
+            // Ignore null values
             IgnoreNullValues(ref entity, ignoreNullValues);
 
             return entityEntry;
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         public virtual Task InsertAsync(params TEntity[] entities)
         {
@@ -75,10 +75,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns></returns>
         public virtual Task InsertAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default)
         {
@@ -86,11 +86,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增一条记录并立即提交
+        /// add a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中返回的实体</returns>
+        /// <returns>数据库中返回的entity</returns>
         public virtual EntityEntry<TEntity> InsertNow(TEntity entity, bool? ignoreNullValues = null)
         {
             var entityEntry = Insert(entity, ignoreNullValues);
@@ -99,12 +99,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增一条记录并立即提交
+        /// add a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <returns>数据库中返回的实体</returns>
+        /// <returns>数据库中返回的entity</returns>
         public virtual EntityEntry<TEntity> InsertNow(TEntity entity, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null)
         {
@@ -114,9 +114,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void InsertNow(params TEntity[] entities)
         {
             Insert(entities);
@@ -124,10 +124,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         public virtual void InsertNow(TEntity[] entities, bool acceptAllChangesOnSuccess)
         {
             Insert(entities);
@@ -135,9 +135,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void InsertNow(IEnumerable<TEntity> entities)
         {
             Insert(entities);
@@ -145,10 +145,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录
+        /// Add multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         public virtual void InsertNow(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess)
         {
             Insert(entities);
@@ -156,12 +156,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增一条记录并立即提交
+        /// add a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中返回的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中返回的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> InsertNowAsync(TEntity entity, bool? ignoreNullValues = null,
             CancellationToken cancellationToken = default)
         {
@@ -171,13 +171,13 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增一条记录并立即提交
+        /// add a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <param name="ignoreNullValues"></param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>数据库中返回的实体</returns>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>数据库中返回的entity</returns>
         public virtual async Task<EntityEntry<TEntity>> InsertNowAsync(TEntity entity, bool acceptAllChangesOnSuccess,
             bool? ignoreNullValues = null, CancellationToken cancellationToken = default)
         {
@@ -187,9 +187,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录并立即提交
+        /// Add multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         public virtual async Task InsertNowAsync(params TEntity[] entities)
         {
@@ -198,10 +198,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录并立即提交
+        /// Add multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task InsertNowAsync(TEntity[] entities, CancellationToken cancellationToken = default)
         {
@@ -210,11 +210,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录并立即提交
+        /// Add multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task InsertNowAsync(TEntity[] entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
@@ -224,10 +224,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录并立即提交
+        /// Add multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task InsertNowAsync(IEnumerable<TEntity> entities,
             CancellationToken cancellationToken = default)
@@ -237,11 +237,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 新增多条记录并立即提交
+        /// Add multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         public virtual async Task InsertNowAsync(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)

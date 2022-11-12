@@ -1,23 +1,23 @@
-﻿using System;
+using System;
 using Silky.EntityFrameworkCore.Locators;
 using Microsoft.EntityFrameworkCore;
 
 namespace Silky.EntityFrameworkCore.Entities.Configures
 {
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public interface IEntityChangedListener<TEntity> : IEntityChangedListener<TEntity, MasterDbContextLocator>
         where TEntity : class, IPrivateEntity, new()
     {
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1> : IPrivateEntityChangedListener<TEntity>
         where TEntity : class, IPrivateEntity, new()
         where TDbContextLocator1 : class, IDbContextLocator
@@ -25,11 +25,11 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
     public interface
         IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2> : IPrivateEntityChangedListener<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -39,12 +39,12 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
     public interface
         IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2,
             TDbContextLocator3> : IPrivateEntityChangedListener<TEntity>
@@ -56,13 +56,13 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4> : IPrivateEntityChangedListener<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -74,14 +74,14 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5> : IPrivateEntityChangedListener<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -94,15 +94,15 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6> : IPrivateEntityChangedListener<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -116,16 +116,16 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6,
         TDbContextLocator7> : IPrivateEntityChangedListener<TEntity>
@@ -141,17 +141,17 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口
+    /// Entity data change monitoring dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator8">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator8">database context locator</typeparam>
     public interface IEntityChangedListener<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6, TDbContextLocator7,
         TDbContextLocator8> : IPrivateEntityChangedListener<TEntity>
@@ -168,14 +168,14 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 实体数据改变监听依赖接口（禁止外部继承）
+    /// Entity data change monitoring dependency interface（Forbid external inheritance）
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IPrivateEntityChangedListener<TEntity> : IPrivateModelBuilder
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 监听数据改变之前（仅支持EFCore操作）
+        /// Before listening for data changes（only supportedEFCoreoperate）
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="dbContext"></param>
@@ -186,7 +186,7 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
         }
 
         /// <summary>
-        /// 监听数据改变之后（仅支持EFCore操作）
+        /// After listening for data changes（only supportedEFCoreoperate）
         /// </summary>
         /// <param name="newEntity"></param>
         /// <param name="oldEntity"></param>
@@ -197,7 +197,7 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
             EntityState state);
 
         /// <summary>
-        /// 监听数据改变失败（仅支持EFCore操作）
+        /// Failed to monitor data change（only supportedEFCoreoperate）
         /// </summary>
         /// <param name="entity"></param>
         /// <param name="dbContext"></param>

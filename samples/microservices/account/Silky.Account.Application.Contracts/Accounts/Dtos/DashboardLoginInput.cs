@@ -5,16 +5,16 @@ namespace Silky.Account.Application.Contracts.Accounts.Dtos
     public class DashboardLoginInput
     {
         /// <summary>
-        /// 用户名
+        /// username
         /// </summary>
-        [Required(ErrorMessage = "用户名不允许为空")]
+        [Required(ErrorMessage = "username不允许为空")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// 密码
+        /// password
         /// </summary>
-        [Required(ErrorMessage = "密码不允许为空")]
-        [MinLength(6,ErrorMessage = "密码不允许少于6位")]
+        [Required(ErrorMessage = "password不允许为空")]
+        [MinLength(6,ErrorMessage = "password不允许少于6bit")]
         public string Password { get; set; }
     }
 }

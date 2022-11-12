@@ -1,4 +1,4 @@
-﻿using System.Data.Common;
+using System.Data.Common;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,22 +8,22 @@ using Silky.Core.Configuration;
 namespace Silky.EntityFrameworkCore.Interceptors
 {
     /// <summary>
-    /// 数据库连接拦截分析器
+    /// Database Connection Interception Analyzer
     /// </summary>
     internal sealed class SqlConnectionProfilerInterceptor : DbConnectionInterceptor
     {
         /// <summary>
-        /// MiniProfiler 分类名
+        /// MiniProfiler Category name
         /// </summary>
         private const string MiniProfilerCategory = "connection";
 
 
         /// <summary>
-        /// 拦截数据库连接
+        /// Intercept database connections
         /// </summary>
-        /// <param name="connection">数据库连接对象</param>
-        /// <param name="eventData">数据库连接事件数据</param>
-        /// <param name="result">拦截结果</param>
+        /// <param name="connection">database connection object</param>
+        /// <param name="eventData">Database connection event data</param>
+        /// <param name="result">Intercept result</param>
         /// <returns></returns>
         public override InterceptionResult ConnectionOpening(DbConnection connection, ConnectionEventData eventData,
             InterceptionResult result)
@@ -32,12 +32,12 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截数据库连接
+        /// Intercept database connections
         /// </summary>
-        /// <param name="connection">数据库连接对象</param>
-        /// <param name="eventData">数据库连接事件数据</param>
-        /// <param name="result">拦截器结果</param>
-        /// <param name="cancellationToken">取消异步Token</param>
+        /// <param name="connection">database connection object</param>
+        /// <param name="eventData">Database connection event data</param>
+        /// <param name="result">Interceptor result</param>
+        /// <param name="cancellationToken">Cancel asyncToken</param>
         /// <returns></returns>
         public override ValueTask<InterceptionResult> ConnectionOpeningAsync(DbConnection connection,
             ConnectionEventData eventData, InterceptionResult result, CancellationToken cancellationToken = default)

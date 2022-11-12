@@ -1,10 +1,10 @@
-﻿namespace Silky.EntityFrameworkCore.Entities.Configures
+namespace Silky.EntityFrameworkCore.Entities.Configures
 {
     /// <summary>
-    /// 数据库模型构建器依赖（禁止直接继承）
+    /// Database Model Builder dependencies（Direct inheritance is prohibited）
     /// </summary>
     /// <remarks>
-    /// 对应 <see cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)"/>
+    /// correspond <see cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating(Microsoft.EntityFrameworkCore.ModelBuilder)"/>
     /// </remarks>
     public interface IPrivateModelBuilder
     {

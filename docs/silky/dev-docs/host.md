@@ -1,40 +1,40 @@
 ---
-title: 主机
+title: host
 lang: zh-cn
 ---
 
-## 主机的概念
+## hostof概念
 
-silky的主机与.net的[主机](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.1)概念一致。是封装应用资源的对象,用于托管应用和管理应用的生命周期。
+silkyofhostand.netof[host](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-3.1)Conceptual agreement。是封装应用资源of对象,用于托管应用和管理应用of生命周期。
 
-### 通用主机
+### 通用host
 
-如果用于托管普通的业务应用,该微服务模块本身并不需要对直接对集群外部提供访问入口。那么,您可以使用[.net的通用主机](https://docs.microsoft.com/zh-cn/dotnet/core/extensions/generic-host)注册silky服务框架。.net的通用主机无法提供http请求,也无法配置http的请求管道(即:**中间件**)。
+如果用于托管普通of业务应用,The microservice module itself does not need to provide access to the outside of the cluster directly。So,you can use it[.netof通用host](https://docs.microsoft.com/zh-cn/dotnet/core/extensions/generic-host)registersilkyservice framework。.netof通用host无法supplyhttpask,also cannot be configuredhttpofask管道(which is:**middleware**)。
 
-在注册silky框架后,silky框架会注册dotnetty的服务监听者,并会暴露rpc端口号。但是由于silky框架的安全机制,集群外部并不允许通过`tcp`协议通过rpc端口号直接访问该微服务模块的应用接口。
+existregistersilkyafter the frame,silkyframe会registerdotnettyofServe监听者,and will exposerpcThe port number。But due tosilkyframeof安全机制,Outside the cluster is not allowed to pass`tcp`Agreement passedrpcThe port number直接访问该微Serve模块of应用接口。
 
-### web主机
+### webhost
 
-如果您需要访问该服务模块的应用接口,您必须要通过.net的[web主机](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1)注册silky框架,并配置silky框架的请求管道。这样,web构建的主机通过引用某个微服务的应用接口项目(包)，通过应用接口的代理与微服务集群内部实现rpc通信。
+如果您需要访问该Serve模块of应用接口,you must pass.netof[webhost](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-3.1)registersilkyframe,and configuresilkyframeofask管道。so,web构建ofhostpass引用某个微Serveof应用接口项目(Bag)，pass应用接口of代理and微Serve集群内部实现rpccommunication。
 
-## 业务主机类型
+## 业务hostkind型
 
-silky微服务框架提供了多种类型的业务主机,开发者可以选择合适的主机来托管应用服务。
+silky微service frameworksupply了多种kind型of业务host,开发者可以选择合适ofhost来托管应用Serve。
 
-### 使用web主机构建微服务应用
+### usewebhost构建微Serve应用
 
-使用web主机构建的silky应用具有如下特性:
+usewebhost构建ofsilkyThe application has the following characteristics:
 
-1. 提供http服务和RPC服务,暴露http端口和RPC端口
-2. 可以作为外部流量的入口,集群外部通过http服务访问微服务应用集群
-3. 作为RPC服务提供者,通过RPC框架与其他微服务进行通信
+1. supplyhttpservice andRPCServe,exposedhttpport andRPCport
+2. 可以as外部流量of入口,pass outside the clusterhttpServe访问微Serve应用集群
+3. asRPCServesupply者,passRPCframeand其他微Serve进行communication
 
 ![host0.png](/assets/imgs/host0.png)
 
 
-一般地,如果我们希望该服务应用既可以作为RPC服务提供者,也希望外部能够直接通过http协议访问应用,那么我们就可以通过web主机构建微服务应用。这样的方式适用于将微服务应用拆分给不同的团队进行开发,开发者也无需要额外的构建网关,就可以访问微服务应用服务。
+normally,如果我们希望该Serve应用既可以asRPCServesupply者,也希望外部能够直接passhttpProtocol access application,So我们就可以passwebhost构建微Serve应用。soof方式适用于Will微Serve应用拆分给不同of团队进行开发,开发者也无需要额外ofBuild a gateway,就可以访问微Serve应用Serve。
 
-使用web主机构建Silky微服务应用只需要开发者安装`Silky.Agent.Host`包后,在`Main()`方法中通过`Host`提供的API`ConfigureSilkyWebHostDefaults`即可。开发者需要指定`Startup`类,在`Startup`中注册服务和配置http中间件。
+usewebhost构建Silky微Serve应用只需要开发者安装`Silky.Agent.Host`Bag后,exist`Main()`方法中pass`Host`supplyofAPI`ConfigureSilkyWebHostDefaults`which is可。The developer needs to specify`Startup`kind,exist`Startup`中registerservice andconfigurehttpmiddleware。
 
 ```csharp
 namespace Silky.Sample
@@ -58,7 +58,7 @@ namespace Silky.Sample
 }
 ```
 
-当然,我们也可以在构建主机的时候,另外指定启动模块:
+certainly,我们也可以exist构建hostof时候,Also specify the startup module:
 
 ```csharp
 namespace Silky.Sample
@@ -82,40 +82,40 @@ namespace Silky.Sample
 }
 ```
 
-自定义的启动模块`DemoModule`需要继承`WebHostModule`,开发者可以在自定义的启动模块中,定义应用启动和停止需要执行的业务方法和配置服务注册,也可以依赖开发者扩展的自定义模块。
+自定义of启动模块`DemoModule`need to inherit`WebHostModule`,开发者可以exist自定义of启动模块中,定义应用启动和停止需要执行of业务方法和configureServeregister,也可以依赖开发者扩展of自定义模块。
 
 ```csharp
-    // 依赖开发者自定义的模块
+    // 依赖开发者自定义of模块
     // [DependsOn(typeof("UserDefinedModule"))]
     public class DemoModule : WebHostModule
     {
         public override Task Initialize(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序启动时执行的业务方法
+            // 开发者可以定义应用程序启动时执行of业务方法
             return Task.CompletedTask;
         }
 
         public override Task Shutdown(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序停止时执行的业务方法
+            // 开发者可以定义应用程序停止时执行of业务方法
             return Task.CompletedTask;d
         }
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            // 开发者可以配置服务注册,作用与Startup类ConfigureServices一致
+            // 开发者可以configureServeregister,role andStartupkindConfigureServicesconsistent
             
         }
 
         protected override void RegisterServices(ContainerBuilder builder)
         {
-            // 开发者可以通过 Autofac 的ContainerBuilder注册服务,
-            // 例如: IServiceCollection无法注册命名服务,ContainerBuilder支持注册命名服务
+            // 开发者可以pass Autofac ofContainerBuilderregisterServe,
+            // E.g: IServiceCollection无法register命名Serve,ContainerBuilder支持register命名Serve
         }
     }
 ```
 
-在启动类`Startup`类中配置服务注册和中间件:
+exist启动kind`Startup`kind中configureServeregister和middleware:
 
 ```csharp
  public class Startup
@@ -161,20 +161,20 @@ namespace Silky.Sample
     }
 ```
 
-这样,我们就可以得到一个既可以提供http服务,也作为rpc服务提供者的应用。
+so,我们就可以得到一个既可以supplyhttpServe,也asrpcServesupply者of应用。
 
-### 使用通用主机构建微服务应用
+### use通用host构建微Serve应用
 
-使用通用主机构建的silky应用具有如下特性:
+use通用host构建ofsilkyThe application has the following characteristics:
 
-1. 只提供RPC服务,不提供http服务,微服务集群外部无法直接访问应用
-2. 可以通过网关或是具有http服务的应用间接的访问该微服务提供的服务
+1. 只supplyRPCServe,不supplyhttpServe,微Serve集群外部无法直接访问应用
+2. 可以pass网关或是havehttpServeof应用间接of访问该微ServesupplyofServe
 
 ![host1.png](/assets/imgs/host1.png)
 
-一般地,如果只是作为普通的业务应用,只需要作为RPC服务提供者,服务内部通过RPC框架进行通信,并不需要对外提供http服务,在这样的情况下,我们考虑使用通用主机构建微服务应用。
+normally,如果只是as普通of业务应用,只需要asRPCServesupply者,Serve内部passRPCframe进行communication,并不需要对外supplyhttpServe,existsoof情况下,我们考虑use通用host构建微Serve应用。
 
-开发者在安装`Silky.Agent.Host`包后,在`Main()`方法中通过`Host`提供的API`ConfigureSilkyGeneralHostDefaults`即可通过通用主机构建silky微服务应用。
+开发者exist安装`Silky.Agent.Host`Bag后,exist`Main()`方法中pass`Host`supplyofAPI`ConfigureSilkyGeneralHostDefaults`which is可pass通用host构建silky微Serve应用。
 
 ```csharp
 namespace Silky.Sample
@@ -195,7 +195,7 @@ namespace Silky.Sample
 }
 ```
 
-同样地,我们也可以在构建主机的时候,另外指定启动模块:
+Similarly,我们也可以exist构建hostof时候,Also specify the startup module:
 
 ```csharp
 namespace Silky.Sample
@@ -216,7 +216,7 @@ namespace Silky.Sample
 }
 ```
 
-在这里,我们需要自定义的启动模块`DemoModule`需要继承`GeneralHostModule`,开发者可以在自定义的启动模块中,定义应用启动和停止需要执行的业务方法和配置服务注册,也可以依赖开发者扩展的自定义模块。
+existhere,我们需要自定义of启动模块`DemoModule`need to inherit`GeneralHostModule`,开发者可以exist自定义of启动模块中,定义应用启动和停止需要执行of业务方法和configureServeregister,也可以依赖开发者扩展of自定义模块。
 
 ```csharp
   // [DependsOn(typeof("UserDefinedModule"))]
@@ -224,37 +224,37 @@ namespace Silky.Sample
     {
         public override Task Initialize(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序启动时执行的业务方法
+            // 开发者可以定义应用程序启动时执行of业务方法
             return Task.CompletedTask;
         }
 
         public override Task Shutdown(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序停止时执行的业务方法
+            // 开发者可以定义应用程序停止时执行of业务方法
             return Task.CompletedTask;
         }
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            // 开发者可以配置服务注册,作用与Startup类ConfigureServices一致
+            // 开发者可以configureServeregister,role andStartupkindConfigureServicesconsistent
             
         }
 
         protected override void RegisterServices(ContainerBuilder builder)
         {
-            // 开发者可以通过 Autofac 的ContainerBuilder注册服务,
-            // 例如: IServiceCollection无法注册命名服务,ContainerBuilder支持注册命名服务
+            // 开发者可以pass Autofac ofContainerBuilderregisterServe,
+            // E.g: IServiceCollection无法register命名Serve,ContainerBuilder支持register命名Serve
         }
     }
 ```
 
-::: warning 注意
+::: warning Notice
 
-与web主机构建微服务应用自定义启动模块继承的基类不同,但是作用和使用上一致
+andwebhost构建微Serve应用自定义启动模块继承of基kind不同,but作用和use上consistent
 
 :::
 
-通用主机构建的微服务应用,不提供HTTP服务,所有也无需(也没有必要)配置http中间件。但是,开发者可以通过继承`IConfigureService`来配置服务的注册,从而自身服务注册,或是引入第三方组件。
+通用host构建of微Serve应用,不supplyHTTPServe,all without(there is no need)configurehttpmiddleware。but,开发者可以pass继承`IConfigureService`来configureServeofregister,从而自身Serveregister,Or introduce third-party components。
 
 ```csharp
     public class ConfigureService : IConfigureService
@@ -269,21 +269,21 @@ namespace Silky.Sample
                 options => { options.AddDbPool<DefaultContext>(); },
                 "Demo.Database.Migrations");
 
-             // 可以通过服务注册引入第三方组件,例如:CAP,MassTransit等
+             // 可以passServeregister引入第三方组件,E.g:CAP,MassTransitWait
         }
     }
 ```
 
-### 构建具有websocket能力的微服务应用
+### build withwebsocket能力of微Serve应用
 
-具有websocket服务能力的微服务应用除了能够提供RPC服务,还可以提供websocket服务。
+havewebsocketServe能力of微Serve应用除了能够supplyRPCServe,还可以supplywebsocketServe。
 
-1. 提供RPC服务,也提供WebSocket服务
-2. 可以通过网关的websocket代理中间件与该微服务的websocket服务进行握手
+1. supplyRPCServe,也supplyWebSocketServe
+2. 可以pass网关ofwebsocket代理middlewareand该微ServeofwebsocketServe进行握手
 
 ![host2.png](/assets/imgs/host2.png)
 
-开发者在安装`Silky.Agent.Host`包后,在`Main()`方法中通过`Host`提供的API`ConfigureSilkyGeneralHostDefaults`即可通过通用主机构建支持websocket服务的微服务应用。
+开发者exist安装`Silky.Agent.Host`Bag后,exist`Main()`方法中pass`Host`supplyofAPI`ConfigureSilkyGeneralHostDefaults`which is可pass通用host构建支持websocketServeof微Serve应用。
 
 ```csharp
 namespace Silky.Sample
@@ -304,7 +304,7 @@ namespace Silky.Sample
 }
 ```
 
-同样地,我们也可以在构建主机的时候,另外指定启动模块:
+Similarly,我们也可以exist构建hostof时候,Also specify the startup module:
 
 ```csharp
 namespace Silky.Sample
@@ -325,7 +325,7 @@ namespace Silky.Sample
 }
 ```
 
-在这里,我们需要自定义的启动模块`DemoModule`需要继承`WebSocketHostModule`,开发者可以在自定义的启动模块中,定义应用启动和停止需要执行的业务方法和配置服务注册,也可以依赖开发者扩展的自定义模块。
+existhere,我们需要自定义of启动模块`DemoModule`need to inherit`WebSocketHostModule`,开发者可以exist自定义of启动模块中,定义应用启动和停止需要执行of业务方法和configureServeregister,也可以依赖开发者扩展of自定义模块。
 
 ```csharp
 // [DependsOn(typeof("UserDefinedModule"))]
@@ -333,37 +333,37 @@ namespace Silky.Sample
     {
         public override Task Initialize(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序启动时执行的业务方法
+            // 开发者可以定义应用程序启动时执行of业务方法
             return Task.CompletedTask;
         }
 
         public override Task Shutdown(ApplicationContext applicationContext)
         {
-            // 开发者可以定义应用程序停止时执行的业务方法
+            // 开发者可以定义应用程序停止时执行of业务方法
             return Task.CompletedTask;
         }
 
         public override void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
-            // 开发者可以配置服务注册,作用与Startup类ConfigureServices一致
+            // 开发者可以configureServeregister,role andStartupkindConfigureServicesconsistent
             
         }
 
         protected override void RegisterServices(ContainerBuilder builder)
         {
-            // 开发者可以通过 Autofac 的ContainerBuilder注册服务,
-            // 例如: IServiceCollection无法注册命名服务,ContainerBuilder支持注册命名服务
+            // 开发者可以pass Autofac ofContainerBuilderregisterServe,
+            // E.g: IServiceCollection无法register命名Serve,ContainerBuilder支持register命名Serve
         }
     }
 ```
 
-::: warning 注意
+::: warning Notice
 
-与web主机构建微服务应用自定义启动模块继承的基类不同,但是作用和使用上一致
+andwebhost构建微Serve应用自定义启动模块继承of基kind不同,but作用和use上consistent
 
 :::
 
-构建具有websocket能力的服务,实现应用服务接口的类需要继承`WsAppServiceBase`。在与前端建立会话后,就可以通过`SessionManager`向前端发送消息。
+build withwebsocket能力ofServe,实现应用Serve接口ofkindneed to inherit`WsAppServiceBase`。existand前端建立会话后,就可以pass`SessionManager`Send a message to the front end。
 
 
 ```csharp
@@ -396,39 +396,39 @@ namespace Silky.Sample
     }
 ```
 
-前端需要通过网关的websocket代理中间件，与具体的websocket服务实例建立会话时,需要满足如下要求:
+前端需要pass网关ofwebsocket代理middleware，and具体ofwebsocketServe实例建立会话时,The following requirements need to be met:
 
-1. 需要通过请求头或是`qString`参数指定`bussinessId`，通过该值使用哈希算法,路由到具体的websocket服务实例。
-2. 为保证每次都能够路由到同一个websocket服务实例,websocket服务对应的网关实例只能有一个。
-3. 该网关必须要引用websocket服务代理中间件。
+1. 需要passask头或是`qString`parameter specification`bussinessId`，pass该值use哈希算法,路由到具体ofwebsocketServe实例。
+2. In order to ensure that each time can be routed to the samewebsocketServe实例,websocketServe对应of网关实例只能有一个。
+3. The gateway must be referencedwebsocketServe代理middleware。
 
 ```csharp
-// 需要在网关的Configure()配置websocket代理中间件
+// 需要exist网关ofConfigure()configurewebsocket代理middleware
 app.UseSilkyWebSocketsProxy();
 ```
 
-::: warning 注意
+::: warning Notice
 
-1. 开发者可以考虑,普通业务服务对应一组网关应用(支持部署多个实例),websocket应用对应一组网关应用(只允许一个服务实例)
+1. Developers can consider,普通业务Serve对应一组网关应用(Support for deploying multiple instances),websocketAn application corresponds to a set of gateway applications(只允许一个Serve实例)
 
 :::
 
-### 构建网关
+### Build a gateway
 
-这里,网关的作用只是作为集群流量的入口,将http请求转发到集群内部,交个各个微服务应用的服务进行处理,并不作为rpc服务提供者。也就是说,这里构建的网关只能作为服务消费者。
+here,网关of作用只是as集群流量of入口,Willhttpask转发到集群内部,交个各个微Serve应用ofServe进行处理,并不asrpcServesupply者。That is to say,here构建of网关只能asServe消费者。
 
-1. 只提供http服务,作为集群流量入口
-2. 不提供RPC服务,不可以作为rpc服务提供者
+1. 只supplyhttpServe,as集群流量入口
+2. 不supplyRPCServe,不可以asrpcServesupply者
 
 ![host3.png](/assets/imgs/host3.png)
 
-::: warning 注意
+::: warning Notice
 
-网关与web主机构建业务主机的区别在于,网关只能作为服务消费者,转发外部的http请求,而后者除了具有转发http请求的能力之外,还能作为RPC服务提供者。
+网关andwebhost构建业务hostof区别exist于,网关只能asServe消费者,转发外部ofhttpask,而后者除了have转发httpaskof能力之外,还能asRPCServesupply者。
 
 :::
 
-开发者在安装`Silky.Agent.Host`包后,在`Main()`方法中通过`Host`提供的API`ConfigureSilkyGatewayDefaults`即可通过通用主机构建支持websocket服务的微服务应用。
+开发者exist安装`Silky.Agent.Host`Bag后,exist`Main()`方法中pass`Host`supplyofAPI`ConfigureSilkyGatewayDefaults`which is可pass通用host构建支持websocketServeof微Serve应用。
 
 ```csharp
 namespace Silky.Sample
@@ -449,7 +449,7 @@ namespace Silky.Sample
 }
 ```
 
-当然,也可以自定义启动模块,只需要将自定义的启动模块`DemoModule`继承的基类修改为`GatewayHostModule`:
+certainly,You can also customize the startup module,只需要Will自定义of启动模块`DemoModule`继承of基kind修改为`GatewayHostModule`:
 
 ```csharp
 namespace Silky.Sample

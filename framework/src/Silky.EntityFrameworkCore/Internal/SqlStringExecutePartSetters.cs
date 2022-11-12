@@ -1,15 +1,15 @@
-﻿using System;
+using System;
 using Silky.EntityFrameworkCore.Locators;
 
 namespace Silky.EntityFrameworkCore
 {
     /// <summary>
-    /// 构建 Sql 字符串执行部件
+    /// Construct Sql String execution part
     /// </summary>
     public sealed partial class SqlStringExecutePart
     {
         /// <summary>
-        /// 设置 Sql 字符串
+        /// set up Sql string
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
@@ -20,9 +20,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 设置 ADO.NET 超时时间
+        /// set up ADO.NET overtime time
         /// </summary>
-        /// <param name="timeout">单位秒</param>
+        /// <param name="timeout">unit second</param>
         /// <returns></returns>
         public SqlStringExecutePart SetCommandTimeout(int timeout)
         {
@@ -32,7 +32,7 @@ namespace Silky.EntityFrameworkCore
 
 
         /// <summary>
-        /// 设置数据库上下文定位器
+        /// set up数据库上下文定位器
         /// </summary>
         /// <typeparam name="TDbContextLocator"></typeparam>
         /// <returns></returns>
@@ -44,7 +44,7 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 设置数据库上下文定位器
+        /// set up数据库上下文定位器
         /// </summary>
         /// <returns></returns>
         public SqlStringExecutePart Change(Type dbContextLocator)

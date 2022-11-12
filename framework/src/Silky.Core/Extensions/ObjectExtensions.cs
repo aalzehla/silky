@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Text.Json;
@@ -37,11 +37,11 @@ namespace Silky.Core.Extensions
         }
 
         /// <summary>
-        /// 将一个对象转换为指定类型
+        /// converts an object to the specified type
         /// </summary>
-        /// <param name="obj">待转换的对象</param>
-        /// <param name="type">目标类型</param>
-        /// <returns>转换后的对象</returns>
+        /// <param name="obj">object to be converted</param>
+        /// <param name="type">target type</param>
+        /// <returns>converted object</returns>
         public static object ChangeType(this object obj, Type type)
         {
             if (type == null) return obj;
@@ -56,12 +56,12 @@ namespace Silky.Core.Extensions
                 if (underlyingType != null && string.IsNullOrWhiteSpace(obj.ToString())) return null;
                 else return Enum.Parse(underlyingType ?? type, obj.ToString());
             }
-            // 处理DateTime -> DateTimeOffset 类型
+            // deal withDateTime -> DateTimeOffset type
             else if (obj.GetType().Equals(typeof(DateTime)) && (underlyingType ?? type).Equals(typeof(DateTimeOffset)))
             {
                 return ((DateTime)obj).ConvertToDateTimeOffset();
             }
-            // 处理 DateTimeOffset -> DateTime 类型
+            // deal with DateTimeOffset -> DateTime type
             else if (obj.GetType().Equals(typeof(DateTimeOffset)) && (underlyingType ?? type).Equals(typeof(DateTime)))
             {
                 return ((DateTimeOffset)obj).ConvertToDateTime();

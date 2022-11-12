@@ -1,26 +1,26 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 
 namespace Silky.EntityFrameworkCore.Contexts.Enums
 {
     /// <summary>
-    /// 数据库上下文模式
+    /// database context mode
     /// </summary>
     public enum DbContextMode
     {
         /// <summary>
-        /// 缓存模型数据库上下文
+        /// cache model database context
         /// <para>
-        /// OnModelCreating 只会初始化一次
+        /// OnModelCreating will only be initialized once
         /// </para>
         /// </summary>
-        [Description("缓存模型数据库上下文")] Cached,
+        [Description("cache model database context")] Cached,
 
         /// <summary>
-        /// 动态模型数据库上下文
+        /// Dynamic Model Database Context
         /// <para>
-        /// OnModelCreating 每次都会调用
+        /// OnModelCreating will be called every time
         /// </para>
         /// </summary>
-        [Description("动态模型数据库上下文")] Dynamic
+        [Description("Dynamic Model Database Context")] Dynamic
     }
 }

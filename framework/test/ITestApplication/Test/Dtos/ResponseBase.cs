@@ -2,7 +2,7 @@ namespace ITestApplication.Test.Dtos;
 
 public class ResponseBase
 {
-    public ResponseBase(int code = 520, string message = "未知异常")
+    public ResponseBase(int code = 520, string message = "Unknown exception")
     {
         Code = code;
 
@@ -10,12 +10,12 @@ public class ResponseBase
     }
 
     /// <summary>
-    /// 状态码
+    /// status code
     /// </summary>
     public int Code { get; set; }
 
     /// <summary>
-    /// 返回描述
+    /// return description
     /// </summary>
     public string Message { get; set; }
 }

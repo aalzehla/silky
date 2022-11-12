@@ -1,22 +1,22 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Silky.EntityFrameworkCore.LinqBuilder.Visitors
 {
     /// <summary>
-    /// 处理 Lambda 参数不一致问题
+    /// deal with Lambda parameter inconsistency
     /// </summary>
     internal sealed class ParameterReplaceExpressionVisitor : ExpressionVisitor
     {
         /// <summary>
-        /// 参数表达式映射集合
+        /// A collection of parameter expression mappings
         /// </summary>
         private readonly Dictionary<ParameterExpression, ParameterExpression> parameterExpressionSetter;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
-        /// <param name="parameterExpressionSetter">参数表达式映射集合</param>
+        /// <param name="parameterExpressionSetter">A collection of parameter expression mappings</param>
         public ParameterReplaceExpressionVisitor(
             Dictionary<ParameterExpression, ParameterExpression> parameterExpressionSetter)
         {
@@ -25,11 +25,11 @@ namespace Silky.EntityFrameworkCore.LinqBuilder.Visitors
         }
 
         /// <summary>
-        /// 替换表达式参数
+        /// Substitute expression arguments
         /// </summary>
-        /// <param name="parameterExpressionSetter">参数表达式映射集合</param>
-        /// <param name="expression">表达式</param>
-        /// <returns>新的表达式</returns>
+        /// <param name="parameterExpressionSetter">A collection of parameter expression mappings</param>
+        /// <param name="expression">expression</param>
+        /// <returns>新的expression</returns>
         public static Expression ReplaceParameters(
             Dictionary<ParameterExpression, ParameterExpression> parameterExpressionSetter, Expression expression)
         {
@@ -37,7 +37,7 @@ namespace Silky.EntityFrameworkCore.LinqBuilder.Visitors
         }
 
         /// <summary>
-        /// 重写基类参数访问器
+        /// Override base class parameter accessors
         /// </summary>
         /// <param name="parameterExpression"></param>
         /// <returns></returns>

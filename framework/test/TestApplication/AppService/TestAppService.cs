@@ -59,7 +59,7 @@ namespace TestApplication.AppService
             var test = await _testRepository.FindOrDefaultAsync(id);
             if (test == null)
             {
-                throw new UserFriendlyException($"不存在Id为{id}的数据");
+                throw new UserFriendlyException($"does not existIdfor{id}The data");
             }
             return test.Adapt<TestOut>();
         }
@@ -69,7 +69,7 @@ namespace TestApplication.AppService
             var entity = await _testRepository.FindOrDefaultAsync(input.Id);
             if (entity == null)
             {
-                throw new UserFriendlyException($"不存在Id为{input.Id}的数据");
+                throw new UserFriendlyException($"does not existIdfor{input.Id}The data");
             }
 
             entity = input.Adapt(entity);
@@ -88,12 +88,12 @@ namespace TestApplication.AppService
             var entity = await _testRepository.FindOrDefaultAsync(id);
             if (entity == null)
             {
-                throw new UserFriendlyException($"不存在Id为{id}的数据");
+                throw new UserFriendlyException($"does not existIdfor{id}The data");
             }
 
             await _testRepository.DeleteAsync(entity);
             await _distributedCache.RemoveAsync($"name:{entity.Name}");
-            return "删除数据成功";
+            return "Delete data successfully";
         }
 
         public async Task<PagedList<TestOut>> Search1(string name, string address, int? pageIndex, int? pageSize)
@@ -124,7 +124,7 @@ namespace TestApplication.AppService
             var entity = await _testRepository.FirstOrDefaultAsync(p => p.Name == name);
             if (entity == null)
             {
-                throw new UserFriendlyException($"不存在名称为{name}的记录");
+                throw new UserFriendlyException($"does not exist名称for{name}record of");
             }
 
             return entity.Adapt<TestOut>();
@@ -134,7 +134,7 @@ namespace TestApplication.AppService
         {
             if (!id.HasValue)
             {
-                throw new UserFriendlyException("Id的值不允许为空");
+                throw new UserFriendlyException("Id的值不允许for空");
             }
 
             return Get(id.Value);
@@ -145,7 +145,7 @@ namespace TestApplication.AppService
             var entity = await _testRepository.FindOrDefaultAsync(input.Id);
             if (entity == null)
             {
-                throw new UserFriendlyException($"不存在Id为{input.Id}的数据");
+                throw new UserFriendlyException($"does not existIdfor{input.Id}The data");
             }
 
             entity = input.Adapt(entity);
@@ -159,7 +159,7 @@ namespace TestApplication.AppService
             var objects = new List<object>();
             dynamic obj = new
             {
-                Value = "08车10F号",
+                Value = "08car10FNo",
                 Position = new List<int>()
                 {
                     730,
@@ -172,7 +172,7 @@ namespace TestApplication.AppService
                     299
                 },
                 Key = "seat_number",
-                Description = "座位号"
+                Description = "座位No"
             };
             for (int i = 0; i < 1000; i++)
             {
@@ -186,7 +186,7 @@ namespace TestApplication.AppService
         {
             var obj = new
             {
-                Value = "08车10F号",
+                Value = "08car10FNo",
                 Position = new List<int>()
                 {
                     730,
@@ -199,7 +199,7 @@ namespace TestApplication.AppService
                     299
                 },
                 Key = "seat_number",
-                Description = "座位号"
+                Description = "座位No"
             };
             return obj;
         }
@@ -208,7 +208,7 @@ namespace TestApplication.AppService
         {
             var obj = new
             {
-                Value = "08车10F号",
+                Value = "08car10FNo",
                 Position = new List<int>()
                 {
                     730,
@@ -221,7 +221,7 @@ namespace TestApplication.AppService
                     299
                 },
                 Key = "seat_number",
-                Description = "座位号"
+                Description = "座位No"
             };
             var ocrOutput = new OcrOutput()
             {
@@ -235,7 +235,7 @@ namespace TestApplication.AppService
             var service = EngineContext.Current.ResolveNamed<ITestDomainService>(serviceName);
             if (service == null)
             {
-                throw new BusinessException($"不存在{serviceName}的服务");
+                throw new BusinessException($"does not exist{serviceName}service");
             }
 
             return await service.Test();

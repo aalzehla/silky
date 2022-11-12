@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
 namespace Silky.EntityFrameworkCore.Entities.Attributes
 {
     /// <summary>
-    /// 禁止实体监听
+    /// No entity monitoring
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class SuppressChangedListenerAttribute : Attribute

@@ -1,43 +1,43 @@
 ---
-title:  服务注册中心
+title:  Service Registry
 lang: zh-cn
 ---
 
-## 服务注册中心简介
+## Service Registry简介
 
-在分布式系统中,服务注册中心的作用是将部署服务实例的机器地址以及其它元数据记录到注册中心,服务消费者在有需求的时候，通过查询注册中心，输入提供的服务名，获取到地址，从而发起调用。
+in a distributed system,Service Registryof作用是将deployServe实例of机器addressas well as其它元数据记录到注册middle心,Serve consumers when they need it，By querying the registry，Enter the provided service name，get the address，to initiate a call。
 
-在微服务架构下，主要有三种角色：**服务提供者（RPC Server）**、**服务消费者（RPC Client）** 和 **服务注册中心（Registry）**，三者的交互关系请看下面这张图:
+Under the microservice architecture，There are three main roles：**service provider（RPC Server）**、**service consumers（RPC Client）** and **Service Registry（Registry）**，Please see the following picture for the interaction between the three:
 
 ![service-registry1.png](/assets/imgs/service-registry1.png)
 
-**RPC Server** 提供服务，在启动时，根据配置文件指定的服务注册中心配置信息，向 **Registry** 注册自身的服务路由，并向**Registry**定期发送心跳汇报存活状态。
+**RPC Server** Provide services，at startup，根据配置文件指定ofService Registry配置信息，Towards **Registry** Register your own service route，并Towards**Registry**Periodically send heartbeats to report survival status。
 
-**RPC Client** 调用服务，在启动时，根据配置文件指定的服务注册中心配置信息，向 **Registry** 订阅服务，把**Registry**返回的服务节点列表缓存在本地内存中，并与 **RPC Sever** 建立连接。
+**RPC Client** call service，at startup，根据配置文件指定ofService Registry配置信息，Towards **Registry** Subscription service，Bundle**Registry**The returned list of service nodes is cached in local memory，and with **RPC Sever** establish connection。
 
-当 **RPC Server** 节点发生变更时，**Registry**会同步变更，**RPC Client** 感知后会刷新本地内存中缓存的服务节点列表。
+when **RPC Server** When the node changes，**Registry**changes will be synchronized，**RPC Client** After sensing; the list of service nodes cached in the local memory will be refreshed。
 
-**RPC Client** 从本地缓存的服务节点列表中，基于负载均衡算法选择一台 **RPC Sever** 发起调用。
+**RPC Client** from a locally cached list of service nodes，Choose one based on the load balancing algorithm **RPC Sever** make a call。
 
-::: tip 提示
+::: tip hint
 
-1. 对于一个微服务应用来说,在集群中,它既可以作为**RPC Sever**,也可能作为**RPC Client**，主要是看在rpc通信过程中，是提供服务的一方，还是调用服务的一方。
+1. For a microservice application,in a cluster,it can either be used as**RPC Sever**,also possible as**RPC Client**，mainly look atrpcduring communication，是Provide servicesof一方，还是call serviceof一方。
 
 :::
 
-当前, silky微服务框架支持使用 **Zookeeper** 、 **Nacos** 、 **Consul** 作为服务注册中心,开发者可以选择熟悉的服务中间件作为服务注册中心。
+when前, silkyThe microservice framework supports the use of **Zookeeper** 、 **Nacos** 、 **Consul** 作为Service Registry,开发者可以选择熟悉ofServemiddle间件作为Service Registry。
 
-## 服务元数据
+## service metadata
 
-在silky框架中,服务提供者向服务注册中心注册的数据被称为: **服务元数据** 。服务元数据主要四部分组成:
+existsilkyin the frame,service providerTowardsService Registry注册of数据被称为: **service metadata** 。service metadata主要四部分组成:
 
-1. **hostName** : 用于描述服务提供者的名称,为构建主机的包名称
-2. **services** : 该服务提供者所提供的应用服务信息,是一个数组,包括：服务Id,服务名称,服务协议,服务条目，元数据等信息
-3. **timeStamp** : 更新服务元数据的时间戳
-4. **endpoints** : 该服务实例的终结点,是一个数组。不同服务注册中心注册服务实例的终结点不同
+1. **hostName** : 用于描述service providerof名称,The package name for the build host
+2. **services** : 该service provider所提供of应用Serve信息,is an array,include：ServeId,Serve名称,Serve协议,Serve条目，Metadata and other information
+3. **timeStamp** : 更新service metadataoftimestamp
+4. **endpoints** : 该Serve实例ofendpoint,is an array。不同Service Registry注册Serve实例ofendpoint不同
 
 
-如果使用 **Zookeeper** 作为服务注册中心, 所有的服务元数据将会被维护到该主机所在节点下, 注册到 **Zookeeper** 服务注册中心的服务元数据如下:
+If using **Zookeeper** 作为Service Registry, 所有ofservice metadata将会被维护到该主机所existnode下, register to **Zookeeper** Service Registryofservice metadatalike下:
 
 ```json
 {
@@ -82,7 +82,7 @@ lang: zh-cn
 }
 ```
 
-如果服务注册中心是 **Consul** 或是 **Nacos**, 服务实例的终结点则会单独注册和维护, 服务元数据格式如下:
+like果Service Registry是 **Consul** or **Nacos**, Serve实例ofendpoint则会单独注册and维护, service metadata格式like下:
 
 ```json
 {
@@ -118,47 +118,47 @@ lang: zh-cn
 }
 ```
 
-### 主机名称(hostName)
+### hostname(hostName)
 
-**hostName** 用于描述服务提供者的名称,在向服务注册中心注册服务的过程中,应用会判断服务注册中心是否存在该应用的服务元数据,如果不存在,则创建相应的节点,并添加相应的服务元数据;如果已经存在相应的服务节点,则会更新服务元数据,其他服务提供者的实例从服务注册中心获取到服务元数据,并更新本地内存的服务元数据。
+**hostName** 用于描述service providerof名称,existTowardsService Registry注册Serveof过程middle,应用会判断Service Registry是否存exist该应用ofservice metadata,like果不存exist,create the corresponding node,并添加相应ofservice metadata;like果已经存exist相应ofServenode,则会更新service metadata,其他service providerof实例从Service Registry获取到service metadata,并更新本地内存ofservice metadata。
 
-### 服务列表(services)
+### Serve列表(services)
 
-该属性包含该应用所支持的服务列表,如果服务注册中心的服务列表被更新,其他服务实例也会从服务注册中心获取,并更新到本地内存。
+该Attributes包含该应用所支持ofServe列表,like果Service RegistryofServe列表被更新,其他Serve实例也会从Service Registry获取,and update to local memory。
 
-服务列表包括：服务Id,服务名称,服务协议,服务条目，元数据等信息
+Serve列表include：ServeId,Serve名称,Serve协议,Serve条目，Metadata and other information
 
-| 字段 | 说明 | 备注 |
+| field | illustrate | Remark |
 |:-----|:-----|:-----|
-| id | 服务Id | 具有唯一性;服务接口定义的完全限定名 |
-| serviceName | 服务名称 |  |
-| serviceProtocol | 服务通信协议 | rpc通信框架中,采用的通信协议  |
-| serviceEntries | 该服务支持的服务条目(即：应用服务定义的方法) | 数据类型为数组  |
-| serviceEntries.id | 服务条目Id | 方法的完全限定名 + 参数名 + Http方法名  |
-| serviceEntries.serviceId | 服务Id |  |
-| serviceEntries.serviceName | 服务名称 |  |
-| serviceEntries.method | 服务条目对应的方法名称 |  |
-| serviceEntries.webApi | 生成的webapi 地址 | 如果被禁止访问外网则为空  |
-| serviceEntries.httpMethod | 生成的webapi的请求地址 | 如果被禁止访问外网则为空  |
-| serviceEntries.serviceProtocol |  rpc通信框架中,采用的通信协议 |   |
-| serviceEntries.metadatas |  服务条目的元数据 | 可以为服务条目写入(k,v)格式的元数据   |
-| metadatas | 服务的其他元数据 | 可以为服务写入(k,v)格式的元数据  |
+| id | ServeId | unique;Serve接口定义of完全限定名 |
+| serviceName | Serve名称 |  |
+| serviceProtocol | Serve通信协议 | rpc通信in the frame,Communication protocol used  |
+| serviceEntries | 该Serve支持ofServe条目(which is：应用Serve定义of方法) | data type is array  |
+| serviceEntries.id | Serve条目Id | fully qualified name of the method + parameter name + Httpmethod name  |
+| serviceEntries.serviceId | ServeId |  |
+| serviceEntries.serviceName | Serve名称 |  |
+| serviceEntries.method | Serve条目对应ofmethod name称 |  |
+| serviceEntries.webApi | Generatedwebapi address | Empty if access to the external network is prohibited  |
+| serviceEntries.httpMethod | Generatedwebapiof请求address | Empty if access to the external network is prohibited  |
+| serviceEntries.serviceProtocol |  rpc通信in the frame,Communication protocol used |   |
+| serviceEntries.metadatas |  Serve条目of元数据 | 可以为Serve条目写入(k,v)format metadata   |
+| metadatas | Serveof其他元数据 | 可以为Serve写入(k,v)format metadata  |
 
-::: warning 注意
+::: warning Notice
 
-1. 在一个微服务集群中,服务条目具有唯一性。也就是说,不允许在同一个微服务集群中, 不同微服务应用中不允许出现两个一模一样的方法(应用服务接口的完全限定名和方法名、参数名一致);
-2. 只有被实现的应用服务才会被注册到服务注册中心。
+1. exist一个微Serve集群middle,Serve条目unique。That is to say,不允许exist同一个微Serve集群middle, 不同微Serve应用middle不允许出现两个一模一样of方法(应用Serve接口of完全限定名andmethod name、parameter name一致);
+2. 只有被实现of应用Serve才会被register toService Registry。
 ::: 
 
-### 终结点
+### endpoint
 
-**endpoints** 是用来描述该微服务的服务实例的地址信息。
+**endpoints** 是用来描述该微ServeofServe实例ofaddress信息。
 
-一个服务实例可能存在多个终结点,如：使用webhost构建的微服务应用(存在web地址终结点和rpc终结点地址)；构建支持websocket服务的微服务应用(存在websocket服务地址终结点和rpc终结点地址)。
+一个Serve实例可能存exist多个endpoint,like：usewebhost构建of微Serve应用(存existwebaddressendpointandrpcendpointaddress)；build supportwebsocketServeof微Serve应用(存existwebsocketServeaddressendpointandrpcendpointaddress)。
 
-使用不同的服务注册中心,注册终结点可能会做不同的处理。
+use不同ofService Registry,注册endpoint可能会做不同of处理。
 
-1. 如果使用 **Zookeeper** 作为服务注册中心, 服务实例的终结点将被更新到该服务提供者对应节点数据的 `endpoints` 属性,也就是说,`endpoints`将作为服务元数据的一个属性。
+1. If using **Zookeeper** 作为Service Registry, Serve实例ofendpoint将被更新到该service provider对应node数据of `endpoints` Attributes,That is to say,`endpoints`将作为service metadataof一个Attributes。
 
 ```json
 {
@@ -184,74 +184,74 @@ lang: zh-cn
 }
 ```
 
-2. 如果使用 **Consul** 作为服务注册中心, 服务实例将会被注册到 **Services** 节点,并且只会注册协议为`TCP`的终结点,服务实例的其他协议的将会以元数据的方式添加到元数据
+2. If using **Consul** 作为Service Registry, Serve实例将会被register to **Services** node,and will only register the protocol as`TCP`ofendpoint,Serve实例of其他协议of将会以元数据of方式添加到元数据
 
 ![service-registry2.png](/assets/imgs/service-registry2.png)
 
 ![service-registry3.png](/assets/imgs/service-registry3.png)
 
-3. 如果使用 **Nacos** 作为服务注册中心, 服务将会被注册到服务列表节点,与使用 **Consul** 作为服务注册中心相同,只会注册协议为`TCP`的终结点,服务实例的其他协议的将会以元数据的方式添加到元数据
+3. If using **Nacos** 作为Service Registry, Serve将会被register toServe列表node,与use **Consul** 作为Service Registry相同,will only register the agreement as`TCP`ofendpoint,Serve实例of其他协议of将会以元数据of方式添加到元数据
 
 ![service-registry4.png](/assets/imgs/service-registry4.png)
 
 ![service-registry5.png](/assets/imgs/service-registry5.png)
 
-终结点的属性如下所述:
+endpointofAttributeslike下所述:
 
-| 字段 | 说明 | 备注 |
+| field | illustrate | Remark |
 |:-----|:-----|:-----|
-| host | 对应的主机地址 | 微服务应用的Ip内网地址 |
-| port | 端口号 |  |
-| processorTime | CPU使使用率  |  |
-| timeStamp | 注册时间戳  |  |
-| serviceProtocol | 服务协议  |  |
+| host | 对应of主机address | 微Serve应用ofIp内网address |
+| port | The port number |  |
+| processorTime | CPU使use率  |  |
+| timeStamp | registration timestamp  |  |
+| serviceProtocol | Serve协议  |  |
 
-### 时间戳
+### timestamp
 
-`timeStamp`是指向服务注册中心更新服务元数据的时间戳。
+`timeStamp`是指TowardsService Registry更新service metadataoftimestamp。
 
-## 使用Zookeeper作为服务注册中心
+## useZookeeper作为Service Registry
 
-silky支持使用 **Zookeeper** 作为服务注册中心。
+silky支持use **Zookeeper** 作为Service Registry。
 
-silky支持为微服务集群配置多个 **Zookeeper** 服务注册中心，您只需要在配置服务注册中心的链接字符串`registrycenter.connectionStrings`中,使用分号`;`就可以指定微服务框架的多个服务注册中心。
+silky支持为微Serve集群配置多个 **Zookeeper** Service Registry，您只需要exist配置Service Registryof链接字符串`registrycenter.connectionStrings`middle,use分号`;`就可以指定微Serve框架of多个Service Registry。
 
-使用 **Zookeeper** 作为服务注册中心需要在配置文件中,在`registrycenter`配置节点下,将服务注册中心的类型`type`设置为: `Zookeeper`,通过`connectionStrings`属性配置服务中心的链接。同时可以通过其他属性配置服务注册中心的链接属性。
+use **Zookeeper** 作为Service Registry需要exist配置文件middle,exist`registrycenter`配置node下,将Service Registryof类型`type`Set as: `Zookeeper`,pass`connectionStrings`Attributes配置Servemiddle心of链接。同时可以pass其他Attributes配置Service Registryof链接Attributes。
 
 ```yml
 
-registrycenter: // 服务注册中心配置节点
+registrycenter: // Service Registry配置node
   type: Zookeeper
-  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 // 服务配置中心链接
-  connectionTimeout: 1000 // 链接超时时间(单位:ms)
-  sessionTimeout: 2000 // 会话超时时间(单位:ms)
-  operatingTimeout: 4000 // 操作超时时间(单位:ms)
+  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 // Serve配置middle心链接
+  connectionTimeout: 1000 // link timeout(unit:ms)
+  sessionTimeout: 2000 // session timeout(unit:ms)
+  operatingTimeout: 4000 // Operation timeout(unit:ms)
   routePath: /services/serviceroutes
 
 ```
-一般地,使用 **Zookeeper** 作为服务注册中心我们只需要指定服务注册中心类型和链接字符串即可,其他属性(如链接超时时间、会话时间、操作超时时间、注册的路由地址等)均提供了缺省值。
+normally,use **Zookeeper** 作为Service Registry我们只需要指定Service Registry类型and链接字符串which is可,其他Attributes(likelink timeout、session time、Operation timeout、注册of路由address等)default values ​​are provided。
 
 ```yml
 
-registrycenter: // 服务注册中心配置节点
+registrycenter: // Service Registry配置node
   type: Zookeeper
-  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 // 服务配置中心链接
+  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 // Serve配置middle心链接
 
 ```
 
-silky框架提供了使用 docker-compose 来编排 Zookeeper 的 [编排文件](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.zookeeper.yml), 开发者在获取 silky源代码后,进入到 `./samples/docker-compose/infrastr` 目录后,执行如下命令,就可以构建一个 **Zookeeper** 服务集群。
+silky框架提供了use docker-compose to arrange Zookeeper of [Arrange files](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.zookeeper.yml), 开发者exist获取 silkyafter the source code,Enter `./samples/docker-compose/infrastr` after the directory,执行like下命令,can build a **Zookeeper** Serve集群。
 
 ```powershell
 docker-compose -f docker-compose.zookeeper.yml up -d
 ```
 
-## 使用Nacos作为服务注册中心
+## useNacos作为Service Registry
 
-silky支持使用 **Nacos** 作为服务注册中心。
+silky支持use **Nacos** 作为Service Registry。
 
-如果使用 **Nacos** 作为服务注册中心，需要将 `registrycenter:type` 配置设置为:`Nacos`,再加上 **Nacos** 的其他配置属性。开发者可以参考[Nacos文档](https://nacos.io/zh-cn/docs/what-is-nacos.html)以及[nacos-sdk-csharp](https://.readthedocs.io/en/latest/introduction/gettingstarted.html) 来熟悉 **Nacos** 的配置和使用。
+If using **Nacos** 作为Service Registry，need to be `registrycenter:type` 配置Set as:`Nacos`,Plus **Nacos** of其他配置Attributes。Developers can refer to[NacosDocumentation](https://nacos.io/zh-cn/docs/what-is-nacos.html)as well as[nacos-sdk-csharp](https://.readthedocs.io/en/latest/introduction/gettingstarted.html) to get acquainted **Nacos** of配置anduse。
 
-使用 **Nacos** 作为服务注册中心的配置如下:
+use **Nacos** 作为Service Registryof配置like下:
 
 ```yml
 registrycenter:
@@ -270,31 +270,31 @@ registrycenter:
   namingUseRpc: true
 ```
 
-关于 Nacas服务的搭建可以参考[Nacos Docker 快速开始](https://nacos.io/zh-cn/docs/quick-start-docker.html)。当然, silky框架也提供了使用 **docker-compose** 来编排 **Nacos** 服务的文件，开发者在获取源代码后,进入到 `./samples/docker-compose/infrastr` 目录后,执行如下命令,就可以构建一个 **Nacos** 服务集群。
+about NacasServeofbuild可以refer to[Nacos Docker quick start](https://nacos.io/zh-cn/docs/quick-start-docker.html)。when然, silky框架也提供了use **docker-compose** to arrange **Nacos** Serveof文件，开发者exist获取after the source code,Enter `./samples/docker-compose/infrastr` after the directory,执行like下命令,can build a **Nacos** Serve集群。
 
 ```powershell
 docker-compose -f docker-compose.nacos.cluster-hostname.yaml up -d
 ```
 
-## 使用Consul作为服务注册中心
+## useConsul作为Service Registry
 
-silky支持使用 **Consul** 作为服务注册中心。
+silky支持use **Consul** 作为Service Registry。
 
-如果使用 **Consul** 作为服务注册中心，需要将 `registrycenter:type` 配置设置为:`Consul`,再加上 **Consul** 的其他配置属性。开发者可以参考[Consul文档](https://www.consul.io/docs)以及[consuldotnet](https://github.com/G-Research/consuldotnet) 来熟悉 **Consul** 的配置和使用。
+If using **Consul** 作为Service Registry，need to be `registrycenter:type` 配置Set as:`Consul`,Plus **Consul** of其他配置Attributes。Developers can refer to[ConsulDocumentation](https://www.consul.io/docs)as well as[consuldotnet](https://github.com/G-Research/consuldotnet) to get acquainted **Consul** of配置anduse。
 
-使用 **Consul** 作为服务注册中心的配置如下:
+use **Consul** 作为Service Registryof配置like下:
 
 ```yml
 registrycenter:
   type: Consul
   address: http://127.0.0.1:8500
-  datacenter: dc1 # 缺省值为 dc1
-  token：""  # 如果consul服务设置了token，则需要配置token
-  waitTime: 1000 # 缺省值为空
-  heartBeatInterval: 10 # 缺省值为10，单位为秒
+  datacenter: dc1 # Default is dc1
+  token：""  # like果consulServe设置了token，you need to configuretoken
+  waitTime: 1000 # Default is空
+  heartBeatInterval: 10 # Default is10，unit为秒
 ```
 
-搭建consul服务集群的方式开发者可以[参考](https://learn.hashicorp.com/tutorials/consul/docker-compose-datacenter)。同样地,silky框架提供了使用 docker-compose 部署 **Consul** 集群的编排文件，开发者在获取源码后,进入到 `./samples/docker-compose/infrastr` 目录后,执行如下命令,就可以构建一个 **Consul** 服务集群。
+buildconsulServe集群of方式开发者可以[refer to](https://learn.hashicorp.com/tutorials/consul/docker-compose-datacenter)。Similarly,silky框架提供了use docker-compose deploy **Consul** 集群ofArrange files，开发者exist获取源码后,Enter `./samples/docker-compose/infrastr` after the directory,执行like下命令,can build a **Consul** Serve集群。
 
 ```powershell
 docker-compose -f docker-compose.consul.yaml up -d

@@ -1,17 +1,17 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Silky.EntityFrameworkCore.Entities;
 
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 可写仓储分部类
+    /// Writable repository subclass
     /// </summary>
     public partial class PrivateRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 接受所有更改
+        /// accept all changes
         /// </summary>
         public virtual void AcceptAllChanges()
         {
@@ -19,7 +19,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// Save all changed database contexts in the database context pool
         /// </summary>
         /// <returns></returns>
         public int SavePoolNow()
@@ -28,7 +28,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// Save all changed database contexts in the database context pool
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <returns></returns>
@@ -38,7 +38,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// Save all changed database contexts in the database context pool
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -48,7 +48,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// Save all changed database contexts in the database context pool
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <param name="cancellationToken"></param>
@@ -59,7 +59,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 提交更改操作
+        /// Commit changes
         /// </summary>
         /// <returns></returns>
         public virtual int SaveNow()
@@ -68,7 +68,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 提交更改操作
+        /// Commit changes
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <returns></returns>
@@ -78,7 +78,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 提交更改操作（异步）
+        /// Commit changes（asynchronous）
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
@@ -88,7 +88,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 提交更改操作（异步）
+        /// Commit changes（asynchronous）
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <param name="cancellationToken"></param>

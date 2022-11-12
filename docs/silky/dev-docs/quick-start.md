@@ -1,46 +1,46 @@
 ---
-title: 快速开始
+title: quick start
 lang: zh-cn
 ---
 
-## 必要前提
+## necessary premise
 
-1. (**必须**) 安装 .net5 或是 .net6 sdk。
+1. (**must**) Install .net5 or .net6 sdk。
 
-2. (**必须**) 您可以使用visual studio 或是rider作为开发工具。 
+2. (**must**) you can use itvisual studio orrideras a development tool。 
 
-3. (**必须**) 您必须准备一个可用的`zookeeper`服务作为服务注册中心。
+3. (**must**) 您must准备一个可用of`zookeeper`Service as a Service Registry。
 
-4. (**必须**) 使用选择`redis`服务作为分布式缓存服务。
+4. (**must**) use selection`redis`Service as a distributed cache service。
 
 
-## 使用Web主机构建微服务应用 
+## useWebHost builds microservice applications 
 
-开发者可以通过.net平台提供[Web 主机](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0)来构建silky微服务应用。
+Developers can use.netPlatform provides[Web host](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/web-host?view=aspnetcore-6.0)to buildsilkyMicroservice application。
 
-使用webhost来构建的Silky微服务应用，不但可以作为微服务应用的服务提供者(服务内部可以通过SilkyRpc框架进行通信);也提供http服务，http请求通过应用服务方法(服务条目)生成的webapi,通过silky设定的路由规则即可访问微服务应用提供的相关服务。
+usewebhostto buildofSilkyMicroservice application，不但可以作为Microservice applicationofServe提供者(The service can be accessed throughSilkyRpcframe to communicate);also availablehttpServe，http请求passapplicationServemethod(Serve条目)Generatedwebapi,passsilky设定ofrouting规则即可访问Microservice application提供of相关Serve。
 
-我们通过如下步骤可以快速的构建一个使用Web 主机构建的Silky微服务应用。
+我们pass如下步骤可以快速ofConstruct一个useWeb hostConstructofSilkyMicroservice application。
 
-1. 新增一个控制台应用或是ASP.NET Core Empty应用
+1. 新增一个控制台applicationorASP.NET Core Emptyapplication
 
 ![quick-start1.png](/assets/imgs/quick-start1.png)
 
 ![quick-start1.1.png](/assets/imgs/quick-start1.1.png)
 
-2. 安装`Silky.Agent.Host`包
+2. Install`Silky.Agent.Host`Bag
 
-通过 Nuget Package Manger 安装`Silky.Agent.Host`包:
+pass Nuget Package Manger Install`Silky.Agent.Host`Bag:
 
 ![quick-start2.png](/assets/imgs/quick-start2.png)
 
-或是通过控制台命令安装包:
+orpass控制台命令InstallBag:
 
 ```powershell
 PM> Install-Package Silky.Agent.Host -Version 3.0.2
 ```
 
-3. 在`Main`方法中构建silky主机
+3. exist`Main`built in methodsilkyhost
 
 ```csharp
 namespace Silky.Sample
@@ -64,7 +64,7 @@ namespace Silky.Sample
 }
 ```
 
-4. 在启用类中配置服务和置中间件、路由
+4. exist启用kind中configureServeand置middleware、routing
 
 ```csharp
 using Microsoft.AspNetCore.Builder;
@@ -87,7 +87,7 @@ namespace Silky.Sample
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // 新增必要的服务
+            // 新增必要ofServe
             services.AddSilkyHttpCore()
                 .AddSwaggerDocuments()
                 .AddRouting();
@@ -95,24 +95,24 @@ namespace Silky.Sample
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            // 判断是否开发环境
+            // Determine whether the development environment
             if (env.IsDevelopment())
             {
-                // 开发环境使用开发者异常调式页面
+                // 开发环境use开发者异常调式页面
                 app.UseDeveloperExceptionPage();
-                // 开发环境使用Swagger在线文档
+                // 开发环境useSwaggerexist线Documentation
                 app.UseSwaggerDocuments();
             }
 
-            // 使用路由中间件
+            // useroutingmiddleware
             app.UseRouting();
             
-            // 添加其他asp.net core中间件...
+            // add otherasp.net coremiddleware...
 
-            // 配置路由
+            // configurerouting
             app.UseEndpoints(endpoints => 
               { 
-                // 配置SilkyRpc路由
+                // configureSilkyRpcrouting
                 endpoints.MapSilkyRpcServices(); 
               });
         }
@@ -120,13 +120,13 @@ namespace Silky.Sample
 }
 ```
 
-4. 更新配置
+4. 更新configure
 
-silky支持通过`json`或是`yml`格式进行配置。您可以通过`appsettings.json`为公共配置项指定配置信息,也可以通过新增`appsettings.${ENVIRONMENT}.json`文件为指定的环境更新配置属性。
+silky支持pass`json`or`yml`格式进行configure。您可以pass`appsettings.json`为公共configure项指定configure信息,也可以pass新增`appsettings.${ENVIRONMENT}.json`文件为指定of环境更新configure属性。
 
-一般地,您必须指定rpc通信的`token`,服务注册中心地址等配置项。如果您使用redis作为缓存服务,那么您还需要将`distributedCache:redis:isEnabled`配置项设置为`true`,并给出redis服务缓存的地址。
+normally,您must指定rpccommunication`token`,Serve注册中心地址等configure项。如果您useredis作为缓存Serve,then you also need to`distributedCache:redis:isEnabled`configure项Set as`true`,and givesredisServe缓存of地址。
 
-在`appsettings.json`配置文件中新增如下配置属性:
+exist`appsettings.json`configure文件中新增如下configure属性:
 
 ```json
 {
@@ -147,61 +147,61 @@ silky支持通过`json`或是`yml`格式进行配置。您可以通过`appsettin
 }
 ```
 
-将配置文件属性的**复制到输出目录**,设置为: *始终复制* 或是 *如果较新则复制*。
+Willconfigure文件属性of**Copy to output directory**,Set as: *always copy* or *Copy if newer*。
 
 ![quick-start3.png](/assets/imgs/quick-start3.png)
 
-5. 创建zookeeper服务和redis缓存服务
+5. createzookeeperServeandredis缓存Serve
 
-在该示例项目中,我们使用`Zookeeper`作为服务注册中心。我们在silky的示例项目中给出各种基础服务的[docker-compose的编排文件](https://github.com/liuhll/silky/tree/main/samples/docker-compose/infrastr),其中,也包括了zookeeper和redis服务的。
+exist该示例project中,我们use`Zookeeper`作为Serve注册中心。我们existsilkyof示例project中给出各种基础Serveof[docker-composethe arrangement file](https://github.com/liuhll/silky/tree/main/samples/docker-compose/infrastr),in,也Bag括了zookeeperandredisServeof。
 
-将[docker-compose.zookeeper.yml](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.zookeeper.yml)和[docker-compose.redis.yml](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.redis.yml)拷贝到本地,保存为相同名称的文件,进入到保存文件的本地目录。
+Will[docker-compose.zookeeper.yml](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.zookeeper.yml)and[docker-compose.redis.yml](https://raw.githubusercontent.com/liuhll/silky/main/samples/docker-compose/infrastr/docker-compose.redis.yml)copy to local,Save as a file with the same name,Go to the local directory where the file is saved。
 
 ```powershell
-# 创建一个名称为silky_service_net的docker网络
+# create一个名称为silky_service_netofdockernetwork
 docker network create silky_service_net
 
-# 使用docker-compose创建zookeeper和redis服务
+# usedocker-composecreatezookeeperandredisServe
 docker-compose -f docker-compose.zookeeper.yml -f docker-compose.redis.yml up -d
 ```
 
 
-6. 微服务应用的其他层(项目)
+6. Microservice applicationof其他层(project)
 
-完成主机项目后,您可以新增**应用接口层**、**应用层**、**领域层**、**基础设施层**等其他项目,更多内容请参考[微服务架构](#)节点。
+完成hostproject后,you can add**applicationinterface层**、**application层**、**Domain layer**、**infrastructure layer**等其他project,For more information; please refer to[微Serve架构](#)node。
 
-一个典型的微服务模块的划分与传统的`DDD`领域模型的应用划分基本一致。需要将应用接口单独的抽象为一个程序集，方便被其他微服务应用引用，其他微服务应用通过应用接口生成RPC代理,与该微服务通信。
+一个典型of微Serve模块of划分与传统of`DDD`领域模型ofapplication划分基本consistent。需要Willapplicationinterface单独of抽象为一个程序集，方便被其他Microservice applicationquote，其他Microservice applicationpassapplicationinterfacegenerateRPCacting,与该微Serve通信。
 
-一个典型的微服务模块的项目结构如下所示:
+一个典型of微Serve模块ofproject结构如下所示:
 
 ![quick-start4.png](/assets/imgs/quick-start4.png)
 
-项目的依赖关系如下:
+projectofrely关系如下:
 
-(1) 主机项目依赖**应用层**,从而达到对应用的托管。
+(1) hostprojectrely**application层**,从而达到对applicationof托管。
 
-(2) **应用接口层**用于定义服务接口和`DTO`对象,**应用层**需要依赖**应用接口层**,实现定义好的服务接口。
+(2) **applicationinterface层**用于定义Serveinterfaceand`DTO`object,**application层**need to depend on**applicationinterface层**,实现定义好ofServeinterface。
 
-(3) **领域层**主要用于实现具体的业务逻辑,可以依赖自身的**应用接口层**以及其他微服务应用的**应用接口层**(开发者可以通过nuget包安装其他微服务应用的应用接口项目或是直接添加项目的方式进行引用);**领域层**依赖自身的**应用接口层**的原因是为了方便使用`DTO`对象;引用其他微服务的**应用接口层**可以通过接口生成的动态代理,与其他微服务通过`SilkyRPC`框架进行通信。
+(3) **Domain layer**主要used to implement具体of业务逻辑,可以rely自身of**applicationinterface层**以及其他Microservice applicationof**applicationinterface层**(Developers can usenugetBagInstall其他Microservice applicationofapplicationinterfaceprojector直接添加projectof方式进行quote);**Domain layer**rely自身of**applicationinterface层**of原因是为了方便use`DTO`object;quote其他微Serveof**applicationinterface层**可以passinterfaceGenerated动态acting,与其他微Servepass`SilkyRPC`frame to communicate。
 
-(4) **领域共享层(Domain.Shared)** 一般用于定义ddd概念中的值类型以及枚举等,方便被其他微服务应用引用。
+(4) **Domain Shared Layer(Domain.Shared)** generally used to defineddd概念中of值kind型以及枚举等,方便被其他Microservice applicationquote。
 
-(5) **EntityFramework**作为基础服务层,提供数据访问能力,当然,开发者也可以选择使用其他ORM框架。
+(5) **EntityFramework**作为基础Serve层,Provide data access capability,certainly,开发者也可以选择use其他ORMframe。
 
 
-7. 应用接口的定义和实现
+7. applicationinterfaceof定义and实现
 
-**应用接口层(Silky.Sample.Application.Contracts)** 安装包`Silky.Rpc`:
+**applicationinterface层(Silky.Sample.Application.Contracts)** InstallBag`Silky.Rpc`:
 
 ![quick-start5.png](/assets/imgs/quick-start5.png)
 
-或是通过控制台命令安装包:
+orpass控制台命令InstallBag:
 
 ```powershell
 PM> Install-Package Silky.Rpc -Version 3.0.2
 ```
 
-新增一个服务接口`IGreetingAppService`,并且定义一个`Say()`方法,应用接口需要使用`[ServiceRoute]`特性进行标识。
+新增一个Serveinterface`IGreetingAppService`,and define a`Say()`method,applicationinterface需要use`[ServiceRoute]`feature to identify。
 
 ```csharp
 [ServiceRoute]
@@ -211,7 +211,7 @@ public interface IGreetingAppService
 }
 ```
 
-接下来,我们需要 **应用层(Silky.Sample.Application)** 依赖(引用) **应用接口层(Silky.Sample.Application.Contracts)**, 并新增一个服务类`GreetingAppService`,通过它实现服务接口`IGreetingAppService`。
+next,we need to **application层(Silky.Sample.Application)** rely(quote) **applicationinterface层(Silky.Sample.Application.Contracts)**, and add aServekind`GreetingAppService`,pass它实现Serveinterface`IGreetingAppService`。
 
 ```csharp
     public class GreetingAppService : IGreetingAppService
@@ -223,23 +223,23 @@ public interface IGreetingAppService
     }
 ```
 
-8. 通过Swagger文档在线调试
+8. passSwaggerDocumentationexist线调试
 
-运行应用程序,即可打开swagger在线文档。开发者可以通过swagger生成的在线文档调试API。
+运行application程序,to openswaggerexist线Documentation。Developers can useswaggerGeneratedexist线Documentation调试API。
 
 ![quick-start6.png](/assets/imgs/quick-start6.png)
 
-## 使用.NET通用主机构建微服务应用
+## use.NET通用Host builds microservice applications
 
-开发者可以通过.net平台提供[通用主机](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-6.0)来构建silky微服务应用。
+Developers can use.netPlatform provides[通用host](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-6.0)to buildsilkyMicroservice application。
 
-使用.NET 通用主机构建微服务应用只能作为服务提供者,通过SilkyRPC框架与其他微服务应用进行通信;无法提供http服务，也就是说,集群外部无法直接访问该微服务应用，只能通过网关或是其他提供http服务的微服务应用访问该微服务应用的服务。
+use.NET 通用Host builds microservice applications只能作为Serve提供者,passSilkyRPCframe与其他Microservice application进行通信;can not providehttpServe，That is to say,集群外部无法直接访问该Microservice application，只能passgatewayor其他提供httpServeofMicroservice application访问该Microservice applicationofServe。
 
-使用.NET 通用主机构建Silky微服务应用的步骤与使用使用Web 主机构建微服务应用的步骤基本一致,区别在于无需配置`Startup`类,也不能配置http中间件(配置了也无效);开发者可以通过实现`IConfigureService`接口来完成对服务注入的配置。
+use.NET 通用hostConstructSilkyMicroservice applicationofsteps withuseuseWeb Host builds microservice applicationsof步骤基本consistent,区别exist于无需configure`Startup`kind,也不能configurehttpmiddleware(configure了也无效);Developers can use实现`IConfigureService`interface来完成对Serve注入ofconfigure。
 
-1-2 步骤与[使用web主机构建微服务应用](#使用Web主机构建微服务应用)一致。
+1-2 steps with[usewebHost builds microservice applications](#useWebHost builds microservice applications)consistent。
 
-3. 在`Main`方法中构建silky主机
+3. exist`Main`built in methodsilkyhost
 
 ```csharp
 namespace Silky.Sample
@@ -262,7 +262,7 @@ namespace Silky.Sample
     }
 }
 ```
-创建`ConfigureService`类,用于实现`IConfigureService`接口,在`ConfigureServices()`方法中配置服务注入依赖。
+create`ConfigureService`kind,used to implement`IConfigureService`interface,exist`ConfigureServices()`method中configureServe注入rely。
 
 ```csharp
    public class ConfigureService : IConfigureService
@@ -270,32 +270,32 @@ namespace Silky.Sample
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSilkySkyApm()
-                //其他服务(包括第三方组件的服务或是silky框架的其他服务,例如:Efcore组件,MessagePack编解码,Cap或是MassTransit等分布式事件总线等)
+                //其他Serve(Bag括第三方componentsofServeorsilkyframeof其他Serve,E.g:Efcorecomponents,MessagePackCodec,CaporMassTransitetc. Distributed event bus etc.)
                 //...
                 ;
         }
     }
 ```
 
-5-7步骤与[使用web主机构建微服务应用](#使用Web主机构建微服务应用)一致。
+5-7steps with[usewebHost builds microservice applications](#useWebHost builds microservice applications)consistent。
 
-启动应用后,我们可以在控制台看到相关的日志输出,应用服务启动成功。
+启动application后,我们可以exist控制台看到相关of日志输出,applicationServe启动成功。
 
 ![quick-start7.png](/assets/imgs/quick-start7.png)
 
-用户无法直接访问该微服务应用,必须通过网关引用该微服务的 **应用接口层** ,通过[网关](#构建Silky微服务网关)的提供的http服务间接的访问该微服务应用提供的服务。
+用户无法直接访问该Microservice application,mustpassgatewayquote该微Serveof **applicationinterface层** ,pass[gateway](#ConstructSilky微Servegateway)of提供ofhttpServe间接of访问该Microservice application提供ofServe。
 
 
-## 构建具有websocket服务能力的微服务应用
+## Construct具有websocketServe能力ofMicroservice application
 
-开发者通过构建具有websocket服务能力的微服务应用, 这样的微服务应用可以除了可以作为服务提供者之外,还具有提供websocket通信的能力(websocket端口默认为:3000)。可以通过与服务端进行握手会话(可以通过网关代理),服务端实现向客户单推送消息的能力。
+开发者passConstruct具有websocketServe能力ofMicroservice application, 这样ofMicroservice application可以除了可以作为Serve提供者之外,also provideswebsocketcommunication能力(websocketThe port defaults to:3000)。可以pass与Serve端进行握手会话(可以passgatewayacting),Serve端实现向客户单推送消息of能力。
 
 
-构建具有websocket服务能力的微服务应用与[使用.NET通用主机构建微服务应用](#使用.NET通用主机构建微服务应用)的步骤一致,只是用于构建微服务应用的方法有差异。
+Construct具有websocketServe能力ofMicroservice application与[use.NET通用Host builds microservice applications](#use.NET通用Host builds microservice applications)of步骤consistent,只是用于ConstructMicroservice applicationofmethod有差异。
 
-1-2 步骤与[使用web主机构建微服务应用](#使用Web主机构建微服务应用)一致。
+1-2 steps with[usewebHost builds microservice applications](#useWebHost builds microservice applications)consistent。
 
-3. 在`Main`方法中构建silky主机
+3. exist`Main`built in methodsilkyhost
 
 ```csharp
 namespace Silky.Sample
@@ -317,7 +317,7 @@ namespace Silky.Sample
 
 ```
 
-创建`ConfigureService`类,用于实现`IConfigureService`接口,在`ConfigureServices()`方法中配置服务注入依赖。
+create`ConfigureService`kind,used to implement`IConfigureService`interface,exist`ConfigureServices()`method中configureServe注入rely。
 
 ```csharp
    public class ConfigureService : IConfigureService
@@ -325,36 +325,36 @@ namespace Silky.Sample
         public void ConfigureServices(IServiceCollection services, IConfiguration configuration)
         {
             services.AddSilkySkyApm()
-                //其他服务(包括第三方组件的服务或是silky框架的其他服务,例如:Efcore组件,MessagePack编解码,Cap或是MassTransit等分布式事件总线等)
+                //其他Serve(Bag括第三方componentsofServeorsilkyframeof其他Serve,E.g:Efcorecomponents,MessagePackCodec,CaporMassTransitetc. Distributed event bus etc.)
                 //...
                 ;
         }
     }
 ```
 
-5-6步骤与[使用web主机构建微服务应用](#使用Web主机构建微服务应用)一致。
+5-6steps with[usewebHost builds microservice applications](#useWebHost builds microservice applications)consistent。
 
-7. 构建具有提供websocket服务能力的服务
+7. Construct具有提供websocketServe能力ofServe
 
-应用服务接口的定义与一般应用服务的接口定义一样,只需要在一个普通的接口标识`[ServiceRoute]`特性即可。
+applicationServeinterfaceof定义与一般applicationServeofinterface定义一样,只需要exist一个普通ofinterface标识`[ServiceRoute]`feature。
 
 ```csharp
 
 [ServiceRoute]
 public interface ITestAppService
 {
-   // 可以定义其他方法(服务条目),定义的方法可以与其他微服务应用通过RPC框架进行通信
+   // 可以定义其他method(Serve条目),定义ofmethod可以与其他Microservice applicationpassRPCframe to communicate
 }
 ```
 
 
-我们需要在 **应用层(Silky.Sample.Application)** 安装 `Silky.WebSocket`包。
+we need toexist **application层(Silky.Sample.Application)** Install `Silky.WebSocket`Bag。
 
 ```powershell
 PM> Install-Package Silky.WebSocket -Version 3.0.2
 ```
 
-并新增一个 `TestAppService`类, 通过它来实现 `ITestAppService`, 除此之外,我们需要 `TestAppService`类继承 `WsAppServiceBase`基类。
+and add a `TestAppService`kind, pass它来实现 `ITestAppService`, besides,we need to `TestAppService`kind继承 `WsAppServiceBase`基kind。
 
 ```csharp
     public class TestAppService : WsAppServiceBase, ITestAppService
@@ -366,7 +366,7 @@ PM> Install-Package Silky.WebSocket -Version 3.0.2
             _logger = logger;
         }
 
-        // 当建立websocket会话时
+        // when establishedwebsocketsession
         protected override void OnOpen()
         {
             base.OnOpen();
@@ -374,46 +374,46 @@ PM> Install-Package Silky.WebSocket -Version 3.0.2
             
         }
 
-        // 当服务端接收到客服端的消息时
+        // whenServe端接收到客服端of消息时
         protected override void OnMessage(MessageEventArgs e)
         {
             _logger.LogInformation(e.Data);
         }
         
-       // 当websocket会话关闭时
+       // whenwebsocketWhen the session is closed
         protected override void OnClose(CloseEventArgs e)
         {
             base.OnClose(e);
             _logger.LogInformation("websocket disconnected");
         }
 
-        // 其他服务方法
+        // 其他Servemethod
     }
 ```
 
-启动应用后,我们可以在控制台看到相关的日志输出,应用服务启动成功。我们定义的websocket的服务的webapi地址为:`/api/test`。
+启动application后,我们可以exist控制台看到相关of日志输出,applicationServe启动成功。我们定义ofwebsocketofServeofwebapiaddress is:`/api/test`。
 
 ![quick-start8.png](/assets/imgs/quick-start8.png)
 
-8. 客户端透过网关代理与websocket服务握手
+8. 客户端透过gatewayacting与websocketServe握手
 
-客户端无法直接与该微服务应用进行握手,必须通过网关引用该微服务的 **应用接口层** ,通过[网关](#构建Silky微服务网关)的提供的websocket代理服务与该微服务进行握手,通过`ws[s]://gateway_ip[:gateway_port]/websocket_webapi`与之前定义websocket服务进行会话。
+客户端无法直接与该Microservice application进行握手,mustpassgatewayquote该微Serveof **applicationinterface层** ,pass[gateway](#ConstructSilky微Servegateway)of提供ofwebsocketactingServe与该微Serve进行握手,pass`ws[s]://gateway_ip[:gateway_port]/websocket_webapi`with the previous definitionwebsocketServe进行会话。
 
-我们在构建的网关应用中引用该微服务的**应用接口层**,并启动网关应用(网关服务地址为`127.0.0.1:5000`),并可通过地址:`ws://127.0.0.1:5000/api/test`与之前定义的websocket服务进行握手和通信。
+我们existConstructofgatewayapplication中quote该微Serveof**applicationinterface层**,并启动gatewayapplication(gatewayServeaddress is`127.0.0.1:5000`),并可pass地址:`ws://127.0.0.1:5000/api/test`with the previous definitionofwebsocketServe进行握手and通信。
 
-客户端与websocket服务进行握手时,需要通过`qstring参数`或是请求头设置`hashkey`，确保每次通信的微服务应用都是同一个实例。
+client withwebsocketServe进行握手时,需要pass`qstringparameter`or请求头设置`hashkey`，确保每次communicationMicroservice application都是同一个实例。
 
 ![quick-start9.png](/assets/imgs/quick-start9.png)
 
 ![quick-start10.png](/assets/imgs/quick-start10.png)
 
-## 构建Silky微服务网关
+## ConstructSilky微Servegateway
 
-实际上,[通过.net平台提供Web主机](#使用Web主机构建微服务应用)来构建silky微服务应用，也可以认为是一个网关。我们在这里专门构建的网关与[通过.net平台提供Web 主机](#使用Web主机构建微服务应用)的区别在于该类型的微服务应用只能作为服务消费者,不能作为RPC服务提供者。
+Actually,[pass.netPlatform providesWebhost](#useWebHost builds microservice applications)to buildsilkyMicroservice application，也可以认为是一个gateway。我们exist这里专门Constructofgateway与[pass.netPlatform providesWeb host](#useWebHost builds microservice applications)of区别exist于该kind型ofMicroservice application只能作为Serve消费者,cannot act asRPCServe提供者。
 
-总的来说,网关是对微服务应用集群来说是一个对接外部的流量入口。
+总of来说,gateway是对Microservice application集群来说是一个对接外部of流量入口。
 
-构建过程与[通过.net平台提供Web 主机](#使用Web主机构建微服务应用)一致,我们只需要将创建主机的方法修改为:
+Construct过程与[pass.netPlatform providesWeb host](#useWebHost builds microservice applications)consistent,我们只需要Willcreatehostofmethod修改为:
 
 ```csharp
  private static IHostBuilder CreateHostBuilder(string[] args) =>
@@ -421,4 +421,4 @@ PM> Install-Package Silky.WebSocket -Version 3.0.2
             .ConfigureSilkyGatewayDefaults(webBuilder => { webBuilder.UseStartup<Startup>(); });
 ```
 
-网关项目通过引用其他微服务应用的**应用接口层**，就可以作为服务消费者通过SilkyRPC框架调用其他微服务应用提供的服务,并且通过网关提供的http相关中间件可以实现生成在线swagger文档,实现统一的api鉴权,http限流,生成dashboard管理端,实现对微服务集群服务提供者实例的健康检查等功能。
+gatewayprojectpassquote其他Microservice applicationof**applicationinterface层**，就可以作为Serve消费者passSilkyRPCframe调用其他Microservice application提供ofServe,并且passgateway提供ofhttp相关middleware可以实现generateexist线swaggerDocumentation,实现统一ofapiAuthentication,httpLimiting,generatedashboardmanagement side,实现对微Serve集群Serve提供者实例of健康检查等功能。

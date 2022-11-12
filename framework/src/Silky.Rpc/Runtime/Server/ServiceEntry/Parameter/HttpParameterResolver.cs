@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.AspNetCore.Http;
@@ -44,7 +44,7 @@ public class HttpParameterResolver : ParameterResolverBase
         var typeConvertibleService = EngineContext.Current.Resolve<ITypeConvertibleService>();
         foreach (var parameterDescriptor in serviceEntry.ParameterDescriptors)
         {
-            #region 获取参数
+            #region get parameters
 
             var parameter = parameterDescriptor.From.DefaultValue();
             if (parameters.ContainsKey(parameterDescriptor.From))

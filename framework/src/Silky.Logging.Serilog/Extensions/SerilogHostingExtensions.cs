@@ -14,7 +14,7 @@ namespace Microsoft.Extensions.Hosting
         {
             hostBuilder.UseSerilog((context, configuration) =>
             {
-                // 加载配置文件
+                // load configuration file
                 var config = configuration
                     .ReadFrom.Configuration(context.Configuration)
                     .Enrich.FromLogContext();
@@ -22,7 +22,7 @@ namespace Microsoft.Extensions.Hosting
                 if (configAction != null) configAction.Invoke(config);
                 else
                 {
-                    // 判断是否有输出配置
+                    // Determine if there is an output configuration
                     var hasWriteTo = context.Configuration["Serilog:WriteTo:0:Name"];
                     if (hasWriteTo == null)
                     {
@@ -45,7 +45,7 @@ namespace Microsoft.Extensions.Hosting
         {
             builder.UseSerilog((context, configuration) =>
             {
-                // 加载配置文件
+                // load configuration file
                 var config = configuration
                     .ReadFrom.Configuration(context.Configuration)
                     .Enrich.FromLogContext();
@@ -53,7 +53,7 @@ namespace Microsoft.Extensions.Hosting
                 if (configAction != null) configAction.Invoke(config);
                 else
                 {
-                    // 判断是否有输出配置
+                    // Determine if there is an output configuration
                     var hasWriteTo = context.Configuration["Serilog:WriteTo:0:Name"];
                     if (hasWriteTo == null)
                     {

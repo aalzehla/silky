@@ -5,32 +5,32 @@ namespace Silky.Order.Application.Contracts.Orders.Dtos
     public class GetOrderOutput
     {
         /// <summary>
-        /// 订单Id
+        /// OrderId
         /// </summary>
         public int Id { get; set; }
         
         /// <summary>
-        /// 账号Id
+        /// accountId
         /// </summary>
         public long AccountId { get; set; }
         
         /// <summary>
-        /// 产品Id
+        /// productId
         /// </summary>
         public long ProductId { get; set; }
 
         /// <summary>
-        /// 购买数量
+        /// Purchase quantity
         /// </summary>
         public int Quantity { get; set; }
         
         /// <summary>
-        /// 订单金额
+        /// Order金额
         /// </summary>
         public decimal Amount { get; set; }
 
         /// <summary>
-        /// 订单状态
+        /// Order状态
         /// </summary>
         public OrderStatus Status { get; set; }
     }

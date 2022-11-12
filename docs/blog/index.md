@@ -1,8 +1,8 @@
 ---
-title: 目录
+title: Table of contents
 lang: zh-cn
 ---
 
-## 介绍
+## introduce
 
-该部分主要收录silky框架的使用介绍、设计思路等。欢迎各位开发者投稿。
+This part mainly includessilky框架的使用introduce、design ideas; etc.。Developers are welcome to contribute。

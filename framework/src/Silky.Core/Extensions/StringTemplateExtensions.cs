@@ -7,18 +7,18 @@ namespace Silky.Core.Extensions
     public static class StringTemplateExtensions
     {
         /// <summary>
-        /// 模板正则表达式
+        /// Template regular expressions
         /// </summary>
         private const string commonTemplatePattern = @"\{(?<p>.+?)\}";
 
         /// <summary>
-        /// 读取配置模板正则表达式
+        /// 读取配置Template regular expressions
         /// </summary>
         private const string configTemplatePattern = @"\#\((?<p>.*?)\)";
         
         
         /// <summary>
-        /// 从配置中渲染字符串模板
+        /// Render string template from config
         /// </summary>
         /// <param name="template"></param>
         /// <param name="encode"></param>
@@ -27,10 +27,10 @@ namespace Silky.Core.Extensions
         {
             if (template == null) return default;
 
-            // 判断字符串是否包含模板
+            // Check if a string contains a template
             if (!Regex.IsMatch(template, configTemplatePattern)) return template;
 
-            // 获取所有匹配的模板
+            // Get all matching templates
             var templateValues = Regex.Matches(template, configTemplatePattern)
                 .Select(u => new
                 {
@@ -38,7 +38,7 @@ namespace Silky.Core.Extensions
                     Value = EngineContext.Current.Configuration[u.Groups["p"].Value]
                 });
 
-            // 循环替换模板
+            // Circular replacement template
             foreach (var item in templateValues)
             {
                 template = template.Replace($"#({item.Template})",
@@ -50,21 +50,21 @@ namespace Silky.Core.Extensions
 
         private static object ResolveTemplateValue(string template, object data)
         {
-            // 根据 . 分割模板
+            // according to . split template
             var propertyCrumbs = template.Split('.', StringSplitOptions.RemoveEmptyEntries);
             return GetValue(propertyCrumbs, data);
 
-            // 静态本地函数
+            // static local function
             static object GetValue(string[] propertyCrumbs, object data)
             {
                 if (data == null || propertyCrumbs == null || propertyCrumbs.Length <= 1) return data;
                 var dataType = data.GetType();
 
-                // 如果是基元类型则直接返回
+                // If it is a primitive type; return directly
                 if (dataType.IsRichPrimitive()) return data;
                 object value = null;
 
-                // 递归获取下一级模板值
+                // Recursively get the next level template value
                 for (var i = 1; i < propertyCrumbs.Length; i++)
                 {
                     var propery = dataType.GetProperty(propertyCrumbs[i]);

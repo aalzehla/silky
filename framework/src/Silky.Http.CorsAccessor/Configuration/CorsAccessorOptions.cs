@@ -7,37 +7,37 @@ namespace Silky.Http.CorsAccessor.Configuration
         internal const string CorsAccessor = "CorsAccessor";
 
         /// <summary>
-        /// 策略名称
+        /// Policy name
         /// </summary>
         public string PolicyName { get; set; }
 
         /// <summary>
-        /// 允许来源域名，没有配置则允许所有来源
+        /// Allow source domains，Allow all sources without configuration
         /// </summary>
         public string[] WithOrigins { get; set; }
 
         /// <summary>
-        /// 请求表头，没有配置则允许所有表头
+        /// request header，All headers are allowed without configuration
         /// </summary>
         public string[] WithHeaders { get; set; }
 
         /// <summary>
-        /// 响应标头
+        /// response headers
         /// </summary>
         public string[] WithExposedHeaders { get; set; }
 
         /// <summary>
-        /// 设置跨域允许请求谓词，没有配置则允许所有
+        /// Set cross-domain allow request verb，No configuration allows all
         /// </summary>
         public string[] WithMethods { get; set; }
 
         /// <summary>
-        /// 跨域请求中的凭据
+        /// Credentials in Cross-Origin Requests
         /// </summary>
         public bool? AllowCredentials { get; set; }
 
         /// <summary>
-        /// 设置预检过期时间
+        /// Set preflight expiration time
         /// </summary>
         public int? SetPreflightMaxAge { get; set; }
 

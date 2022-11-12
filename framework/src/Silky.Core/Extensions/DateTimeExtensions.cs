@@ -5,7 +5,7 @@ namespace Silky.Core.Extensions
     public static class DateTimeExtensions
     {
         /// <summary>
-        /// 将 DateTime 转换成 DateTimeOffset
+        /// Will DateTime convert to DateTimeOffset
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>
@@ -15,7 +15,7 @@ namespace Silky.Core.Extensions
         }
 
         /// <summary>
-        /// 将 DateTimeOffset 转换成本地 DateTime
+        /// Will DateTimeOffset convert to本地 DateTime
         /// </summary>
         /// <param name="dateTime"></param>
         /// <returns></returns>

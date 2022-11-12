@@ -28,53 +28,53 @@ namespace Silky.Rpc.Configuration
 
 
         /// <summary>
-        /// 负载分流策略
+        /// load shedding strategy
         /// </summary>
         public ShuntStrategy ShuntStrategy { get; set; }
 
 
         /// <summary>
-        /// Rpc调用执行超时时间
+        /// RpcCall execution timeout
         /// </summary>
         public int TimeoutMillSeconds { get; set; }
 
         /// <summary>
-        /// 是否开启缓存拦截
+        /// Whether to enable cache blocking
         /// </summary>
         public bool EnableCachingInterceptor { get; set; }
 
         /// <summary>
-        /// 熔断休眠时长
+        /// fuse sleep duration
         /// </summary>
         public int AddressFuseSleepDurationSeconds { get; set; }
 
         /// <summary>
-        /// 地址被标识不健康多少次后会被移除
+        /// How many times an address is identified as unhealthy before it is removed
         /// </summary>
         public int UnHealthAddressTimesAllowedBeforeRemoving { get; set; }
 
         /// <summary>
-        /// 是否开启熔断保护,用户友好类异常不会触发熔断保护
+        /// Whether to open the fuse protection,User-friendly exceptions do not trigger circuit breakers
         /// </summary>
         public bool EnableCircuitBreaker { get; set; }
 
         /// <summary>
-        /// 熔断时长
+        /// Fusing time
         /// </summary>
         public int BreakerSeconds { get; set; }
 
         /// <summary>
-        /// 熔断前允许出现的异常
+        /// Exceptions allowed before fusing
         /// </summary>
         public int ExceptionsAllowedBeforeBreaking { get; set; }
 
         /// <summary>
-        /// 故障转移次数
+        /// Failover times
         /// </summary>
         public int RetryTimes { get; set; }
 
         /// <summary>
-        /// 故障转移间隔时间
+        /// Failover Interval
         /// </summary>
         public int RetryIntervalMillSeconds { get; set; }
 

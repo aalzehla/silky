@@ -29,7 +29,7 @@ namespace Silky.Http.MiniProfiler
             var customTiming = StackExchange.Profiling.MiniProfiler.Current?.CustomTiming(category,
                 string.IsNullOrWhiteSpace(message) ? $"{category.ToTitleCase()} {state}" : message, state);
             if (customTiming == null) return;
-            // 判断是否是警告消息
+            // Determine if it is a warning message
             if (isError) customTiming.Errored = true;
         }
     }

@@ -1,7 +1,7 @@
-﻿namespace Silky.EntityFrameworkCore.Repositories
+namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 仓储依赖空接口
+    /// Repository depends on empty interface
     /// </summary>
     public interface IPrivateRootRepository
     {

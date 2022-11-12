@@ -1,15 +1,15 @@
-# Silky打包脚本
+# Silkypackaging script
 
-## 参数
+## parameter
 
-| 参数名 | 是否必填 | 备注 |
+| parameter名 | Is it required | Remark |
 |:----|:-----|:-----|
-| -repo | 否 | nuget仓库地址 |
-| -push | 否 | 是否将surging组件推送到nuget仓库,缺省值为`false` |
-| -apikey | 否 | nuget仓库apikey,如果设置了`-push $true`,必须提供`-apikey`值 |
-| -build | 否 | 是否构建surging组件包,缺省值为`true` |
+| -repo | no | nugetWarehouse Address |
+| -push | no | 是no将surgingcomponents are pushed tonugetstorehouse,Default is`false` |
+| -apikey | no | nugetstorehouseapikey,if set`-push $true`,must provide`-apikey`value |
+| -build | no | 是no构建surgingcomponent package,Default is`true` |
 
-## 推送nuget仓库
+## pushnugetstorehouse
 ```
 .\pack.ps1 -push $true -apikey "$apikey"
 ```

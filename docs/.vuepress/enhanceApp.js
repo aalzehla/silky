@@ -1,15 +1,15 @@
 export default ({ router }) => {
     /**
-     * 路由切换事件处理
+     * Route switch event handling
      */
     router.beforeEach((to, from, next) => {
-        console.log("切换路由", to.fullPath, from.fullPath);
+        console.log("switch route", to.fullPath, from.fullPath);
 
-        //触发百度的pv统计
+        //Trigger Baidu'spvstatistics
         if (typeof _hmt != "undefined") {
             if (to.path) {
                 _hmt.push(["_trackPageview", to.fullPath]);
-                console.log("上报百度统计", to.fullPath);
+                console.log("Report to Baidu statistics", to.fullPath);
             }
         }
 

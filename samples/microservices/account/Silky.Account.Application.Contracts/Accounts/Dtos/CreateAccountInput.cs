@@ -5,32 +5,32 @@ namespace Silky.Account.Application.Contracts.Accounts.Dtos
     public class CreateAccountInput
     {
         /// <summary>
-        /// 账号/姓名
+        /// account/Name
         /// </summary>
-        [Required(ErrorMessage = "名称不允许为空")]
+        [Required(ErrorMessage = "Name is not allowed to be empty")]
         public string UserName { get; set; }
 
         /// <summary>
-        /// 密码
+        /// password
         /// </summary>
-        [Required(ErrorMessage = "密码不允许为空")]
-        [MinLength(6,ErrorMessage = "密码不允许少于6位")]
+        [Required(ErrorMessage = "passwordEmpty is not allowed")]
+        [MinLength(6,ErrorMessage = "password不允许少于6bit")]
         public string Password { get; set; }
 
         /// <summary>
-        /// 地址
+        /// address
         /// </summary>
         public string Address { get; set; }
 
         /// <summary>
-        /// 电子邮件
+        /// e-mail
         /// </summary>
-        [Required(ErrorMessage = "Email不允许为空")]
-        [EmailAddress(ErrorMessage = "Email格式不正确")]
+        [Required(ErrorMessage = "EmailEmpty is not allowed")]
+        [EmailAddress(ErrorMessage = "Emailincorrect format")]
         public string Email { get; set; }
         
         /// <summary>
-        /// 账号余额
+        /// account余额
         /// </summary>
         public decimal Balance { get; set; }
     }

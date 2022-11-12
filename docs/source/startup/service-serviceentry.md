@@ -1,74 +1,74 @@
 ---
-title: 服务与服务条目的解析
+title: Resolution of Services and Service Entries
 lang: zh-cn
 ---
 
-## 概念
+## concept
 
-### 对外提供访问接口的服务
+### Services that provide external access interfaces
 
-这里的 **服务** 与前文中所指的通过`ServiceCollection` 或是通过`ContainerBuilder`实现各个类的依赖关系注入所述的 **服务注册** 中的服务的概念是不一样的。
+here **Serve** as referred to in the preceding paragraph through`ServiceCollection` or through`ContainerBuilder`Implement dependency injection for each class as described **Serve注册** middleServeofconcept是不一样of。
 
-在这里所指的 **服务** 是指在一个Silky应用中,对应用外提供访问能力的接口，它与传统MVC框架中的控制器概念相对应。
+referred to here **Serve** means in aSilkyin application,An interface that provides access to outside the application，it and traditionalMVC框架middle控制器concept相对应。
 
-在silky应用中,我们通过对接口添加`[ServiceRoute]`特性,就可以定义 **应用服务**,在该服务中定义的方法我们称之为 **服务条目**, **服务条目** 与之对应的概念是传统MVC中的 **Action**,在silky应用中,我们通过RPC调用的方式与其他微服务应用的服务条目进行远程通信;
+existsilkyin application,We add through the interface`[ServiceRoute]`characteristic,can be defined **应用Serve**,exist该Servemiddle定义ofmethod我们称之为 **Serve条目**, **Serve条目** 与之correspondingconcept是传统MVCmiddle **Action**,existsilkyin application,we passRPCtransferof方式与其他微Serve应用ofServe条目进行远程communication;
 
-**应用服务** 的主要属性如下:
+**应用Serve** The main properties of are as follows:
 
-| 属性名 | 名称  | 备注           |
+| property name | name  | Remark           |
 |:-------|:------|:--------------|
-| Id | 服务Id  | 由该服务的完全限定名生成 |
-| ServiceDescriptor | 服务描述符  | 将会以服务元数据的方式注册到服务注册中心 |
-| IsLocal | 是否是本地服务  | 在该应用内是否存在实现类,在运行时确定是由本地服务执行器执行还是通过RPC调用 |
-| ServiceType | 应用服务对应的类型`Type`  |  |
-| ServiceProtocol | 服务协议  | 该服务对应的服务协议 |
-| ServiceEntries | 该服务对应的所有的服务条目  | 该服务定义的所有方法 |
+| Id | ServeId  | 由该Serveof完全限定名generate |
+| ServiceDescriptor | ServeDescriptor  | 将会以Serve元数据of方式注册到Serve注册middle心 |
+| IsLocal | 是否是本地Serve  | exist该应用内是否存exist实现类,exist运行时确定是由本地Serve执行器执行还is throughRPCtransfer |
+| ServiceType | 应用Servecorresponding类型`Type`  |  |
+| ServiceProtocol | Serve协议  | 该ServecorrespondingServe协议 |
+| ServiceEntries | 该Servecorresponding所有ofServe条目  | 该Serve定义of所有method |
 
-**服务条目**的主要属性如下:
+**Serve条目**The main properties of are as follows:
 
-| 属性名 | 名称  | 备注           |
+| property name | name  | Remark           |
 |:-------|:------|:--------------|
-| Id | 服务条目Id  | 该服务条目对应方法的完全限定名 + 参数名 + 对应的Http请求方法名 |
-| ServiceId | 服务Id  | 对应的服务Id |
-| ServiceType | 应用服务对应的类型`Type`  |
-| IsLocal | 是否是本地服务条目  | |  |
-| MethodExecutor | 方法执行者  | 该服务条目对应方法的ObjectMethodExecutor |
-| FallbackProvider | 失败重试提供器  | 可为空,当服务条目调用失败后,通过它可以获取到配置的失败回调的方法 |
-| SupportedRequestMediaTypes | 支持的http请求的媒体类型  |  |
-| SupportedResponseMediaTypes |  支持的http响应的媒体类型 |  |
-| Router |  对应的Http路由 | 主要包括路由模板、对应的Http方法、Http路径(WebAPI)、以及解析http Path参数  |
-| MethodInfo |  对应的方法 |   |
-| ReturnType |  服务条目对应方法返回值的类型 |   |
-| ParameterDescriptors |  参数描述符 | 用于描述和解释该方法对应的参数说明  |
-| CustomAttributes |  该服务条目所有的特性 |   |
-| ClientFilters |  客户端过滤器 |  非本地服务条目在执行RPC远程调用时根据客户端过滤器的排序依次执行过滤器方法 |
-| ClientFilters |  服务端过滤器 |  本地服务条目在执行实现的业务方法时根据服务端过滤器排序依次执行过滤器方法 |
-| AuthorizeData |  身份认证数据 |   |
-| GovernanceOptions |  服务条目在执行过程中的实现服务治理的参数配置 |  例如: 超时时间、负载均衡策略、是否允许服务熔断、发生非业务类异常N次后出现熔断、熔断时长、重试次数、是否禁用外网等等  |
-| ServiceEntryDescriptor |  服务条目描述符 | 该服务条目对应的服务条目描述符,将会以元数据的方式注册到服务注册中心  |
+| Id | Serve条目Id  | 该Serve条目对应methodof完全限定名 + parameter name + correspondingHttprequest method name |
+| ServiceId | ServeId  | correspondingServeId |
+| ServiceType | 应用Servecorresponding类型`Type`  |
+| IsLocal | 是否是本地Serve条目  | |  |
+| MethodExecutor | method executor  | 该Serve条目对应methodofObjectMethodExecutor |
+| FallbackProvider | Failed retry provider  | nullable,当Serve条目transfer失败后,The method through which you can get the configured failure callback |
+| SupportedRequestMediaTypes | supportedhttprequested media type  |  |
+| SupportedResponseMediaTypes |  supportedhttpresponse media type |  |
+| Router |  correspondingHttprouting | 主要包括routing模板、correspondingHttpmethod、Httppath(WebAPI)、and parsinghttp Pathparameter  |
+| MethodInfo |  correspondingmethod |   |
+| ReturnType |  Serve条目对应method返回值of类型 |   |
+| ParameterDescriptors |  parameterDescriptor | 用于描述和解释该methodcorrespondingparameter说明  |
+| CustomAttributes |  该Serve条目所有ofcharacteristic |   |
+| ClientFilters |  client filter |  非本地Serve条目exist执行RPC远程transfer时根据client filterof排序依次执行过滤器method |
+| ClientFilters |  Serve端过滤器 |  本地Serve条目exist执行实现of业务method时根据Serve端过滤器排序依次执行过滤器method |
+| AuthorizeData |  Authentication data |   |
+| GovernanceOptions |  Serve条目exist执行过程middle实现Serve治理ofparameter配置 |  E.g: overtime time、load balancing strategy、是否允许Serve熔断、A non-business exception occurredNfuse after、Fusing time、number of retries、Whether to disable the external network; etc.  |
+| ServiceEntryDescriptor |  Serve条目Descriptor | 该Serve条目correspondingServe条目Descriptor,将会以元数据of方式注册到Serve注册middle心  |
 
 
 
 
 
 
-在本节中,我们主要叙述在应用启动时,Silky是如何对应用内定义的服务以及服务条目进行解析。
+exist本节middle,我们主要叙述exist应用启动时,Silky是如何对应用内定义ofServe以及Serve条目进行解析。
 
-## 应用服务的解析
+## 应用Serveof解析
 
-### 应用服务管理器
+### 应用Servemanager
 
-1. Silky框架中由服务管理器`ServiceManager`负责应用服务的解析和获取,服务管理器被注册为 **单例** 的,也就是说,应用服务管理器在整个应用的生命周期中只会被创建一次,在服务管理器`DefaultServiceManager`的构造器中,将会调用服务提供者的所有实现类，解析应用服务;
+1. Silkyin the frame由Servemanager`ServiceManager`Responsible应用Serveof解析和Obtain,Servemanager被注册为 **singleton** of,That is to say,应用Servemanagerexist整个应用of生命周期middlewill only be created once,existServemanager`DefaultServiceManager`of构造器middle,将会transferServeproviderof所有实现类，解析应用Serve;
 
 ```csharp
 public class DefaultServiceManager : IServiceManager
 {
-   private IEnumerable<Service> m_localServices; // 用于缓存本地应用服务
-   private IEnumerable<Service> m_allServices; // 用于缓存所有应用服务
+   private IEnumerable<Service> m_localServices; // 用于缓存本地应用Serve
+   private IEnumerable<Service> m_allServices; // 用于缓存所有应用Serve
 
-   public DefaultServiceManager(IEnumerable<IServiceProvider> providers) // 在服务管理器的构造器注入所有的服务提供者
+   public DefaultServiceManager(IEnumerable<IServiceProvider> providers) // existServemanagerof构造器注入所有ofServeprovider
    {
-       UpdateServices(providers); // 使用注入所有的服务提供者实现解析应用服务
+       UpdateServices(providers); // 使用注入所有ofServeprovider实现解析应用Serve
    }
 
    private void UpdateServices(IEnumerable<IServiceProvider> providers)
@@ -88,24 +88,24 @@ public class DefaultServiceManager : IServiceManager
        m_localServices = allServices.Where(p => p.IsLocal).ToList();
    }
 
-// 其他代码略...
+// other codes...
 
 }
 
 
 ```
 
-从上面的代码的代码我们可以看出,通过遍历所有的服务提供者,通过其方法`provider.GetServices()`解析该服务提供者规定的应用服务;silky框架提供了默认的服务提供者`DefaultServiceProvider`对标识了`[ServiceRoute]`的接口进行解析；
+从上面of代码of代码我们可以看出,pass遍历所有ofServeprovider,pass其method`provider.GetServices()`解析该Serveprovider规定of应用Serve;silky框架提供了默认ofServeprovider`DefaultServiceProvider`Identified`[ServiceRoute]`ofinterface进行解析；
 
-当然,开发者也可以根据需要对应用服务提供者进行扩展(通过实现`IServiceProvider`接口),实现对开发者对自己定义的应用服务进行解析;
+certainly,开发者也可以根据需要对应用Serveprovider进行扩展(by implementing`IServiceProvider`interface),实现对开发者对自己定义of应用Serve进行解析;
 
-通过服务Id进行分组判断应用服务是否重复，在一个用于中,应用服务时不允许重复的，如果定义了相同的应用服务接口,那么应用将会在启动时抛出异常;
+passServeId进行分组判断应用Serve是否重复，exist一个用于middle,应用Serve时不允许重复of，如果定义了相同of应用Serveinterface,那么应用将会exist启动时抛出异常;
 
-服务管理器中定义了两个全局变量：一个用于缓存本地应用服务,一个用于缓存所有的应用服务; 
+Servemanagermiddle定义了两个全局变量：一个用于缓存本地应用Serve,一个用于缓存所有of应用Serve; 
 
-### 默认的服务提供者
+### 默认ofServeprovider
 
-2. Silky框架中,通过默认的服务提供者`DefaultServiceProvider`扫描标识了`[ServiceRoute]`的接口,然后通过遍历所有的服务类型,通过默认的服务生成器`DefaultServiceGenerator`实现创建应用服务对象;
+2. Silkyin the frame,pass默认ofServeprovider`DefaultServiceProvider`Scan the logo`[ServiceRoute]`ofinterface,then pass遍历所有ofServe类型,pass默认ofServegenerate器`DefaultServiceGenerator`实现创建应用Serveobject;
 
 ```csharp
 public class DefaultServiceGenerator : IServiceGenerator
@@ -125,7 +125,7 @@ public class DefaultServiceGenerator : IServiceGenerator
    public IReadOnlyCollection<Service> GetServices()
    {
        var serviceTypes = ServiceHelper.FindAllServiceTypes(_typeFinder);
-       if (!EngineContext.Current.IsContainHttpCoreModule()) // 如果不包含HttpCoreModule模块,则忽略标识了`[DashboardAppService]`的应用服务
+       if (!EngineContext.Current.IsContainHttpCoreModule()) // if not includedHttpCoreModulemodule,then ignore the identifier`[DashboardAppService]`of应用Serve
        {
            serviceTypes = serviceTypes.Where(p =>
                p.Item1.GetCustomAttributes().OfType<DashboardAppServiceAttribute>().FirstOrDefault() == null);
@@ -147,14 +147,14 @@ public class DefaultServiceGenerator : IServiceGenerator
    }
 }
 
-// 其他代码略...
+// other codes...
 
 ```
-通过上述的代码我们看到：
+pass上述of代码We saw：
 
-2.1 通过服务帮助者类提供的`ServiceHelper.FindAllServiceTypes(_typeFinder)`查找到所有的应用服务的类型`serviceTypes`,如果不包含HttpCoreModule模块,则忽略标识了`[DashboardAppService]`的应用服务,然后遍历所有的服务类型,通过服务生成器`_serviceGenerator.CreateService(serviceTypeInfo)`生成应用服务对象;
+2.1 passServe帮助者类提供of`ServiceHelper.FindAllServiceTypes(_typeFinder)`查找到所有of应用Serveof类型`serviceTypes`,if not includedHttpCoreModulemodule,then ignore the identifier`[DashboardAppService]`of应用Serve,然后遍历所有ofServe类型,passServegenerate器`_serviceGenerator.CreateService(serviceTypeInfo)`generate应用Serveobject;
 
-查找应用服务类型的方法`ServiceHelper.FindAllServiceTypes(_typeFinder)`如下所示:
+查找应用Serve类型ofmethod`ServiceHelper.FindAllServiceTypes(_typeFinder)`As follows:
 
 ```csharp
 public static IEnumerable<(Type, bool)> FindAllServiceTypes(ITypeFinder typeFinder)
@@ -178,12 +178,12 @@ public static IEnumerable<(Type, bool)> FindAllServiceTypes(ITypeFinder typeFind
 }
 ```
 
-从上面的代码我们可以看到框架是如何扫描应用服务的：首先从系统统扫描所有被标识了`[ServiceRoute]`特性的接口,然后遍历所有的接口,分析出该接口是否存在实现类,从而得到应用服务的类型信息`(TypeInfo,IsLocal)`;
+从上面of代码我们可以看到框架是如何扫描应用Serveof：First scan from the system all identified`[ServiceRoute]`characteristicofinterface,然后遍历所有ofinterface,分析出该interface是否存exist实现类,从而得到应用Serveof类型信息`(TypeInfo,IsLocal)`;
 
 
-2.2 如果当前应用包含`WebSocketModule`,则通过服务帮助类提供的`ServiceHelper.FindServiceLocalWsTypes(_typeFinder)`查找所有的支持websocket的`wsServiceTypes`,然后遍历所有的`wsServiceTypes`，然后通过`_serviceGenerator.CreateWsService(wsServiceType)`生成ws服务对象；
+2.2 If the current application contains`WebSocketModule`,则passServe帮助类提供of`ServiceHelper.FindServiceLocalWsTypes(_typeFinder)`查找所有ofsupportwebsocketof`wsServiceTypes`,然后遍历所有of`wsServiceTypes`，then pass`_serviceGenerator.CreateWsService(wsServiceType)`generatewsServeobject；
 
-查找支持websocket的应用服务的方法`ServiceHelper.FindServiceLocalWsTypes(_typeFinder)`如下所示:
+Find supportwebsocketof应用Serveofmethod`ServiceHelper.FindServiceLocalWsTypes(_typeFinder)`As follows:
 
 ```csharp
 public static IEnumerable<Type> FindServiceLocalWsTypes(ITypeFinder typeFinder)
@@ -203,13 +203,13 @@ public static IEnumerable<Type> FindServiceLocalWsTypes(ITypeFinder typeFinder)
     return types;
 }
 ```
-从上面的方法我们可以看出,一个支持websocket应用服务必须为一个类, 其接口需要通过`[ServiceRoute]`特性标识,并且必须派生自`Silky.WebSocket.WsAppServiceBase`；
+从上面ofmethod我们可以看出,a supportwebsocket应用Serve必须为一个类, 其interface需要pass`[ServiceRoute]`characteristiclogo,and must be derived from`Silky.WebSocket.WsAppServiceBase`；
 
-### 服务生成器(创建者)
+### Servegenerate器(creator)
 
-3. 服务生成器`DefaultServiceGenerator`会通过服务类型生成两种不同类型的服务:
+3. Servegenerate器`DefaultServiceGenerator`会passServe类型generate两种不同类型ofServe:
 
-3.1 普通的应用服务(可以通过RPC协议与服务内部实现通信或是通过Http协议简介与外部实现通信),普通的应用服务通过如下代码生成：
+3.1 普通of应用Serve(able to passRPC协议与Serve内部实现communicationor throughHttpIntroduction to the protocol and communication with external implementations),普通of应用Servepass如下代码generate：
 
 ```csharp
 
@@ -230,9 +230,9 @@ public Service CreateService((Type, bool) serviceTypeInfo)
 
 ```
 
-我们看到，应用服务的输入参数是一个元组`(Type, bool) serviceTypeInfo`,元组的第一个参数表示服务的类型,第二个参数表示是否是本地服务;在应用内实现了应用服务接口则表示是一个本地应用服务，如果没有实现应用服务接口,则标识该服务时一个远程应用服务,在使用该服务提供的方法时，可以通过该服务生成的代理与具体的服务提供者进行RPC通信;
+We saw，应用Serveof输入parameter是一个元组`(Type, bool) serviceTypeInfo`,元组of第一个parameter表示Serveof类型,第二个parameter表示是否是本地Serve;exist应用内实现了应用Serveinterface则表示是一个本地应用Serve，如果没有实现应用Serveinterface,则logo该Serve时一个远程应用Serve,exist使用该Serve提供ofmethod时，able to pass该Servegenerateof代理与具体ofServeprovider进行RPCcommunication;
 
-我们看到服务Id是通过Id生成器(`IIdGenerator`)生成的,服务Id的生成规则是该服务类型的完全限定名:
+We sawServeIdis throughIdgenerate器(`IIdGenerator`)generateof,ServeIdofgenerate规则是该Serve类型of完全限定名:
 
 ```csharp
 public string GenerateServiceId(Type serviceType)
@@ -242,9 +242,9 @@ public string GenerateServiceId(Type serviceType)
 }
 ```
 
-应用服务所持有的服务条目会根据服务条目管理器`IServiceEntryManager`通过服务Id获取到,服务条目如何生成;服务条目如何生成,我们将会在下一节进行叙述;
+应用Serve所持有ofServe条目会根据Serve条目manager`IServiceEntryManager`passServeIdget,Serve条目如何generate;Serve条目如何generate,我们将会exist下一节进行叙述;
 
-其中，比较重要的一点就是如果通过应用服务生成服务条目描述符`ServiceDescriptor`,服务描述符是一个POJO对象,可以被注册到服务注册中心,我们通过`CreateServiceDescriptor(serviceInfo)`生成该服务对应的服务描述符;
+in，比较重要of一点就是如果pass应用ServegenerateServe条目Descriptor`ServiceDescriptor`,ServeDescriptor是一个POJOobject,可以被注册到Serve注册middle心,we pass`CreateServiceDescriptor(serviceInfo)`generate该ServecorrespondingServeDescriptor;
 
 ```csharp
         private ServiceDescriptor CreateServiceDescriptor(Service service)
@@ -301,7 +301,7 @@ public string GenerateServiceId(Type serviceType)
         }
 ```
 
-我们看到如果该服务是本地服务，则会查找该应用服务的对应的服务类,我们知道,一个应用服务接口是可以存在多个实现类的;其实现类可以通过特性`[ServiceKey]`标识,该特性有两个参数,一个是实现类的名称,一个是该实现类的权重，如下所示:
+We saw如果该Serve是本地Serve，则会查找该应用ServeofcorrespondingServe类,we know,一个应用Serveinterface是可以存exist多个实现类of;其实现类able to passcharacteristic`[ServiceKey]`logo,该characteristic有两个parameter,一个是实现类ofname,一个是该实现类of权重，As follows:
 
 ```csharp
 
@@ -329,11 +329,11 @@ public class TestAppService : ITestAppService
     }
 ```
 
-前端在发送http请求的时候,可以通过在请求头携带`ServiceKey`来指定调用的实现类,如果没有指定`ServiceKey`的话,则执行权重大的实现类;
+前端exist发送http请求of时候,able to passexist请求头携带`ServiceKey`来指定transferof实现类,If not specified`ServiceKey`of话,则执行权重大of实现类;
 
-除此之外,应用服务还可以通过特性`[Metadata(key,value)]`来标识应用服务,通过其来追加该服务的元数据;
+besides,应用Serve还able to passcharacteristic`[Metadata(key,value)]`来logo应用Serve,pass其来追加该Serveof元数据;
 
-3.2 支持websocket的服务，在上一节中我们介绍了怎么查找支持websocket的服务；支持websocket的服务要求该主机必须包含`WebSocketModule`,查找该实现类后，通过服务生成器的`CreateWsService(wsServiceType)`创建支持websocket的服务:
+3.2 supportwebsocketofServe，exist上一节middle我们介绍了怎么Find supportwebsocketofServe；supportwebsocketofServe要求该主机必须包含`WebSocketModule`,After finding the implementation class，passServegenerate器of`CreateWsService(wsServiceType)`创建supportwebsocketofServe:
 
 ```csharp
 public Service CreateWsService(Type wsServiceType)
@@ -354,19 +354,19 @@ public Service CreateWsService(Type wsServiceType)
 }
 ```
 
-websocket服务生成服务Id的方法不一样,是通过该服务对应的websocket对应的webAPI的路径生成的,其他的属性赋值与普通应用服务的方式一致。
+websocketServegenerateServeIdofmethod不一样,is through该ServecorrespondingwebsocketcorrespondingwebAPIofpathgenerateof,其他of属性赋值与普通应用Serveof方式一致。
 
-## 服务条目的解析
+## Serve条目of解析
 
-在上面的源码解读中,我们看到,在应用服务解析过程中,应用服务所持有的服务条目是根据服务条目管理器根据`serviceId`提供的`_serviceEntryManager.GetServiceEntries(serviceId)`获取。
+exist上面of源码解读middle,We saw,exist应用Serve解析过程middle,应用Serve所持有ofServe条目是根据Serve条目manager根据`serviceId`提供of`_serviceEntryManager.GetServiceEntries(serviceId)`Obtain。
 
-服务条目如何解析和获取是由默认的服务条目管理器`DefaultServiceEntryManager`负责,服务条目管理器跟服务管理器一样,都是被注册为 **单例的**, 在整个应用生命周期,只会被创建一次。并且在构造器中实现服务条目的创建并对服务条目进行缓存。
+Serve条目如何解析和Obtain是由默认ofServe条目manager`DefaultServiceEntryManager`Responsible,Serve条目manager跟Servemanager一样,are registered as **singletonof**, exist整个应用生命周期,will only be created once。并且exist构造器middle实现Serve条目of创建并对Serve条目进行缓存。
 
 ```csharp
 public class DefaultServiceEntryManager : IServiceEntryManager
 {
-    private IEnumerable<ServiceEntry> m_localServiceEntries;  //用于缓存本地服务条目
-    private IEnumerable<ServiceEntry> m_allServiceEntries;  // 用于缓存全部服务条目
+    private IEnumerable<ServiceEntry> m_localServiceEntries;  //用于缓存本地Serve条目
+    private IEnumerable<ServiceEntry> m_allServiceEntries;  // 用于缓存全部Serve条目
     private IChangeToken? _changeToken;
 
     public DefaultServiceEntryManager(IEnumerable<IServiceEntryProvider> providers)
@@ -377,7 +377,7 @@ public class DefaultServiceEntryManager : IServiceEntryManager
     private void UpdateEntries(IEnumerable<IServiceEntryProvider> providers)
     {
         var allServiceEntries = new List<ServiceEntry>();
-        foreach (var provider in providers) // 遍历所有服务条目提供者,有服务条目服务者创建服务条目
+        foreach (var provider in providers) // 遍历所有Serve条目provider,有Serve条目Serve者创建Serve条目
         {
             var entries = provider.GetEntries();
             foreach (var entry in entries)
@@ -413,15 +413,15 @@ public class DefaultServiceEntryManager : IServiceEntryManager
         OnUpdate?.Invoke(this, serviceEntry);
     }
 
-   // 其他代码略...
+   // other codes...
 }
 ```
 
-从上面的源码我们可以看到,在服务条目管理器`DefaultServiceEntryManager`被创建时,会调用`UpdateEntries(providers)`通过遍历所有的服务条目提供者生成服务条目，并对服务条目进行缓存，服务条目不允许重复。
+从上面of源码我们可以看到,existServe条目manager`DefaultServiceEntryManager`when created,会transfer`UpdateEntries(providers)`pass遍历所有ofServe条目providergenerateServe条目，并对Serve条目进行缓存，Serve条目不允许重复。
 
-### 服务条目提供者
+### Serve条目provider
 
-与服务提供者一样,开发者也可以根据自己的约定实现自己的服务条目提供者,Silky框架实现了默认的服务提供者`DefaultServiceEntryProvider`。
+与Serveprovider一样,开发者也可以根据自己of约定实现自己ofServe条目provider,Silky框架实现了默认ofServeprovider`DefaultServiceEntryProvider`。
 
 ```csharp
 public class DefaultServiceEntryProvider : IServiceEntryProvider
@@ -445,21 +445,21 @@ public class DefaultServiceEntryProvider : IServiceEntryProvider
         return entries;
     }
    
-// 其他代码略...
+// other codes...
 
 }
 ```
 
-服务条目提供者创建服务条目的过程如下:
+Serve条目provider创建Serve条目of过程如下:
 
-1. 查找到所有的服务类型`IEnumerable<(Type, bool)> serviceTypeInfos`，其中：元组的第一个参数表示服务类型，第二个参数表示是否是本地服务;
-2. 是否包含`HttpCoreModule`模块,如果不包含,那么忽略标识了`[DashboardAppService]`的服务条目;
-3. 遍历所有的服务类型，通过服务条目生成器`IServiceEntryGenerator`创建该服务定义的所有服务条目;
+1. 查找到所有ofServe类型`IEnumerable<(Type, bool)> serviceTypeInfos`，in：元组of第一个parameter表示Serve类型，第二个parameter表示是否是本地Serve;
+2. Does it contain`HttpCoreModule`module,if not included,那么忽略logo了`[DashboardAppService]`ofServe条目;
+3. 遍历所有ofServe类型，passServe条目generate器`IServiceEntryGenerator`创建该Serve定义of所有Serve条目;
 
 
-### 服务条目生成器
+### Serve条目generate器
 
-服务条目生成器`DefaultServiceEntryGenerator`通过遍历服务类型定义的所有方法,以及该方法标识的`HttpMethod`,并且依次创建服务条目;
+Serve条目generate器`DefaultServiceEntryGenerator`pass遍历Serve类型定义of所有method,以及该methodlogoof`HttpMethod`,并且依次创建Serve条目;
 
 ```csharp
 public class DefaultServiceEntryGenerator : IServiceEntryGenerator
@@ -537,13 +537,13 @@ public class DefaultServiceEntryGenerator : IServiceEntryGenerator
             return serviceEntry;
         }
 
-   // 其他代码略...
+   // other codes...
 
    
 }
 ```
 
-如果一个方法被标识了多个`HttpMethod`,那么将会生成两个不同的服务条目,如果没有被标识`HttpMethod`特性,那么将会根据命名的规则默认返回对应的`HttpMethod`方法:
+如果一个method被logo了多个`HttpMethod`,那么将会generate两个不同ofServe条目,如果没有被logo`HttpMethod`characteristic,那么将会根据命名of规则默认返回corresponding`HttpMethod`method:
 
 ```csharp
         public static ICollection<HttpMethodInfo> GetHttpMethodInfos(this MethodInfo method)
@@ -599,16 +599,16 @@ public class DefaultServiceEntryGenerator : IServiceEntryGenerator
         }
 ```
 
-创建服务条目的过程如下所述:
+创建Serve条目of过程如下所述:
 
-1. 通过Id生成器`IIdGenerator`依次生成服务Id和服务条目Id;
-2. 通过参数提供者获取该方法对应的参数描述符` _parameterProvider.GetParameterDescriptors(method, httpMethodInfo)`;
-3. 通过`TemplateHelper.GenerateServerEntryTemplate()`为该方法生成路由模板，并创建该方法对应的路由器`router`;
-4. 创建服务条目描述符,并根据方法的特性`[Metadata]`更新服务描述符的元数据;
-5. 调用服务条目的构造方法创建服务条目;
-6. 更新服务条目描述符的元数据;
+1. passIdgenerate器`IIdGenerator`依次generateServeId和Serve条目Id;
+2. passparameterproviderObtain该methodcorrespondingparameterDescriptor` _parameterProvider.GetParameterDescriptors(method, httpMethodInfo)`;
+3. pass`TemplateHelper.GenerateServerEntryTemplate()`为该methodgeneraterouting模板，并创建该methodcorrespondingrouting器`router`;
+4. 创建Serve条目Descriptor,并根据methodofcharacteristic`[Metadata]`更新ServeDescriptorof元数据;
+5. transferServe条目of构造method创建Serve条目;
+6. 更新Serve条目Descriptorof元数据;
 
-服务条目治理构造方法如下所示,在服务条目构造器中完成了如下一系列的任务:
+Serve条目治理构造methodAs follows,existServe条目构造器middle完成了如下一系列of任务:
 
 ```csharp
     internal ServiceEntry(IRouter router,
@@ -627,29 +627,29 @@ public class DefaultServiceEntryGenerator : IServiceEntryGenerator
             MethodInfo = methodInfo;
             CustomAttributes = MethodInfo.GetCustomAttributes(true);
             (IsAsyncMethod, ReturnType) = MethodInfo.ReturnTypeInfo();
-            GovernanceOptions = new ServiceEntryGovernance(governanceOptions); // 根据服务治理配置创建服务条目治理属性
+            GovernanceOptions = new ServiceEntryGovernance(governanceOptions); // 根据Serve治理配置创建Serve条目治理属性
 
             var governanceProvider = CustomAttributes.OfType<IGovernanceProvider>().FirstOrDefault();
-            ReConfiguration(governanceProvider); // 更新服务条目的服务治理配置属性
+            ReConfiguration(governanceProvider); // 更新Serve条目ofServe治理配置属性
 
-            _methodExecutor = methodInfo.CreateExecutor(serviceType); // 创建方法执行器
-            Executor = CreateExecutor();  //创建服务条目执行器
-            AuthorizeData = CreateAuthorizeData(); // 解析服务条目的身份认证元数据
+            _methodExecutor = methodInfo.CreateExecutor(serviceType); // 创建method执行器
+            Executor = CreateExecutor();  //创建Serve条目执行器
+            AuthorizeData = CreateAuthorizeData(); // 解析Serve条目of身份认证元数据
 
-            ClientFilters = CreateClientFilters();  // 解析客户端过滤器
-            ServerFilters = CreateServerFilters();  // 解析服务端过滤器
-            CreateFallBackExecutor();   // 创建失败回调执行器
-            CreateDefaultSupportedRequestMediaTypes();  // 创建默认的请求媒体类型 
-            CreateDefaultSupportedResponseMediaTypes(); // 创建默认的响应媒体类型
-            CreateCachingInterceptorDescriptors();  // 创建缓存拦截描述符
+            ClientFilters = CreateClientFilters();  // 解析client filter
+            ServerFilters = CreateServerFilters();  // 解析Serve端过滤器
+            CreateFallBackExecutor();   // Create a failure callback executor
+            CreateDefaultSupportedRequestMediaTypes();  // 创建默认of请求媒体类型 
+            CreateDefaultSupportedResponseMediaTypes(); // 创建默认of响应媒体类型
+            CreateCachingInterceptorDescriptors();  // Create a cache interception descriptor
         }
 ```
 
-## 服务与服务条目的解析过程
+## Resolution of Services and Service Entries过程
 
-通过上文所述,我们知道服务与服务条目是在其 **管理器** 创建的时候进行构造解析的, **管理器**是单例的,也就是说在整个应用的生命周期中,服务与服务条目都只会被创建一次，并存在于应用的内存中。那么服务与服务条目是在服务条目的什么时候进行解析的呢?
+pass上文所述,we knowServe与Serve条目是exist其 **manager** 创建of时候进行构造解析of, **manager**是singletonof,That is to sayexist整个应用of生命周期middle,Serve与Serve条目都will only be created once，并存exist于应用of内存middle。那么Serve与Serve条目是existServe条目of什么时候进行解析of呢?
 
-1. 我们看到在服务生成器`DefaultServiceGenerator`中看到,通过构造注入服务条目管理器接口`IServiceEntryManager`,也就是说,在生成服务之前必须要先创建服务条目管理器的实例，在解析服务之前需要先解析服务条目,也正是因为如此,所以可以在在解析服务的时候通过服务条目管理器`IServiceEntryManager`获取该服务对应的服务条目;
+1. We sawexistServegenerate器`DefaultServiceGenerator`see in,pass构造注入Serve条目managerinterface`IServiceEntryManager`,That is to say,existgenerateServe之前必须要先创建Serve条目managerof实例，exist解析Serve之前需要先解析Serve条目,It is because of this,所以可以existexist解析Serveof时候passServe条目manager`IServiceEntryManager`Obtain该ServecorrespondingServe条目;
 
 ```csharp
 public class DefaultServiceGenerator : IServiceGenerator
@@ -669,7 +669,7 @@ public class DefaultServiceGenerator : IServiceGenerator
 }
 ```
 
-2. 在Silky服务主机提供者`DefaultServerProvider` 中,我们看到通过构造注入应用服务管理器`IServiceManager`,也就是说在第一次获取Silky服务主机提供者的时候,需要创建应用服务管理器的实例,实现应用服务的解析；
+2. existSilkyServe主机provider`DefaultServerProvider` middle,We sawpass构造注入应用Servemanager`IServiceManager`,That is to sayexist第一次ObtainSilkyServe主机providerof时候,需要创建应用Servemanagerof实例,实现应用Serveof解析；
 
 ```csharp
 public class DefaultServerProvider : IServerProvider
@@ -690,8 +690,8 @@ public class DefaultServerProvider : IServerProvider
 }
 ```
 
-通过上述的描述,我们可以了解到,在应用启动过程中,在首次解析Silky服务主机提供者实例`DefaultServerProvider`的时候,Silky框架会首先进行服务条目的解析,然后再解析应用服务;由于其相应的服务管理器都是 **单例的**，在整个应用的生命周期中,服务与服务条目都只会被解析一次;
+pass上述of描述,we can learn,exist应用启动过程middle,exist首次解析SilkyServe主机provider实例`DefaultServerProvider`of时候,Silky框架会首先进行Serve条目of解析,然后再解析应用Serve;由于其相应ofServemanager都是 **singletonof**，exist整个应用of生命周期middle,Serve与Serve条目都只会被解析一次;
 
-服务和服务条目被解析成功后，也会存在相应的**描述符**,随着应用的启动,描述符将会作为silky服务主机的一部分,将会随着应用服务主机的描述符注册到服务注册中心，服务注册中心将会更新整个微服务集群的注册信息(包括新增微服务主机信息、支持的服务与服务条目、以及主机实例的的终结点等等元数据信息)，集群的其他微服务主机实例将会通过心跳或是订阅的方式获取到整个集群最新的元数据,并通过更新到内存中;
+Serve和Serve条目被解析成功后，也会存exist相应of**Descriptor**,随着应用of启动,Descriptor将会作为silkyServe主机of一部分,将会随着应用Serve主机ofDescriptor注册到Serve注册middle心，Serve注册middle心将会更新整个微Serve集群of注册信息(包括新增微Serve主机信息、supportedServe与Serve条目、以及主机实例ofof终结点等等元数据信息)，集群of其他微Serve主机实例将会pass心跳或是订阅of方式get整个集群最新of元数据,并pass更新到内存middle;
 
-接下来,我们将继续介绍在应用启动时,如何构建Silky服务主机(提供者)[Server](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/Server.cs),并将其信息注册到服务注册中心;
+next,我们将继续介绍exist应用启动时,how to buildSilkyServe主机(provider)[Server](https://github.com/liuhll/silky/blob/main/framework/src/Silky.Rpc/Runtime/Server/Server.cs),并将其信息注册到Serve注册middle心;

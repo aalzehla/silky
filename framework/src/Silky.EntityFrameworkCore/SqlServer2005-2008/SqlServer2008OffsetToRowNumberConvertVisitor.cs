@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,28 +7,28 @@ using System.Linq.Expressions;
 namespace Microsoft.EntityFrameworkCore.Query
 {
     /// <summary>
-    /// 处理 .Skip().Take() 表达式问题
+    /// deal with .Skip().Take() expression problem
     /// </summary>
     internal class SqlServer2008OffsetToRowNumberConvertVisitor : ExpressionVisitor
     {
         /// <summary>
-        /// 筛选列访问器
+        /// Filter column accessors
         /// </summary>
         private static readonly Func<SelectExpression, SqlExpression, string, ColumnExpression>
             GenerateOuterColumnAccessor;
 
         /// <summary>
-        /// 表达式根节点
+        /// expression root node
         /// </summary>
         private readonly Expression root;
 
         /// <summary>
-        /// Sql 表达式工厂
+        /// Sql expression factory
         /// </summary>
         private readonly ISqlExpressionFactory sqlExpressionFactory;
 
         /// <summary>
-        /// 静态构造函数
+        /// static constructor
         /// </summary>
         static SqlServer2008OffsetToRowNumberConvertVisitor()
         {
@@ -45,7 +45,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="root"></param>
         /// <param name="sqlExpressionFactory"></param>
@@ -56,7 +56,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         /// <summary>
-        /// 替换表达式
+        /// replace expression
         /// </summary>
         /// <param name="node"></param>
         /// <returns></returns>
@@ -74,7 +74,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         /// <summary>
-        /// 更新 Select 语句
+        /// renew Select statement
         /// </summary>
         /// <param name="selectExpression"></param>
         /// <returns></returns>
@@ -87,12 +87,12 @@ namespace Microsoft.EntityFrameworkCore.Query
             var oldLimit = selectExpression.Limit;
             var oldOrderings = selectExpression.Orderings;
 
-            // 在子查询中 OrderBy 必须写 Top 数量
+            // in subquery OrderBy must write Top quantity
             var newOrderings = oldOrderings.Count > 0 && (oldLimit != null || selectExpression == root)
                 ? oldOrderings.ToList()
                 : new List<OrderingExpression>();
 
-            // 更新表达式
+            // renew表达式
             selectExpression = selectExpression.Update(selectExpression.Projection.ToList(),
                 selectExpression.Tables.ToList(),
                 selectExpression.Predicate,
@@ -106,7 +106,7 @@ namespace Microsoft.EntityFrameworkCore.Query
                 : new[] { new OrderingExpression(new SqlFragmentExpression("(SELECT 1)"), true) };
 
 #if NET5_0
-            _ = selectExpression.PushdownIntoSubquery(); // .NET 6 该方法已无返回值
+            _ = selectExpression.PushdownIntoSubquery(); // .NET 6 This method has no return value
 #else
             selectExpression.PushdownIntoSubquery();
 #endif
@@ -126,7 +126,7 @@ namespace Microsoft.EntityFrameworkCore.Query
                 }
                 else
                 {
-                    // 这里不支持子查询的 OrderBy 操作
+                    // Subqueries are not supported here OrderBy operate
                     selectExpression.ApplyLimit(oldLimit);
                 }
             }

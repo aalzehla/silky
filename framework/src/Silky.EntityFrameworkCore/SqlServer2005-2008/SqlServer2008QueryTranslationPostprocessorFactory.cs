@@ -1,22 +1,22 @@
-﻿namespace Microsoft.EntityFrameworkCore.Query
+namespace Microsoft.EntityFrameworkCore.Query
 {
     /// <summary>
-    /// SqlServer 查询转换工厂（处理 SqlServer 2008 分页问题）
+    /// SqlServer query conversion factory（deal with SqlServer 2008 pagination problem）
     /// </summary>
     public class SqlServer2008QueryTranslationPostprocessorFactory : IQueryTranslationPostprocessorFactory
     {
         /// <summary>
-        /// 查询转换依赖集合
+        /// Query Transformation Dependency Collection
         /// </summary>
         private readonly QueryTranslationPostprocessorDependencies _dependencies;
 
         /// <summary>
-        /// 关系查询转换依赖集合
+        /// 关系Query Transformation Dependency Collection
         /// </summary>
         private readonly RelationalQueryTranslationPostprocessorDependencies _relationalDependencies;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="dependencies"></param>
         /// <param name="relationalDependencies"></param>
@@ -28,7 +28,7 @@
         }
 
         /// <summary>
-        /// 创建查询转换实例工厂
+        /// Create a query transformation instance factory
         /// </summary>
         /// <param name="queryCompilationContext"></param>
         /// <returns></returns>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Silky.EntityFrameworkCore.Contexts.Enums;
 
 namespace Silky.EntityFrameworkCore.Contexts.Attributes
@@ -6,7 +6,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Attributes
     public class AppDbContextAttribute : Attribute
     {
         /// <summary>
-        /// 默认构造函数
+        /// default constructor
         /// </summary>
         /// <param name="slaveDbContextLocators"></param>
         public AppDbContextAttribute(params Type[] slaveDbContextLocators)
@@ -15,7 +15,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Attributes
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="slaveDbContextLocators"></param>
@@ -26,7 +26,7 @@ namespace Silky.EntityFrameworkCore.Contexts.Attributes
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="connectionString"></param>
         /// <param name="providerName"></param>
@@ -39,32 +39,32 @@ namespace Silky.EntityFrameworkCore.Contexts.Attributes
         }
 
         /// <summary>
-        /// 数据库连接字符串
+        /// database connection string
         /// </summary>
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// 数据库提供器名称
+        /// database provider name
         /// </summary>
         public string ProviderName { get; set; }
 
         /// <summary>
-        /// 数据库上下文模式
+        /// database context mode
         /// </summary>
         public DbContextMode Mode { get; set; } = DbContextMode.Cached;
 
         /// <summary>
-        /// 表统一前缀
+        /// table uniform prefix
         /// </summary>
         public string TablePrefix { get; set; }
 
         /// <summary>
-        /// 表统一后缀
+        /// table uniform suffix
         /// </summary>
         public string TableSuffix { get; set; }
 
         /// <summary>
-        /// 指定从库定位器
+        /// Specify the slave locator
         /// </summary>
         public Type[] SlaveDbContextLocators { get; set; }
     }

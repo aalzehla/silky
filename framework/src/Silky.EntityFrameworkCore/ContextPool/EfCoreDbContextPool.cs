@@ -16,17 +16,17 @@ namespace Silky.EntityFrameworkCore.ContextPool
     public class EfCoreDbContextPool : ISilkyDbContextPool
     {
         /// <summary>
-        /// 线程安全的数据库上下文集合
+        /// A collection of thread-safe database contexts
         /// </summary>
         private readonly ConcurrentDictionary<Guid, DbContext> dbContexts;
 
         /// <summary>
-        /// 登记错误的数据库上下文
+        /// Registering the wrong database context
         /// </summary>
         private readonly ConcurrentDictionary<Guid, DbContext> failedDbContexts;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="serviceProvider"></param>
         public EfCoreDbContextPool()
@@ -36,12 +36,12 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 数据库上下文事务
+        /// database context transaction
         /// </summary>
         public IDbContextTransaction DbContextTransaction { get; private set; }
 
         /// <summary>
-        /// 获取所有数据库上下文
+        /// Get all database contexts
         /// </summary>
         /// <returns></returns>
         public ConcurrentDictionary<Guid, DbContext> GetDbContexts()
@@ -50,7 +50,7 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 保存数据库上下文
+        /// save database context
         /// </summary>
         /// <param name="dbContext"></param>
         public void AddToPool(DbContext dbContext)
@@ -60,24 +60,24 @@ namespace Silky.EntityFrameworkCore.ContextPool
             var canAdd = dbContexts.TryAdd(instanceId, dbContext);
             if (canAdd)
             {
-                // 订阅数据库上下文操作失败事件
+                // Subscribe to database context operation failure events
                 dbContext.SaveChangesFailed += (s, e) =>
                 {
-                    // 排除已经存在的数据库上下文
+                    // Exclude existing database contexts
                     var canAdd = failedDbContexts.TryAdd(instanceId, dbContext);
                     if (canAdd)
                     {
                         dynamic context = s as DbContext;
 
-                        // 当前事务
+                        // current affairs
                         var database = context.Database as DatabaseFacade;
                         var currentTransaction = database?.CurrentTransaction;
                         if (currentTransaction != null && context.FailedAutoRollback == true)
                         {
-                            // 获取数据库连接信息
+                            // Get database connection information
                             var connection = database.GetDbConnection();
 
-                            // 回滚事务
+                            // rollback transaction
                             currentTransaction.Rollback();
                         }
                     }
@@ -86,7 +86,7 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 保存数据库上下文（异步）
+        /// save database context（asynchronous）
         /// </summary>
         /// <param name="dbContext"></param>
         public Task AddToPoolAsync(DbContext dbContext)
@@ -110,49 +110,49 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// save database context池中所有已更改的数据库上下文
         /// </summary>
         /// <returns></returns>
         public int SavePoolNow()
         {
-            // 查找所有已改变的数据库上下文并保存更改
+            // Find all changed database contexts and save changes
             return dbContexts
                 .Where(u => u.Value != null && u.Value.ChangeTracker.HasChanges() && !failedDbContexts.Contains(u))
                 .Select(u => u.Value.SaveChanges()).Count();
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// save database context池中所有已更改的数据库上下文
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <returns></returns>
         public int SavePoolNow(bool acceptAllChangesOnSuccess)
         {
-            // 查找所有已改变的数据库上下文并保存更改
+            // Find all changed database contexts and save changes
             return dbContexts
                 .Where(u => u.Value != null && u.Value.ChangeTracker.HasChanges() && !failedDbContexts.Contains(u))
                 .Select(u => u.Value.SaveChanges(acceptAllChangesOnSuccess)).Count();
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文
+        /// save database context池中所有已更改的数据库上下文
         /// </summary>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
         public async Task<int> SavePoolNowAsync(CancellationToken cancellationToken = default)
         {
-            // 查找所有已改变的数据库上下文并保存更改
+            // Find all changed database contexts and save changes
             var tasks = dbContexts
                 .Where(u => u.Value != null && u.Value.ChangeTracker.HasChanges() && !failedDbContexts.Contains(u))
                 .Select(u => u.Value.SaveChangesAsync(cancellationToken));
 
-            // 等待所有异步完成
+            // 等待所有asynchronous完成
             var results = await Task.WhenAll(tasks);
             return results.Length;
         }
 
         /// <summary>
-        /// 保存数据库上下文池中所有已更改的数据库上下文（异步）
+        /// save database context池中所有已更改的数据库上下文（asynchronous）
         /// </summary>
         /// <param name="acceptAllChangesOnSuccess"></param>
         /// <param name="cancellationToken"></param>
@@ -160,31 +160,31 @@ namespace Silky.EntityFrameworkCore.ContextPool
         public async Task<int> SavePoolNowAsync(bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default)
         {
-            // 查找所有已改变的数据库上下文并保存更改
+            // Find all changed database contexts and save changes
             var tasks = dbContexts
                 .Where(u => u.Value != null && u.Value.ChangeTracker.HasChanges() && !failedDbContexts.Contains(u))
                 .Select(u => u.Value.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken));
 
-            // 等待所有异步完成
+            // 等待所有asynchronous完成
             var results = await Task.WhenAll(tasks);
             return results.Length;
         }
 
         /// <summary>
-        /// 打开事务
+        /// open transaction
         /// </summary>
         /// <param name="ensureTransaction"></param>
         /// <returns></returns>
         public void BeginTransaction(bool ensureTransaction = false)
         {
-            // 判断 dbContextPool 中是否包含DbContext，如果是，则使用第一个数据库上下文开启事务，并应用于其他数据库上下文
+            // judge dbContextPool does it containDbContext，in the case of，then use the first database context to start the transaction，and applied to other database contexts
             EnsureTransaction:
             if (dbContexts.Any())
             {
-                // 如果共享事务不为空，则直接共享
+                // if the shared transaction is not null，share directly
                 if (DbContextTransaction != null) goto ShareTransaction;
 
-                // 先判断是否已经有上下文开启了事务
+                // 先judge是否已经有上下文开启了事务
                 var transactionDbContext = dbContexts.FirstOrDefault(u => u.Value.Database.CurrentTransaction != null);
                 if (transactionDbContext.Value != null)
                 {
@@ -192,23 +192,23 @@ namespace Silky.EntityFrameworkCore.ContextPool
                 }
                 else
                 {
-                    // 如果没有任何上下文有事务，则将第一个开启事务
+                    // If there is no context there is a transaction，will be the first to open the transaction
                     DbContextTransaction = dbContexts.First().Value.Database.BeginTransaction();
                 }
 
-                // 共享事务
+                // shared transaction
                 ShareTransaction:
                 ShareTransaction(DbContextTransaction.GetDbTransaction());
             }
             else
             {
-                // 判断是否确保事务强制可用（此处是无奈之举）
+                // judge是否确保事务强制可用（Here is helpless）
                 if (ensureTransaction)
                 {
                     var defaultDbContextLocator = Penetrates.DbContextWithLocatorCached.LastOrDefault();
                     if (defaultDbContextLocator.Key == null) return;
 
-                    // 创建一个新的上下文
+                    // create a new context
                     var newDbContext = Db.GetDbContext(defaultDbContextLocator.Key);
                     if (!dbContexts.Any())
                     {
@@ -221,31 +221,31 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 提交事务
+        /// commit transaction
         /// </summary>
         /// <param name="isManualSaveChanges"></param>
         /// <param name="exception"></param>
-        /// <param name="withCloseAll">是否自动关闭所有连接</param>
+        /// <param name="withCloseAll">Whether to automatically close all connections</param>
         public void CommitTransaction(bool isManualSaveChanges = true, Exception exception = default,
             bool withCloseAll = false)
         {
-            // 判断是否异常
+            // judge是否异常
             if (exception == null)
             {
                 try
                 {
-                    // 将所有数据库上下文修改 SaveChanges();，这里另外判断是否需要手动提交
+                    // Modify all database contexts SaveChanges();，这里另外judge是否需要手动提交
                     var hasChangesCount = !isManualSaveChanges ? SavePoolNow() : 0;
 
-                    // 如果事务为空，则执行完毕后关闭连接
+                    // if transaction is empty，Then close the connection after execution
                     if (DbContextTransaction == null) goto CloseAll;
 
-                    // 提交共享事务
+                    // 提交shared transaction
                     DbContextTransaction?.Commit();
                 }
                 catch
                 {
-                    // 回滚事务
+                    // rollback transaction
                     if (DbContextTransaction?.GetDbTransaction()?.Connection != null) DbContextTransaction?.Rollback();
 
                     throw;
@@ -261,19 +261,19 @@ namespace Silky.EntityFrameworkCore.ContextPool
             }
             else
             {
-                // 回滚事务
+                // rollback transaction
                 if (DbContextTransaction?.GetDbTransaction() != null) DbContextTransaction?.Rollback();
                 DbContextTransaction?.Dispose();
                 DbContextTransaction = null;
             }
 
-            // 关闭所有连接
+            // close all connections
             CloseAll:
             if (withCloseAll) CloseAll();
         }
 
         /// <summary>
-        /// 释放所有数据库上下文
+        /// release all database contexts
         /// </summary>
         public void CloseAll()
         {
@@ -290,13 +290,13 @@ namespace Silky.EntityFrameworkCore.ContextPool
         }
 
         /// <summary>
-        /// 设置数据库上下文共享事务
+        /// 设置数据库上下文shared transaction
         /// </summary>
         /// <param name="transaction"></param>
         /// <returns></returns>
         private void ShareTransaction(DbTransaction transaction)
         {
-            // 跳过第一个数据库上下文并设置共享事务
+            // 跳过第一个数据库上下文并设置shared transaction
             _ = dbContexts
                 .Where(u => u.Value != null && u.Value.Database.CurrentTransaction == null)
                 .Select(u => u.Value.Database.UseTransaction(transaction));

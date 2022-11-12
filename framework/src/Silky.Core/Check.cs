@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using JetBrains.Annotations;
@@ -46,17 +46,17 @@ namespace Silky.Core
         {
             if (value == null)
             {
-                throw new ArgumentException($"{parameterName} 不允许为空!", parameterName);
+                throw new ArgumentException($"{parameterName} Empty is not allowed!", parameterName);
             }
 
             if (value.Length > maxLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或小于 {maxLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} length must be equal to or less than {maxLength}!", parameterName);
             }
 
             if (minLength > 0 && value.Length < minLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或大于 {minLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} Length must be equal to or greater than {minLength}!", parameterName);
             }
 
             return value;
@@ -71,17 +71,17 @@ namespace Silky.Core
         {
             if (value.IsNullOrWhiteSpace())
             {
-                throw new ArgumentException($"{parameterName} 不允许为空或是空字符串", parameterName);
+                throw new ArgumentException($"{parameterName} Empty is not allowed或是空字符串", parameterName);
             }
 
             if (value.Length > maxLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或小于 {maxLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} length must be equal to or less than {maxLength}!", parameterName);
             }
 
             if (minLength > 0 && value.Length < minLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或大于 {minLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} Length must be equal to or greater than {minLength}!", parameterName);
             }
 
             return value;
@@ -96,17 +96,17 @@ namespace Silky.Core
         {
             if (value.IsNullOrEmpty())
             {
-                throw new ArgumentException($"{parameterName} 不允许为空!", parameterName);
+                throw new ArgumentException($"{parameterName} Empty is not allowed!", parameterName);
             }
 
             if (value.Length > maxLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或小于 {maxLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} length must be equal to or less than {maxLength}!", parameterName);
             }
 
             if (minLength > 0 && value.Length < minLength)
             {
-                throw new ArgumentException($"{parameterName} 长度必须等于或大于 {minLength}!", parameterName);
+                throw new ArgumentException($"{parameterName} Length must be equal to or greater than {minLength}!", parameterName);
             }
 
             return value;
@@ -118,7 +118,7 @@ namespace Silky.Core
         {
             if (value.IsNullOrEmpty())
             {
-                throw new ArgumentException(parameterName + " 不允许为空!", parameterName);
+                throw new ArgumentException(parameterName + " Empty is not allowed!", parameterName);
             }
 
             return value;

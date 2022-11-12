@@ -7,27 +7,27 @@ namespace Silky.Account.Application.Contracts.Accounts.Dtos
     public class GetAccountOutput
     {
         /// <summary>
-        /// 账号Id
+        /// accountId
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// 账号名称
+        /// account名称
         /// </summary>
         public string UserName { get; set; }
 
         /// <summary>
-        /// 地址
+        /// address
         /// </summary>
         public string Address { get; set; }
 
         /// <summary>
-        /// 电子邮件
+        /// e-mail
         /// </summary>
         public string Email { get; set; }
         
         /// <summary>
-        /// 账号余额
+        /// account余额
         /// </summary>
         public decimal Balance { get; set; }
     }

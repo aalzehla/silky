@@ -19,73 +19,73 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class DatabaseProviderServiceCollectionExtensions
     {
         /// <summary>
-        /// 添加默认数据库上下文
+        /// Add default database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="providerName">数据库提供器</param>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="providerName">database provider</param>
         /// <param name="optionBuilder"></param>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="poolSize">池大小</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="poolSize">pool size</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDbPool<TDbContext>(this IServiceCollection services,
             string providerName = default, Action<DbContextOptionsBuilder> optionBuilder = null,
             string connectionString = default, int poolSize = 100, params IInterceptor[] interceptors)
             where TDbContext : DbContext
         {
-            // 避免重复注册默认数据库上下文
+            // 避免重复注册默认database context
             if (Penetrates.DbContextWithLocatorCached.ContainsKey(typeof(MasterDbContextLocator)))
                 throw new InvalidOperationException("Prevent duplicate registration of default DbContext.");
 
-            // 注册数据库上下文
+            // 注册database context
             return services.AddDbPool<TDbContext, MasterDbContextLocator>(providerName, optionBuilder, connectionString,
                 poolSize, interceptors);
         }
 
         /// <summary>
-        /// 添加默认数据库上下文
+        /// Add default database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="optionBuilder">自定义配置</param>
-        /// <param name="poolSize">池大小</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="optionBuilder">custom configuration</param>
+        /// <param name="poolSize">pool size</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDbPool<TDbContext>(this IServiceCollection services,
             Action<DbContextOptionsBuilder> optionBuilder, int poolSize = 100, params IInterceptor[] interceptors)
             where TDbContext : DbContext
         {
-            // 避免重复注册默认数据库上下文
+            // 避免重复注册默认database context
             if (Penetrates.DbContextWithLocatorCached.ContainsKey(typeof(MasterDbContextLocator)))
                 throw new InvalidOperationException("Prevent duplicate registration of default DbContext.");
 
-            // 注册数据库上下文
+            // 注册database context
             return services.AddDbPool<TDbContext, MasterDbContextLocator>(optionBuilder, poolSize, interceptors);
         }
 
         /// <summary>
-        /// 添加其他数据库上下文
+        /// 添加其他database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="providerName">数据库提供器</param>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <typeparam name="TDbContextLocator">database context定位器</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="providerName">database provider</param>
         /// <param name="optionBuilder"></param>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="poolSize">池大小</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="poolSize">pool size</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDbPool<TDbContext, TDbContextLocator>(this IServiceCollection services,
             string providerName = default, Action<DbContextOptionsBuilder> optionBuilder = null,
             string connectionString = default, int poolSize = 100, params IInterceptor[] interceptors)
             where TDbContext : DbContext
             where TDbContextLocator : class, IDbContextLocator
         {
-            // 注册数据库上下文
+            // 注册database context
             services.RegisterDbContext<TDbContext, TDbContextLocator>();
 
-            // 配置数据库上下文
+            // configuredatabase context
             var connStr = DbProvider.GetConnectionString<TDbContext>(connectionString);
             services.AddDbContextPool<TDbContext>(Penetrates.ConfigureDbContext(options =>
             {
@@ -97,50 +97,50 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        ///  添加默认数据库上下文
+        ///  Add default database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="providerName">数据库提供器</param>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="providerName">database provider</param>
         /// <param name="optionBuilder"></param>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDb<TDbContext>(this IServiceCollection services,
             string providerName = default, Action<DbContextOptionsBuilder> optionBuilder = null,
             string connectionString = default, params IInterceptor[] interceptors)
             where TDbContext : DbContext
         {
-            // 避免重复注册默认数据库上下文
+            // 避免重复注册默认database context
             if (Penetrates.DbContextWithLocatorCached.ContainsKey(typeof(MasterDbContextLocator)))
                 throw new InvalidOperationException("Prevent duplicate registration of default DbContext.");
 
-            // 注册数据库上下文
+            // 注册database context
             return services.AddDb<TDbContext, MasterDbContextLocator>(providerName, optionBuilder, connectionString,
                 interceptors);
         }
 
         /// <summary>
-        /// 添加数据库上下文
+        /// 添加database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="providerName">数据库提供器</param>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <typeparam name="TDbContextLocator">database context定位器</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="providerName">database provider</param>
         /// <param name="optionBuilder"></param>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDb<TDbContext, TDbContextLocator>(this IServiceCollection services,
             string providerName = default, Action<DbContextOptionsBuilder> optionBuilder = null,
             string connectionString = default, params IInterceptor[] interceptors)
             where TDbContext : DbContext
             where TDbContextLocator : class, IDbContextLocator
         {
-            // 注册数据库上下文
+            // 注册database context
             services.RegisterDbContext<TDbContext, TDbContextLocator>();
 
-            // 配置数据库上下文
+            // configuredatabase context
             var connStr = DbProvider.GetConnectionString<TDbContext>(connectionString);
             services.AddDbContext<TDbContext>(Penetrates.ConfigureDbContext(options =>
             {
@@ -152,24 +152,24 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 添加其他数据库上下文
+        /// 添加其他database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <param name="services">服务</param>
-        /// <param name="optionBuilder">自定义配置</param>
-        /// <param name="poolSize">池大小</param>
-        /// <param name="interceptors">拦截器</param>
-        /// <returns>服务集合</returns>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <typeparam name="TDbContextLocator">database context定位器</typeparam>
+        /// <param name="services">Serve</param>
+        /// <param name="optionBuilder">custom configuration</param>
+        /// <param name="poolSize">pool size</param>
+        /// <param name="interceptors">interceptor</param>
+        /// <returns>Serve集合</returns>
         public static IServiceCollection AddDbPool<TDbContext, TDbContextLocator>(this IServiceCollection services,
             Action<DbContextOptionsBuilder> optionBuilder, int poolSize = 100, params IInterceptor[] interceptors)
             where TDbContext : DbContext
             where TDbContextLocator : class, IDbContextLocator
         {
-            // 注册数据库上下文
+            // 注册database context
             services.RegisterDbContext<TDbContext, TDbContextLocator>();
 
-            // 配置数据库上下文
+            // configuredatabase context
             services.AddDbContextPool<TDbContext>(Penetrates.ConfigureDbContext(optionBuilder, interceptors),
                 poolSize: poolSize);
 
@@ -177,17 +177,17 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 数据库提供器 UseXXX 方法缓存集合
+        /// database provider UseXXX method cache collection
         /// </summary>
         private static readonly ConcurrentDictionary<string, (MethodInfo, object)> DatabaseProviderUseMethodCollection;
 
         /// <summary>
-        /// 配置Code First 程序集 Action委托
+        /// configureCode First assembly Actionentrust
         /// </summary>
         private static readonly Action<IRelationalDbContextOptionsBuilderInfrastructure> MigrationsAssemblyAction;
 
         /// <summary>
-        /// 静态构造方法
+        /// static constructor
         /// </summary>
         static DatabaseProviderServiceCollectionExtensions()
         {
@@ -198,32 +198,32 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 配置数据库
+        /// configure数据库
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
-        /// <param name="providerName">数据库提供器</param>
-        /// <param name="connectionString">数据库连接字符串</param>
-        /// <param name="options">数据库上下文选项构建器</param>
+        /// <param name="providerName">database provider</param>
+        /// <param name="connectionString">数据库connection string</param>
+        /// <param name="options">database context选项构建器</param>
         private static DbContextOptionsBuilder ConfigureDatabase<TDbContext>(string providerName,
             string connectionString, DbContextOptionsBuilder options)
             where TDbContext : DbContext
         {
             var dbContextOptionsBuilder = options;
 
-            // 获取数据库上下文特性
+            // Obtaindatabase context特性
             var dbContextAttribute = DbProvider.GetAppDbContextAttribute(typeof(TDbContext));
             if (!string.IsNullOrWhiteSpace(connectionString))
             {
                 providerName ??= dbContextAttribute?.ProviderName;
 
-                // 解析数据库提供器信息
+                // Parsedatabase provider信息
                 (var name, var version) = ReadProviderInfo(providerName);
                 providerName = name;
 
-                // 调用对应数据库程序集
+                // 调用对应数据库assembly
                 var (UseMethod, MySqlVersion) = GetDatabaseProviderUseMethod(providerName, version);
 
-                // 处理最新第三方 MySql 包兼容问题
+                // Deal with the latest third parties MySql package compatibility issues
                 // https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/commit/83c699f5b747253dc1b6fa9c470f469467d77686
                 if (DbProvider.IsDatabaseFor(providerName, DbProvider.MySql))
                 {
@@ -232,11 +232,11 @@ namespace Microsoft.Extensions.DependencyInjection
                                 new object[] { options, connectionString, MySqlVersion, MigrationsAssemblyAction })
                         as DbContextOptionsBuilder;
                 }
-                // 处理 SqlServer 2005-2008 兼容问题
+                // deal with SqlServer 2005-2008 Compatibility problems
                 else if (DbProvider.IsDatabaseFor(providerName, DbProvider.SqlServer) &&
                          (version == "2008" || version == "2005"))
                 {
-                    // 替换工厂
+                    // replacement factory
                     dbContextOptionsBuilder
                         .ReplaceService<IQueryTranslationPostprocessorFactory,
                             SqlServer2008QueryTranslationPostprocessorFactory>();
@@ -245,7 +245,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             .Invoke(null, new object[] { options, connectionString, MigrationsAssemblyAction }) as
                         DbContextOptionsBuilder;
                 }
-                // 处理 Oracle 11 兼容问题
+                // deal with Oracle 11 Compatibility problems
                 else if (DbProvider.IsDatabaseFor(providerName, DbProvider.Oracle) &&
                          !string.IsNullOrWhiteSpace(version))
                 {
@@ -253,11 +253,11 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
                         var optionsType = options.GetType();
 
-                        // 处理版本号
+                        // deal with版本号
                         optionsType.GetMethod("UseOracleSQLCompatibility")
                             .Invoke(options, new[] { version });
 
-                        // 处理迁移程序集
+                        // deal with迁移assembly
                         optionsType.GetMethod("MigrationsAssembly")
                             .Invoke(options, new[] { Db.MigrationAssemblyName });
                     };
@@ -274,7 +274,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 }
             }
 
-            // 解决分表分库
+            // Solve the sub-table and sub-library
             if (dbContextAttribute?.Mode == DbContextMode.Dynamic)
                 dbContextOptionsBuilder
                     .ReplaceService<IModelCacheKeyFactory, DynamicModelCacheKeyFactory>();
@@ -283,9 +283,9 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 获取数据库提供器对应的 useXXX 方法
+        /// Obtaindatabase provider对应的 useXXX method
         /// </summary>
-        /// <param name="providerName">数据库提供器</param>
+        /// <param name="providerName">database provider</param>
         /// <param name="version"></param>
         /// <returns></returns>
         private static (MethodInfo UseMethod, object MySqlVersion) GetDatabaseProviderUseMethod(string providerName,
@@ -293,17 +293,17 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return DatabaseProviderUseMethodCollection.GetOrAdd(providerName, Function(providerName, version));
 
-            // 本地静态方法
+            // 本地静态method
             static (MethodInfo, object) Function(string providerName, string version)
             {
-                // 处理最新 MySql 包兼容问题
+                // deal with最新 MySql package compatibility issues
                 // https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/commit/83c699f5b747253dc1b6fa9c470f469467d77686
                 object mySqlVersionInstance = default;
 
-                // 加载对应的数据库提供器程序集
+                // 加载对应的database providerassembly
                 var databaseProviderAssembly = Assembly.Load(providerName);
 
-                // 数据库提供器服务拓展类型名
+                // database providerServe拓展类型名
                 var databaseProviderServiceExtensionTypeName = providerName switch
                 {
                     DbProvider.SqlServer => "SqlServerDbContextOptionsExtensions",
@@ -319,12 +319,12 @@ namespace Microsoft.Extensions.DependencyInjection
                     _ => null
                 };
 
-                // 加载拓展类型
+                // Load extension type
                 var databaseProviderServiceExtensionType =
                     databaseProviderAssembly.GetType(
                         $"Microsoft.EntityFrameworkCore.{databaseProviderServiceExtensionTypeName}");
 
-                // useXXX方法名
+                // useXXXmethod名
                 var useMethodName = providerName switch
                 {
                     DbProvider.SqlServer => $"Use{nameof(DbProvider.SqlServer)}",
@@ -340,10 +340,10 @@ namespace Microsoft.Extensions.DependencyInjection
                     _ => null
                 };
 
-                // 获取UseXXX方法
+                // ObtainUseXXXmethod
                 MethodInfo useMethod;
 
-                // 处理最新 MySql 第三方包兼容问题
+                // deal with最新 MySql 第三方package compatibility issues
                 // https://github.com/PomeloFoundation/Pomelo.EntityFrameworkCore.MySql/commit/83c699f5b747253dc1b6fa9c470f469467d77686
                 if (DbProvider.IsDatabaseFor(providerName, DbProvider.MySql))
                 {
@@ -353,7 +353,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             u.Name == useMethodName && !u.IsGenericMethod && u.GetParameters().Length == 4 &&
                             u.GetParameters()[1].ParameterType == typeof(string));
 
-                    // 解析mysql版本类型
+                    // ParsemysqlVersion type
                     var mysqlVersionType =
                         databaseProviderAssembly.GetType("Microsoft.EntityFrameworkCore.MySqlServerVersion");
                     mySqlVersionInstance = Activator.CreateInstance(mysqlVersionType,
@@ -374,7 +374,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
         private static (string name, string version) ReadProviderInfo(string providerName)
         {
-            // 解析真实的数据库提供器
+            // Parse真实的database provider
             var providerNameAndVersion = providerName.Split('@', StringSplitOptions.RemoveEmptyEntries);
             providerName = providerNameAndVersion.First();
 
@@ -383,11 +383,11 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 注册数据库上下文
+        /// 注册database context
         /// </summary>
-        /// <typeparam name="TDbContext">数据库上下文</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <param name="services">服务提供器</param>
+        /// <typeparam name="TDbContext">database context</typeparam>
+        /// <typeparam name="TDbContextLocator">database context定位器</typeparam>
+        /// <param name="services">Serve提供器</param>
         public static IServiceCollection RegisterDbContext<TDbContext, TDbContextLocator>(
             this IServiceCollection services)
             where TDbContext : DbContext
@@ -395,7 +395,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             var dbContextLocatorType = (typeof(TDbContextLocator));
 
-            // 将数据库上下文和定位器一一保存起来
+            // 将database context和定位器一一保存起来
             var isSuccess = Penetrates.DbContextWithLocatorCached.TryAdd(dbContextLocatorType, typeof(TDbContext));
             Penetrates.DbContextLocatorTypeCached.TryAdd(dbContextLocatorType.FullName, dbContextLocatorType);
 
@@ -403,7 +403,7 @@ namespace Microsoft.Extensions.DependencyInjection
                 throw new InvalidOperationException(
                     $"The locator `{dbContextLocatorType.FullName}` is bound to another DbContext.");
 
-            // 注册数据库上下文
+            // 注册database context
             services.TryAddScoped<TDbContext>();
 
             return services;

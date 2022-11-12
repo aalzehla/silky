@@ -17,72 +17,72 @@ namespace Microsoft.EntityFrameworkCore
     public static class DbProvider
     {
         /// <summary>
-        /// SqlServer 提供器程序集
+        /// SqlServer provider assembly
         /// </summary>
         public const string SqlServer = "Microsoft.EntityFrameworkCore.SqlServer";
 
         /// <summary>
-        /// Sqlite 提供器程序集
+        /// Sqlite provider assembly
         /// </summary>
         public const string Sqlite = "Microsoft.EntityFrameworkCore.Sqlite";
 
         /// <summary>
-        /// Cosmos 提供器程序集
+        /// Cosmos provider assembly
         /// </summary>
         public const string Cosmos = "Microsoft.EntityFrameworkCore.Cosmos";
 
         /// <summary>
-        /// 内存数据库 提供器程序集
+        /// Memory Database provider assembly
         /// </summary>
         public const string InMemoryDatabase = "Microsoft.EntityFrameworkCore.InMemory";
 
         /// <summary>
-        /// MySql 提供器程序集
+        /// MySql provider assembly
         /// </summary>
         public const string MySql = "Pomelo.EntityFrameworkCore.MySql";
 
         /// <summary>
-        /// MySql 官方包（更新不及时，只支持 8.0.23+ 版本， 所以单独弄一个分类）
+        /// MySql official package（Update is not timely，only support 8.0.23+ Version， So make a separate category）
         /// </summary>
         public const string MySqlOfficial = "MySql.EntityFrameworkCore";
 
         /// <summary>
-        /// PostgreSQL 提供器程序集
+        /// PostgreSQL provider assembly
         /// </summary>
         public const string Npgsql = "Npgsql.EntityFrameworkCore.PostgreSQL";
 
         /// <summary>
-        /// Oracle 提供器程序集
+        /// Oracle provider assembly
         /// </summary>
         public const string Oracle = "Oracle.EntityFrameworkCore";
 
         /// <summary>
-        /// Firebird 提供器程序集
+        /// Firebird provider assembly
         /// </summary>
         public const string Firebird = "FirebirdSql.EntityFrameworkCore.Firebird";
 
         /// <summary>
-        /// Dm 提供器程序集
+        /// Dm provider assembly
         /// </summary>
         public const string Dm = "Microsoft.EntityFrameworkCore.Dm";
 
         /// <summary>
-        /// 不支持存储过程的数据库
+        /// Databases that do not support stored procedures
         /// </summary>
         internal static readonly string[] NotSupportStoredProcedureDatabases;
 
         /// <summary>
-        /// 不支持函数的数据库
+        /// Databases that do not support functions
         /// </summary>
         internal static readonly string[] NotSupportFunctionDatabases;
 
         /// <summary>
-        /// 不支持表值函数的数据库
+        /// Databases that do not support table-valued functions
         /// </summary>
         internal static readonly string[] NotSupportTableFunctionDatabases;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         static DbProvider()
         {
@@ -114,7 +114,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 获取数据库上下文连接字符串
+        /// Get database context connection string
         /// </summary>
         /// <typeparam name="TDbContext"></typeparam>
         /// <param name="connectionString"></param>
@@ -122,30 +122,30 @@ namespace Microsoft.EntityFrameworkCore
         public static string GetConnectionString<TDbContext>(string connectionString = default)
             where TDbContext : DbContext
         {
-            // 支持读取配置渲染
+            // Support read configuration rendering
             var realConnectionString = connectionString.Render();
 
             if (!string.IsNullOrWhiteSpace(realConnectionString)) return realConnectionString;
 
-            // 如果没有配置数据库连接字符串，那么查找特性
+            // If no database connection string is configured，then look for features
             var dbContextAttribute = GetAppDbContextAttribute(typeof(TDbContext));
             if (dbContextAttribute == null) return default;
 
-            // 获取特性连接字符串（渲染配置模板）
+            // Get attribute connection string（render configuration template）
             var connStr = dbContextAttribute.ConnectionString.Render();
 
             if (string.IsNullOrWhiteSpace(connStr)) return default;
-            // 如果包含 = 符号，那么认为是连接字符串
+            // if it contains = symbol，then think it's a connection string
             if (connStr.Contains("=")) return connStr;
             else
             {
                 var configuration = EngineContext.Current.Configuration;
 
-                // 如果包含 : 符号，那么认为是一个 Key 路径
+                // if it contains : symbol，then consider a Key path
                 if (connStr.Contains(":")) return configuration[connStr];
                 else
                 {
-                    // 首先查找 DbConnectionString 键，如果没有找到，则当成 Key 去查找
+                    // Find first DbConnectionString key，if not found，be regarded as Key to find
                     var connStrValue = configuration.GetConnectionString(connStr);
                     return !string.IsNullOrWhiteSpace(connStrValue) ? connStrValue : configuration[connStr];
                 }
@@ -153,7 +153,7 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 数据库上下文 [AppDbContext] 特性缓存
+        /// database context [AppDbContext] feature cache
         /// </summary>
         private static readonly ConcurrentDictionary<Type, AppDbContextAttribute> DbContextAppDbContextAttributes;
 
@@ -161,7 +161,7 @@ namespace Microsoft.EntityFrameworkCore
         {
             return DbContextAppDbContextAttributes.GetOrAdd(dbContexType, Function);
 
-            // 本地静态函数
+            // local static function
             static AppDbContextAttribute Function(Type dbContextType)
             {
                 if (!dbContextType.IsDefined(typeof(AppDbContextAttribute), true)) return default;
@@ -188,16 +188,16 @@ namespace Microsoft.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 不支持操作类型
+        /// Operation type not supported
         /// </summary>
         private const string NotSupportException = "The database provider does not support {0} operations.";
 
 
         /// <summary>
-        /// 检查是否支持函数
+        /// Check if a function is supported
         /// </summary>
-        /// <param name="providerName">数据库提供器名</param>
-        /// <param name="dbFunctionType">数据库函数类型</param>
+        /// <param name="providerName">database provider name</param>
+        /// <param name="dbFunctionType">database function type</param>
         internal static void CheckFunctionSupported(string providerName, DbFunctionType dbFunctionType)
         {
             if (NotSupportFunctionDatabases.Contains(providerName))

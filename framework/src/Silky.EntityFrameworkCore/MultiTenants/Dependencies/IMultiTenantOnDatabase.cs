@@ -1,12 +1,12 @@
-﻿namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
+namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
 {
     /// <summary>
-    /// 基于多个数据库多租户模式
+    /// Multi-tenant mode based on multiple databases
     /// </summary>
     public interface IMultiTenantOnDatabase : IPrivateMultiTenant
     {
         /// <summary>
-        /// 获取数据库连接字符串
+        /// Get database connection string
         /// </summary>
         /// <returns></returns>
         string GetDatabaseConnectionString();

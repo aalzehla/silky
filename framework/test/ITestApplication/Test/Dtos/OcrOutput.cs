@@ -3,7 +3,7 @@ namespace ITestApplication.Test.Dtos;
 public class OcrOutput : ResponseBase
 {
     /// <summary>
-    /// 识别结果
+    /// Recognition result
     /// </summary>
     public object Result { get; set; }
 }

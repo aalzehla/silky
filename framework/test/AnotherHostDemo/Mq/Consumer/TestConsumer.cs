@@ -12,6 +12,6 @@ public class TestConsumer : SilkyConsumer<TestMessage>
     protected async override Task ConsumeWork(ConsumeContext<TestMessage> context)
     {
         var loginUser = NullSession.Instance;
-        Debug.Assert(loginUser.IsLogin(),"登录用户信息获取失败");
+        Debug.Assert(loginUser.IsLogin(),"Failed to obtain login user information");
     }
 }

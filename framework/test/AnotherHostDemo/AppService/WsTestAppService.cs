@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using IAnotherApplication;
 using Silky.Core.Exceptions;
 using Silky.WebSocket;
@@ -18,7 +18,7 @@ namespace AnotherHostDemo.AppService
             }
             else
             {
-                throw new BusinessException($"不存在businessId为{businessId}的会话");
+                throw new BusinessException($"does not existbusinessIdfor{businessId}session");
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,17 +14,17 @@ namespace Silky.Zookeeper.Implementation
         private readonly IZookeeperClient _client;
 
         /// <summary>
-        /// 数据变更多播委托。
+        /// Data change multicast delegation。
         /// </summary>
         private NodeDataChangeHandler _dataChangeHandler;
 
         /// <summary>
-        /// 子节点变更多播委托。
+        /// Child node changes multicast delegation。
         /// </summary>
         private NodeChildrenChangeHandler _childrenChangeHandler;
 
         /// <summary>
-        /// 节点的快照。
+        /// Snapshot of the node。
         /// </summary>
         private NodeSnapshot _localSnapshot = default(NodeSnapshot);
 
@@ -114,7 +114,7 @@ namespace Silky.Zookeeper.Implementation
         {
             _dataChangeHandler += listener;
 
-            //监控数据变化
+            //Monitor data changes
             await WatchDataChange();
         }
 
@@ -127,7 +127,7 @@ namespace Silky.Zookeeper.Implementation
         {
             _childrenChangeHandler += listener;
 
-            //监控子节点变化
+            //Monitor child node changes
             return await WatchChildrenChange();
         }
 
@@ -143,27 +143,27 @@ namespace Silky.Zookeeper.Implementation
         #region Private Method
 
         /// <summary>
-        /// 通知节点发生变化。
+        /// Notify nodes of changes。
         /// </summary>
-        /// <param name="watchedEvent">zookeeper sdk监听事件参数。</param>
-        /// <param name="isFirstConnection">是否是zk第一次连接上服务器。</param>
+        /// <param name="watchedEvent">zookeeper sdklisten event parameter。</param>
+        /// <param name="isFirstConnection">whether or notzkConnecting to the server for the first time。</param>
         internal async Task OnChange(WatchedEvent watchedEvent, bool isFirstConnection)
         {
-            //得到节点路径（如果只是状态发送变化则路径为null）
+            //get node path（If only the state sends the change then the path isnull）
             var path = watchedEvent.getPath();
-            //是否是zk连接状态变更
+            //whether or notzkconnection status change
             var stateChanged = path == null;
 
-            //如果只是状态变更则进行状态变更处理
+            //If it is only a state change; perform state change processing
             if (stateChanged)
             {
                 await OnStatusChangeHandle(watchedEvent, isFirstConnection);
             }
-            else if (path == Path) //如果变化的节点属于自己
+            else if (path == Path) //If the changed node belongs to itself
             {
                 var eventType = watchedEvent.get_Type();
 
-                //是否属于数据变更
+                //Whether it is a data change
                 var dataChanged = new[]
                 {
                     Watcher.Event.EventType.NodeCreated,
@@ -173,43 +173,43 @@ namespace Silky.Zookeeper.Implementation
 
                 if (dataChanged)
                 {
-                    //如果子节点刚刚被创建并且该节点有注册子节点变更监听，则通知zk进行子节点监听（延迟监听）
+                    //If the child node has just been created and the node has registered child node change listeners，then notifyzkmonitor child nodes（Delay listening）
                     if (eventType == Watcher.Event.EventType.NodeCreated && HasChildrenChangeHandler)
                         await _client.RetryUntilConnected(() => GetChildrenAsync(true));
 
-                    //进行数据变更处理
+                    //Perform data change processing
                     await OnDataChangeHandle(watchedEvent);
                 }
                 else
                 {
-                    //进行子节点变更处理
+                    //Perform child node change processing
                     await OnChildrenChangeHandle(watchedEvent);
                 }
             }
         }
 
         /// <summary>
-        /// 是否有数据变更处理者。
+        /// Is there a data change processor。
         /// </summary>
         private bool HasDataChangeHandler => HasHandler(_dataChangeHandler);
 
         /// <summary>
-        /// 是否有子节点变更处理者。
+        /// Whether there is a child node change handler。
         /// </summary>
         private bool HasChildrenChangeHandler => HasHandler(_childrenChangeHandler);
 
         /// <summary>
-        /// 状态变更处理。
+        /// state change handling。
         /// </summary>
         /// <param name="watchedEvent"></param>
-        /// <param name="isFirstConnection">是否是zk第一次连接上服务器。</param>
+        /// <param name="isFirstConnection">whether or notzkConnecting to the server for the first time。</param>
         private async Task OnStatusChangeHandle(WatchedEvent watchedEvent, bool isFirstConnection)
         {
-            //第一次连接zk不进行通知
+            //first connectionzkno notification
             if (isFirstConnection)
                 return;
 
-            //尝试恢复节点
+            //try to restore the node
             await RestoreEphemeral();
 
             if (HasDataChangeHandler)
@@ -223,20 +223,20 @@ namespace Silky.Zookeeper.Implementation
             if (!HasDataChangeHandler)
                 return;
 
-            //获取当前节点最新数据的一个委托
+            //A delegate to get the latest data of the current node
             var getCurrentData = new Func<Task<IEnumerable<byte>>>(() => _client.RetryUntilConnected(async () =>
             {
                 try
                 {
                     return await GetDataAsync();
                 }
-                catch (KeeperException.NoNodeException) //节点不存在返回null
+                catch (KeeperException.NoNodeException) //node does not exist returnnull
                 {
                     return null;
                 }
             }));
 
-            //根据事件类型构建节点变更事件参数
+            //Build Node Change Event Parameters Based on Event Type
             NodeDataChangeArgs args;
             switch (watchedEvent.get_Type())
             {
@@ -249,18 +249,18 @@ namespace Silky.Zookeeper.Implementation
                     break;
 
                 case Watcher.Event.EventType.NodeDataChanged:
-                case Watcher.Event.EventType.None: //重连时触发
+                case Watcher.Event.EventType.None: //Triggered on reconnect
                     args = new NodeDataChangeArgs(Path, Watcher.Event.EventType.NodeDataChanged,
                         await getCurrentData());
                     break;
 
                 default:
-                    throw new NotSupportedException($"不支持的事件类型：{watchedEvent.get_Type()}");
+                    throw new NotSupportedException($"Unsupported event type：{watchedEvent.get_Type()}");
             }
 
             await _dataChangeHandler(_client, args);
 
-            //重新监听
+            //relisten
             await WatchDataChange();
         }
 
@@ -269,7 +269,7 @@ namespace Silky.Zookeeper.Implementation
             if (!HasChildrenChangeHandler)
                 return;
 
-            //获取当前节点最新的子节点信息
+            //Get the latest child node information of the current node
             var getCurrentChildrens = new Func<Task<IEnumerable<string>>>(() => _client.RetryUntilConnected(
                 async () =>
                 {
@@ -283,7 +283,7 @@ namespace Silky.Zookeeper.Implementation
                     }
                 }));
 
-            //根据事件类型构建节点子节点变更事件参数
+            //Build node child nodes based on event type Change event parameters
             NodeChildrenChangeArgs args;
             switch (watchedEvent.get_Type())
             {
@@ -297,18 +297,18 @@ namespace Silky.Zookeeper.Implementation
                     break;
 
                 case Watcher.Event.EventType.NodeChildrenChanged:
-                case Watcher.Event.EventType.None: //重连时触发
+                case Watcher.Event.EventType.None: //Triggered on reconnect
                     args = new NodeChildrenChangeArgs(Path, Watcher.Event.EventType.NodeChildrenChanged,
                         await getCurrentChildrens());
                     break;
 
                 default:
-                    throw new NotSupportedException($"不支持的事件类型：{watchedEvent.get_Type()}");
+                    throw new NotSupportedException($"Unsupported event type：{watchedEvent.get_Type()}");
             }
 
             await _childrenChangeHandler(_client, args);
 
-            //重新监听
+            //relisten
             await WatchChildrenChange();
         }
 
@@ -341,15 +341,15 @@ namespace Silky.Zookeeper.Implementation
 
         private async Task RestoreEphemeral()
         {
-            //没有开启恢复
+            //Recovery is not enabled
             if (!_client.Options.EnableEphemeralNodeRestore)
                 return;
 
-            //节点不存在
+            //node does not exist
             if (!_localSnapshot.IsExist)
                 return;
 
-            //不是短暂的节点
+            //not ephemeral nodes
             if (_localSnapshot.Mode != CreateMode.EPHEMERAL && _localSnapshot.Mode != CreateMode.EPHEMERAL_SEQUENTIAL)
                 return;
 
@@ -362,7 +362,7 @@ namespace Silky.Zookeeper.Implementation
                         return await CreateAsync(_localSnapshot.Data?.ToArray(), _localSnapshot.Acls,
                             _localSnapshot.Mode);
                     }
-                    catch (KeeperException.NodeExistsException) //节点已经存在则忽略
+                    catch (KeeperException.NodeExistsException) //Ignore if node already exists
                     {
                         return Path;
                     }
@@ -370,7 +370,7 @@ namespace Silky.Zookeeper.Implementation
             }
             catch (Exception exception)
             {
-                Console.WriteLine($"恢复节点失败，异常：{exception.Message}");
+                Console.WriteLine($"Failed to restore node，abnormal：{exception.Message}");
             }
         }
 

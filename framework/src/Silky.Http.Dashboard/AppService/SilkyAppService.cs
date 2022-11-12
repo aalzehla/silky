@@ -496,27 +496,27 @@ namespace Silky.Http.Dashboard.AppService
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "Microservice",
-                Title = "微服务应用",
+                Title = "Microservice application",
                 Count = _serverManager.ServerDescriptors.Count(p => p.Endpoints.Any(e => e.IsInstanceEndpoint()))
             });
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "ServiceInstance",
-                Title = "微服务应用实例",
+                Title = "Microservice application实例",
                 Count = _serverManager.ServerDescriptors.SelectMany(p => p.Endpoints).Count(p => p.IsInstanceEndpoint())
             });
 
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "GatewayInstance",
-                Title = "网关实例",
+                Title = "Gateway instance",
                 Count = _serverManager.GetSelfServer().Endpoints.Count(e => e.ServiceProtocol.IsHttp())
             });
 
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "WebSocketService",
-                Title = "支持WebSocket的微服务",
+                Title = "supportWebSocketmicroservices",
                 Count = _serverManager.ServerDescriptors
                     .Count(p => p.Endpoints.Any(e => e.ServiceProtocol == ServiceProtocol.Ws))
             });
@@ -524,21 +524,21 @@ namespace Silky.Http.Dashboard.AppService
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "WebSocketServiceInstance",
-                Title = "支持WebSocket的实例",
+                Title = "supportWebSocketinstance of",
                 Count = _serverManager.ServerDescriptors.SelectMany(p => p.Endpoints)
                     .Count(p => p.ServiceProtocol == ServiceProtocol.Ws)
             });
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "Services",
-                Title = "应用服务",
+                Title = "application service",
                 Count = _serverManager.ServerDescriptors.SelectMany(p => p.Services)
                     .Distinct().Count()
             });
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "WebSocketService",
-                Title = "WebSocket服务",
+                Title = "WebSocketServe",
                 Count = _serverManager.ServerDescriptors.SelectMany(p => p.Services)
                     .Where(p => p.ServiceProtocol == ServiceProtocol.Ws)
                     .Distinct().Count()
@@ -546,14 +546,14 @@ namespace Silky.Http.Dashboard.AppService
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "ServiceEntry",
-                Title = "服务条目",
+                Title = "Serve条目",
                 Count = _serverManager.ServerDescriptors.SelectMany(p => p.Services.SelectMany(p => p.ServiceEntries))
                     .Distinct().Count()
             });
             getProfileOutputs.Add(new GetProfileOutput()
             {
                 Code = "RegistryCenter",
-                Title = "服务注册中心",
+                Title = "Serve注册中心",
                 Count = _registerCenterHealthProvider.GetRegistryCenterHealthInfo().Count
             });
 
@@ -568,7 +568,7 @@ namespace Silky.Http.Dashboard.AppService
             {
                 var externalRoute = CreateExternalRoute("/external");
                 externalRoute.Meta["Icon"] = "el-icon-link";
-                externalRoute.Meta["Title"] = "外部链接";
+                externalRoute.Meta["Title"] = "external link";
                 externalRoute.Meta["IsLayout"] = true;
                 externalRoute.Meta["ShowLink"] = true;
                 externalRoute.Meta["SavedPosition"] = false;

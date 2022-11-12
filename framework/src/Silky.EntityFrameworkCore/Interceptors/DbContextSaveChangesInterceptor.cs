@@ -1,16 +1,16 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Silky.EntityFrameworkCore.Interceptors
 {
     /// <summary>
-    /// 数据库上下文提交拦截器
+    /// Database context commit interceptor
     /// </summary>
     public class DbContextSaveChangesInterceptor : SaveChangesInterceptor
     {
         /// <summary>
-        /// 拦截保存数据库之前
+        /// Intercept before saving the database
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -25,7 +25,7 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截保存数据库之前
+        /// Intercept before saving the database
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -41,7 +41,7 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截保存数据库成功
+        /// Intercept save database successfully
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -55,7 +55,7 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截保存数据库成功
+        /// Intercept save database successfully
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="result"></param>
@@ -71,7 +71,7 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截保存数据库失败
+        /// Failed to intercept save database
         /// </summary>
         /// <param name="eventData"></param>
         public override void SaveChangesFailed(DbContextErrorEventData eventData)
@@ -83,7 +83,7 @@ namespace Silky.EntityFrameworkCore.Interceptors
         }
 
         /// <summary>
-        /// 拦截保存数据库失败
+        /// Failed to intercept save database
         /// </summary>
         /// <param name="eventData"></param>
         /// <param name="cancellationToken"></param>

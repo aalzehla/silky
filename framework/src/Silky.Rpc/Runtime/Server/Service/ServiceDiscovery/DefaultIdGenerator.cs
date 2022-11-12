@@ -21,11 +21,11 @@ namespace Silky.Rpc.Runtime.Server
         }
 
         /// <summary>
-        /// 生成一个服务Id。
+        /// generate a serviceId。
         /// </summary>
-        /// <param name="method">本地方法信息。</param>
+        /// <param name="method">local method information。</param>
         /// <param name="httpMethod"></param>
-        /// <returns>对应方法的唯一服务Id。</returns>
+        /// <returns>The only service corresponding to the methodId。</returns>
         public string GenerateServiceEntryId([NotNull] MethodInfo method, HttpMethod httpMethod)
         {
             Check.NotNull(method, nameof(method));

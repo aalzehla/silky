@@ -1,23 +1,23 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Silky.EntityFrameworkCore.Locators;
 
 namespace Silky.EntityFrameworkCore.Entities.Configures
 {
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public interface IEntityMutableTable<TEntity> : IEntityMutableTable<TEntity, MasterDbContextLocator>
         where TEntity : class, IPrivateEntity, new()
     {
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1> : IPrivateEntityMutableTable<TEntity>
         where TEntity : class, IPrivateEntity, new()
         where TDbContextLocator1 : class, IDbContextLocator
@@ -25,11 +25,11 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
     public interface
         IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2> : IPrivateEntityMutableTable<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -39,12 +39,12 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
     public interface
         IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2,
             TDbContextLocator3> : IPrivateEntityMutableTable<TEntity>
@@ -56,13 +56,13 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4> : IPrivateEntityMutableTable<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -74,14 +74,14 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5> : IPrivateEntityMutableTable<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -94,15 +94,15 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6> : IPrivateEntityMutableTable<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -116,16 +116,16 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6,
         TDbContextLocator7> : IPrivateEntityMutableTable<TEntity>
@@ -141,17 +141,17 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口
+    /// Dynamic table name dependent interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator8">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator8">database context locator</typeparam>
     public interface IEntityMutableTable<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6, TDbContextLocator7,
         TDbContextLocator8> : IPrivateEntityMutableTable<TEntity>
@@ -168,14 +168,14 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 动态表名依赖接口（禁止外部继承）
+    /// Dynamic table name dependent interface（Forbid external inheritance）
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IPrivateEntityMutableTable<TEntity> : IPrivateModelBuilder
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 获取表名
+        /// get table name
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="dbContextLocator"></param>

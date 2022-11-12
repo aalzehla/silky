@@ -20,22 +20,22 @@ using Silky.EntityFrameworkCore.Locators;
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 非泛型EF Core仓储实现
+    /// non-genericEF CoreWarehousing implementation
     /// </summary>
     public partial class EFCoreRepository : IRepository
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public EFCoreRepository()
         {
         }
 
         /// <summary>
-        /// 切换仓储
+        /// switch storage
         /// </summary>
-        /// <typeparam name="TEntity">实体类型</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual IRepository<TEntity> Change<TEntity>()
             where TEntity : class, IPrivateEntity, new()
         {
@@ -43,11 +43,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 切换多数据库上下文仓储
+        /// 切换多database上下文Warehousing
         /// </summary>
-        /// <typeparam name="TEntity">实体类型</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <typeparam name="TDbContextLocator">database context locator</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual IRepository<TEntity, TDbContextLocator> Change<TEntity, TDbContextLocator>()
             where TEntity : class, IPrivateEntity, new()
             where TDbContextLocator : class, IDbContextLocator
@@ -56,30 +56,30 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 重新构建并切换仓储
+        /// 重新构建并switch storage
         /// </summary>
-        /// <remarks>特别注意，Scoped 必须手动释放</remarks>
-        /// <typeparam name="TEntity">实体类型</typeparam>
-        /// <returns>仓储</returns>
+        /// <remarks>pay attention，Scoped must be released manually</remarks>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual (IRepository<TEntity> Repository, IServiceScope Scoped) BuildChange<TEntity>()
             where TEntity : class, IPrivateEntity, new()
         {
             var scoped = EngineContext.Current.ServiceProvider.CreateScope();
             var repository = scoped.ServiceProvider.GetService<IRepository<TEntity>>();
 
-            // 添加未托管对象
+            // Add unmanaged object
             // App.UnmanagedObjects.Add(scoped);
 
             return (repository, scoped);
         }
 
         /// <summary>
-        /// 重新构建并切换多数据库上下文仓储
+        /// 重新构建并切换多database上下文Warehousing
         /// </summary>
-        /// <remarks>特别注意，Scoped 必须手动释放</remarks>
-        /// <typeparam name="TEntity">实体类型</typeparam>
-        /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
-        /// <returns>仓储</returns>
+        /// <remarks>pay attention，Scoped must be released manually</remarks>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <typeparam name="TDbContextLocator">database context locator</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual (IRepository<TEntity, TDbContextLocator> Repository, IServiceScope Scoped) BuildChange<TEntity,
             TDbContextLocator>()
             where TEntity : class, IPrivateEntity, new()
@@ -88,14 +88,14 @@ namespace Silky.EntityFrameworkCore.Repositories
             var scoped = EngineContext.Current.ServiceProvider.CreateScope();
             var repository = scoped.ServiceProvider.GetService<IRepository<TEntity, TDbContextLocator>>();
 
-            // 添加未托管对象
+            // Add unmanaged object
             // App.UnmanagedObjects.Add(scoped);
 
             return (repository, scoped);
         }
 
         /// <summary>
-        /// 获取 Sql 操作仓储
+        /// Obtain Sql 操作Warehousing
         /// </summary>
         /// <returns>ISqlRepository</returns>
         public virtual ISqlRepository Sql()
@@ -104,7 +104,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 获取多数据库上下文 Sql 操作仓储
+        /// Obtain多database上下文 Sql 操作Warehousing
         /// </summary>
         /// <returns>ISqlRepository{TDbContextLocator}</returns>
         public virtual ISqlRepository<TDbContextLocator> Sql<TDbContextLocator>()
@@ -115,15 +115,15 @@ namespace Silky.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// EF Core仓储实现
+    /// EF CoreWarehousing implementation
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public partial class EFCoreRepository<TEntity> : EFCoreRepository<TEntity, MasterDbContextLocator>
         , IRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public EFCoreRepository()
         {
@@ -131,7 +131,7 @@ namespace Silky.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// 多数据库上下文仓储
+    /// 多database上下文Warehousing
     /// </summary>
     public partial class EFCoreRepository<TEntity, TDbContextLocator> : PrivateRepository<TEntity>
         , IRepository<TEntity, TDbContextLocator>
@@ -139,7 +139,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         where TDbContextLocator : class, IDbContextLocator
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public EFCoreRepository() : base(typeof(TDbContextLocator))
         {
@@ -147,24 +147,24 @@ namespace Silky.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// 私有仓储
+    /// 私有Warehousing
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public partial class PrivateRepository<TEntity> : PrivateSqlRepository, IPrivateRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 非泛型仓储
+        /// non-genericWarehousing
         /// </summary>
         private readonly IRepository _repository;
 
         /// <summary>
-        /// 数据库上下文池
+        /// database context pool
         /// </summary>
         private readonly EfCoreDbContextPool _silkyDbContextPool;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="dbContextLocator"></param>
         public PrivateRepository(Type dbContextLocator) : base(dbContextLocator)
@@ -173,69 +173,69 @@ namespace Silky.EntityFrameworkCore.Repositories
             ChangeTracker = Context.ChangeTracker;
             Model = Context.Model;
             
-            // 设置提供器名称
+            // set provider name
             ProviderName = Database.ProviderName;
 
-            //初始化实体
+            //Initialize entity
             Entities = Context.Set<TEntity>();
             DetachedEntities = Entities.AsNoTracking();
             EntityType = Entities.EntityType;
 
-            // 初始化数据上下文池
+            // Initialize the data context pool
             _silkyDbContextPool = (EngineContext.Current.Resolve<ISilkyDbContextPool>() as EfCoreDbContextPool);
 
-            // 非泛型仓储
+            // non-genericWarehousing
             _repository = EngineContext.Current.Resolve<IRepository>();
         }
 
         /// <summary>
-        /// 实体集合
+        /// entity collection
         /// </summary>
         public virtual DbSet<TEntity> Entities { get; }
 
         /// <summary>
-        /// 不跟踪的（脱轨）实体
+        /// not tracked（derail）entity
         /// </summary>
         public virtual IQueryable<TEntity> DetachedEntities { get; }
 
         /// <summary>
-        /// 查看实体类型
+        /// 查看entity type
         /// </summary>
         public virtual IEntityType EntityType { get; }
 
         /// <summary>
-        /// 数据库连接对象
+        /// database connection object
         /// </summary>
         public virtual DbConnection DbConnection { get; }
 
         /// <summary>
-        /// 实体追综器
+        /// entity追综器
         /// </summary>
         public virtual ChangeTracker ChangeTracker { get; }
 
         /// <summary>
-        /// 实体模型
+        /// entity模型
         /// </summary>
         public virtual IModel Model { get; }
 
         
         /// <summary>
-        /// 数据库提供器名
+        /// database provider name
         /// </summary>
         public virtual string ProviderName { get; }
 
         /// <summary>
-        /// 服务提供器
+        /// service provider
         /// </summary>
         public virtual IServiceProvider ServiceProvider { get; }
 
         /// <summary>
-        /// 租户Id
+        /// tenantId
         /// </summary>
         public virtual Guid? TenantId { get; }
 
         /// <summary>
-        /// 判断上下文是否更改
+        /// Determine if the context has changed
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool HasChanges()
@@ -244,9 +244,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将实体加入数据上下文托管
+        /// 将entity加入数据上下文托管
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>EntityEntry</returns>
         public virtual EntityEntry Entry(object entity)
         {
@@ -254,9 +254,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将实体加入数据上下文托管
+        /// 将entity加入数据上下文托管
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns></returns>
         public virtual EntityEntry<TEntity> Entry(TEntity entity)
         {
@@ -264,9 +264,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 获取实体状态
+        /// Obtainentity状态
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns></returns>
         public virtual EntityState EntityEntryState(object entity)
         {
@@ -274,9 +274,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 获取实体状态
+        /// Obtainentity状态
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>EntityState</returns>
         public virtual EntityState EntityEntryState(TEntity entity)
         {
@@ -284,10 +284,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将实体属性加入托管
+        /// 将entity属性加入托管
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyName">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyName">property name</param>
         /// <returns>PropertyEntry</returns>
         public virtual PropertyEntry EntityPropertyEntry(object entity, string propertyName)
         {
@@ -295,10 +295,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将实体属性加入托管
+        /// 将entity属性加入托管
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyName">属性名</param>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyName">property name</param>
         /// <returns>PropertyEntry</returns>
         public virtual PropertyEntry EntityPropertyEntry(TEntity entity, string propertyName)
         {
@@ -306,11 +306,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将实体属性加入托管
+        /// 将entity属性加入托管
         /// </summary>
-        /// <typeparam name="TProperty">属性类型</typeparam>
-        /// <param name="entity">实体</param>
-        /// <param name="propertyPredicate">属性表达式</param>
+        /// <typeparam name="TProperty">property type</typeparam>
+        /// <param name="entity">entity</param>
+        /// <param name="propertyPredicate">property expression</param>
         /// <returns>PropertyEntry</returns>
         public virtual PropertyEntry<TEntity, TProperty> EntityPropertyEntry<TProperty>(TEntity entity,
             Expression<Func<TEntity, TProperty>> propertyPredicate)
@@ -319,10 +319,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 改变实体状态
+        /// 改变entity状态
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="entityState">实体状态</param>
+        /// <param name="entity">entity</param>
+        /// <param name="entityState">entity状态</param>
         /// <returns>EntityEntry</returns>
         public virtual EntityEntry ChangeEntityState(object entity, EntityState entityState)
         {
@@ -332,10 +332,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 改变实体状态
+        /// 改变entity状态
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="entityState">实体状态</param>
+        /// <param name="entity">entity</param>
+        /// <param name="entityState">entity状态</param>
         /// <returns>EntityEntry{TEntity}</returns>
         public virtual EntityEntry<TEntity> ChangeEntityState(TEntity entity, EntityState entityState)
         {
@@ -345,10 +345,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 改变实体状态
+        /// 改变entity状态
         /// </summary>
-        /// <param name="entityEntry">实体条目</param>
-        /// <param name="entityState">实体状态</param>
+        /// <param name="entityEntry">entity条目</param>
+        /// <param name="entityState">entity状态</param>
         /// <returns>EntityEntry</returns>
         public virtual EntityEntry ChangeEntityState(EntityEntry entityEntry, EntityState entityState)
         {
@@ -357,10 +357,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 改变实体状态
+        /// 改变entity状态
         /// </summary>
-        /// <param name="entityEntry">实体条目</param>
-        /// <param name="entityState">实体状态</param>
+        /// <param name="entityEntry">entity条目</param>
+        /// <param name="entityState">entity状态</param>
         /// <returns>EntityEntry{TEntity}</returns>
         public virtual EntityEntry<TEntity> ChangeEntityState(EntityEntry<TEntity> entityEntry, EntityState entityState)
         {
@@ -369,7 +369,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 检查实体跟踪状态
+        /// 检查entity跟踪状态
         /// </summary>
         /// <param name="id"></param>
         /// <param name="entityEntry"></param>
@@ -381,7 +381,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 检查实体跟踪状态
+        /// 检查entity跟踪状态
         /// </summary>
         /// <typeparam name="TTrackEntity"></typeparam>
         /// <param name="id"></param>
@@ -392,11 +392,11 @@ namespace Silky.EntityFrameworkCore.Repositories
             string keyName = default)
             where TTrackEntity : class, IPrivateEntity, new()
         {
-            // 获取主键名
+            // Obtain主键名
             keyName ??= (typeof(TTrackEntity) == typeof(TEntity) ? EntityType : Context.Set<TTrackEntity>().EntityType)
                 .FindPrimaryKey()?.Properties?.AsEnumerable()?.FirstOrDefault()?.PropertyInfo?.Name;
 
-            // 检查是否已经跟踪
+            // Check if tracked
             entityEntry = ChangeTracker.Entries().FirstOrDefault(u => u.Entity.GetType() == typeof(TTrackEntity)
                                                                       && u.CurrentValues[keyName].ToString()
                                                                           .Equals(id.ToString()));
@@ -405,9 +405,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否被附加
+        /// determine whether to attach
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>bool</returns>
         public virtual bool IsAttached(object entity)
         {
@@ -415,9 +415,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否被附加
+        /// determine whether to attach
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>bool</returns>
         public virtual bool IsAttached(TEntity entity)
         {
@@ -425,9 +425,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 附加实体
+        /// 附加entity
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>EntityEntry</returns>
         public virtual EntityEntry Attach(object entity)
         {
@@ -435,9 +435,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 附加实体
+        /// 附加entity
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>EntityEntry</returns>
         public virtual EntityEntry<TEntity> Attach(TEntity entity)
         {
@@ -445,61 +445,61 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 附加多个实体
+        /// 附加多个entity
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void AttachRange(params object[] entities)
         {
             Context.AttachRange(entities);
         }
 
         /// <summary>
-        /// 附加多个实体
+        /// 附加多个entity
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         public virtual void AttachRange(IEnumerable<TEntity> entities)
         {
             Context.AttachRange(entities);
         }
 
         /// <summary>
-        /// 取消附加实体
+        /// 取消附加entity
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         public virtual void Detach(object entity)
         {
             ChangeEntityState(entity, EntityState.Detached);
         }
 
         /// <summary>
-        /// 取消附加实体
+        /// 取消附加entity
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         public virtual void Detach(TEntity entity)
         {
             ChangeEntityState(entity, EntityState.Detached);
         }
 
         /// <summary>
-        /// 取消附加实体
+        /// 取消附加entity
         /// </summary>
-        /// <param name="entityEntry">实体条目</param>
+        /// <param name="entityEntry">entity条目</param>
         public virtual void Detach(EntityEntry entityEntry)
         {
             ChangeEntityState(entityEntry, EntityState.Detached);
         }
 
         /// <summary>
-        /// 取消附加实体
+        /// 取消附加entity
         /// </summary>
-        /// <param name="entityEntry">实体条目</param>
+        /// <param name="entityEntry">entity条目</param>
         public virtual void Detach(EntityEntry<TEntity> entityEntry)
         {
             ChangeEntityState(entityEntry, EntityState.Detached);
         }
 
         /// <summary>
-        /// 获取所有数据库上下文
+        /// Obtain所有database上下文
         /// </summary>
         /// <returns>ConcurrentBag{DbContext}</returns>
         public ConcurrentDictionary<Guid, DbContext> GetDbContexts()
@@ -508,9 +508,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断实体是否设置了主键
+        /// 判断entity是否设置了主键
         /// </summary>
-        /// <param name="entity">实体</param>
+        /// <param name="entity">entity</param>
         /// <returns>bool</returns>
         public virtual bool IsKeySet(TEntity entity)
         {
@@ -518,7 +518,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 删除数据库
+        /// delete database
         /// </summary>
         public virtual void EnsureDeleted()
         {
@@ -526,7 +526,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 删除数据库
+        /// delete database
         /// </summary>
         public virtual Task EnsureDeletedAsync(CancellationToken cancellationToken = default)
         {
@@ -534,7 +534,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 创建数据库
+        /// create database
         /// </summary>
         public virtual void EnsureCreated()
         {
@@ -542,7 +542,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 创建数据库
+        /// create database
         /// </summary>
         public virtual Task EnsureCreatedAsync(CancellationToken cancellationToken = default)
         {
@@ -550,10 +550,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 动态改变表名
+        /// Dynamically change table name
         /// </summary>
-        /// <param name="tableName">表名</param>
-        [Obsolete("该方法已过时，请调用 BuildChange<TEntity> 方法代替。")]
+        /// <param name="tableName">Table Name</param>
+        [Obsolete("This method is obsolete，please call BuildChange<TEntity> method instead。")]
         public virtual void ChangeTable(string tableName)
         {
             if (EntityType is IConventionEntityType convention)
@@ -563,9 +563,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 动态改变数据库
+        /// Dynamically change the database
         /// </summary>
-        /// <param name="connectionString">连接字符串</param>
+        /// <param name="connectionString">connection string</param>
         public virtual void ChangeDatabase(string connectionString)
         {
             if (DbConnection.State == ConnectionState.Open) DbConnection.ChangeDatabase(connectionString);
@@ -573,10 +573,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 动态改变数据库
+        /// Dynamically change the database
         /// </summary>
-        /// <param name="connectionString">连接字符串</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="connectionString">connection string</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         public virtual async Task ChangeDatabaseAsync(string connectionString,
             CancellationToken cancellationToken = default)
         {
@@ -591,7 +591,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 SqlServer 数据库
+        /// determine whether SqlServer database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsSqlServer()
@@ -600,7 +600,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 Sqlite 数据库
+        /// determine whether Sqlite database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsSqlite()
@@ -609,7 +609,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 Cosmos 数据库
+        /// determine whether Cosmos database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsCosmos()
@@ -618,7 +618,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 内存中 数据库
+        /// determine whether in memory database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool InMemoryDatabase()
@@ -627,7 +627,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 MySql 数据库
+        /// determine whether MySql database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsMySql()
@@ -636,7 +636,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 MySql 数据库 官方包（更新不及时，只支持 8.0.23+ 版本， 所以单独弄一个分类）
+        /// determine whether MySql database official package（Update is not timely，only support 8.0.23+ Version， So make a separate category）
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsMySqlOfficial()
@@ -645,7 +645,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 PostgreSQL 数据库
+        /// determine whether PostgreSQL database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsNpgsql()
@@ -654,7 +654,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 Oracle 数据库
+        /// determine whether Oracle database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsOracle()
@@ -663,7 +663,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 Firebird 数据库
+        /// determine whether Firebird database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsFirebird()
@@ -672,7 +672,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是 Dm 数据库
+        /// determine whether Dm database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsDm()
@@ -681,7 +681,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 判断是否是关系型数据库
+        /// determine whether关系型database
         /// </summary>
         /// <returns>bool</returns>
         public virtual bool IsRelational()
@@ -690,10 +690,10 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 切换仓储
+        /// switch storage
         /// </summary>
-        /// <typeparam name="TChangeEntity">实体类型</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TChangeEntity">entity type</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual new IRepository<TChangeEntity> Change<TChangeEntity>()
             where TChangeEntity : class, IPrivateEntity, new()
         {
@@ -701,11 +701,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 切换多数据库上下文仓储
+        /// 切换多database上下文Warehousing
         /// </summary>
-        /// <typeparam name="TChangeEntity">实体类型</typeparam>
-        /// <typeparam name="TChangeDbContextLocator">数据库上下文定位器</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TChangeEntity">entity type</typeparam>
+        /// <typeparam name="TChangeDbContextLocator">database context locator</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual IRepository<TChangeEntity, TChangeDbContextLocator> Change<TChangeEntity,
             TChangeDbContextLocator>()
             where TChangeEntity : class, IPrivateEntity, new()
@@ -715,11 +715,11 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 重新构建并切换仓储
+        /// 重新构建并switch storage
         /// </summary>
-        /// <remarks>特别注意，Scoped 必须手动释放</remarks>
-        /// <typeparam name="TChangeEntity">实体类型</typeparam>
-        /// <returns>仓储</returns>
+        /// <remarks>pay attention，Scoped must be released manually</remarks>
+        /// <typeparam name="TChangeEntity">entity type</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual (IRepository<TChangeEntity> Repository, IServiceScope Scoped) BuildChange<TChangeEntity>()
             where TChangeEntity : class, IPrivateEntity, new()
         {
@@ -727,12 +727,12 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 重新构建并切换多数据库上下文仓储
+        /// 重新构建并切换多database上下文Warehousing
         /// </summary>
-        /// <remarks>特别注意，Scoped 必须手动释放</remarks>
-        /// <typeparam name="TChangeEntity">实体类型</typeparam>
-        /// <typeparam name="TChangeDbContextLocator">数据库上下文定位器</typeparam>
-        /// <returns>仓储</returns>
+        /// <remarks>pay attention，Scoped must be released manually</remarks>
+        /// <typeparam name="TChangeEntity">entity type</typeparam>
+        /// <typeparam name="TChangeDbContextLocator">database context locator</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual (IRepository<TChangeEntity, TChangeDbContextLocator> Repository, IServiceScope Scoped)
             BuildChange<TChangeEntity, TChangeDbContextLocator>()
             where TChangeEntity : class, IPrivateEntity, new()

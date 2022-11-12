@@ -1,83 +1,83 @@
 ---
-title: 分布式事务
+title: Distributed transaction
 lang: zh-cn
 ---
 
-## 概念
+## concept
 
-在微服务应用(分布式应用中)，完成某一个业务功能可能需要横跨多个服务，操作多个数据库。这就涉及到到了分布式事务，用需要操作的资源位于多个资源服务器上，而应用需要保证对于多个资源服务器的数据的操作，要么全部成功，要么全部失败。本质上来说，分布式事务就是为了保证不同资源服务器的数据一致性。
+application in microservices(in distributed applications)，Completing a business function may need to span multiple services，Work with multiple databases。这就涉及到到了Distributed transaction，With the resource that needs to be manipulated on multiple resource servers，The application needs to ensure the operation of the data of multiple resource servers，either all succeed，or all fail。Essentially，Distributed transaction就Yes为了保证不同资源服务器的数据consistency。
 
-## 与分布式事务相关的理论
+## 与Distributed transaction相关的theory
 
-### 经典的分布式系统理论-CAP
+### Classic Distributed Systems Theory-CAP
 
-1. 一致性
+1. consistency
 
-    一致性指**all nodes see the same data at the same time**，即更新操作成功并返回客户端完成后，所有节点在同一时间的数据完全一致，不能存在中间状态。例如对于电商系统用户下单操作，库存减少、用户资金账户扣减、积分增加等操作必须在用户下单操作完成后必须是一致的。不能出现类似于库存已经减少，而用户资金账户尚未扣减，积分也未增加的情况。如果出现了这种情况，那么就认为是不一致的。
+    consistency指**all nodes see the same data at the same time**，That is; the update operation is successful and returns to the client after completion，All nodes have exactly the same data at the same time，no intermediate state。For example; for e-commerce system users to place orders，Inventory reduction、User Fund Account Deduction、Operations such as points increase must be consistent after the user places an order.。Can not appear similar to the inventory has been reduced，And the user's fund account has not been deducted，Points are not increased。If this happens，then it is considered inconsistent。
 
-    关于一致性，如果的确能像上面描述的那样时刻保证客户端看到的数据都是一致的，那么称之为强一致性。如果允许存在中间状态，只要求经过一段时间后，数据最终是一致的，则称之为最终一致性。此外，如果允许存在部分数据不一致，那么就称之为弱一致性。
+    关于consistency，If it is true that the data seen by the client can be guaranteed to be consistent at all times as described above，那么称之为强consistency。If an intermediate state is allowed，only after a period of time，Data is eventually consistent，则称之为最终consistency。also，If some data inconsistencies are allowed，那么就称之为弱consistency。
 
-2. 可用性
+2. Availability
 
-    可用性是指系统提供的服务必须一直处于可用的状态，对于用户的每一个操作请求总是能够在有限的时间内返回结果。**有限的时间内**是指，对于用户的一个操作请求，系统必须能够在指定的时间内返回对应的处理结果，如果超过了这个时间范围，那么系统就被认为是不可用的。试想，如果一个下单操作，为了保证分布式事务的一致性，需要10分钟才能处理完，那么用户显然是无法忍受的。“返回结果”是可用性的另一个非常重要的指标，它要求系统在完成对用户请求的处理后，返回一个正常的响应结果，不论这个结果是成功还是失败。
+    AvailabilityRefers to系统提供的服务必须一直处于可用的状态，For each operation request of the user; the result can always be returned within a limited time。**for a limited time**Refers to，an operation request from the user，The system must be able to return the corresponding processing result within the specified time，If this time frame is exceeded，then the system is considered unavailable。Just imagine，If an order is placed，为了保证Distributed transaction的consistency，need10minutes to process，Then the user is obviously unbearable。“return result”YesAvailability的另一个非常重要的指标，It requires the system to complete the processing of the user request after，returns a normal response result，whether the result is success or failure。
 
-3. 分区容错性
+3. Partition Tolerance
 
-    分布式系统在遇到任何网络分区故障的时候，仍然需要能够保证对外提供满足一致性和可用性的服务，除非是整个网络环境都发生了故障。
+    When a distributed system encounters any network partition failure，仍然need能够保证right外提供满足consistencyandAvailability的服务，Unless the entire network environment fails。
 
 
-**小结**：既然一个分布式系统无法同时满足一致性、可用性、分区容错性三个特点，我们就需要抛弃一个，需要明确的一点是，对于一个分布式系统而言，分区容错性是一个最基本的要求。因为既然是一个分布式系统，那么分布式系统中的组件必然需要被部署到不同的节点，否则也就无所谓分布式系统了。而对于分布式系统而言，网络问题又是一个必定会出现的异常情况，因此分区容错性也就成为了一个分布式系统必然需要面对和解决的问题。因此系统架构师往往需要把精力花在如何根据业务特点在C（一致性）和A（可用性）之间寻求平衡。而前面我们提到的X/Open XA 两阶段提交协议的分布式事务方案，强调的就是一致性；由于可用性较低，实际应用的并不多。而基于BASE理论的柔性事务，强调的是可用性，目前大行其道，大部分互联网公司采可能会优先采用这种方案。
+**summary**：既然一个分布式系统无法同时满足consistency、Availability、Partition Tolerance三个特点，我们就need抛弃一个，need明确的一点Yes，For a distributed system，Partition ToleranceYes一个最基本的要求。Because since it is a distributed system，那么分布式系统中的组件必然need被部署到不同的节点，Otherwise; there is no such thing as a distributed system.。And for distributed systems，The network problem is another abnormal situation that is bound to occur，thereforePartition Tolerance也就成为了一个分布式系统必然need面rightand解决的问题。therefore系统架构师往往need把精力花exist如何根据业务特点existC（consistency）andA（Availability）seek balance。And we mentioned earlierX/Open XA 两阶段提交协议的Distributed transaction方案，强调的就Yesconsistency；由于Availability较低，Not much practical application。and based onBASETheoretical Flexibility，强调的YesAvailability，Currently in vogue，Most Internet companies may give priority to adopting this scheme。
 
-### BASE理论
+### BASEtheory
 
-eBay的架构师Dan Pritchett源于对大规模分布式系统的实践总结，在ACM上发表文章提出BASE理论。文章链接：https://queue.acm.org/detail.cfm?id=1394128
+eBaythe architectDan PritchettFrom the practical summary of large-scale distributed systems，existACMArticles published onBASEtheory。Article link：https://queue.acm.org/detail.cfm?id=1394128
 
-BASE理论是对CAP理论的延伸，核心思想是即使无法做到强一致性（Strong Consistency，CAP的一致性就是强一致性），但应用可以采用适合的方式达到最终一致性（Eventual Consitency）。    
+BASEtheoryYesrightCAPtheory的延伸，核心思想Yes即使无法做到强consistency（Strong Consistency，CAP的consistency就Yes强consistency），但应用可以采用适合的方式达到最终consistency（Eventual Consitency）。    
 
 
 ![distributed-transactions1.png](/assets/imgs/distributed-transactions1.png)
 
-BASE是Basically Available（基本可用）、Soft state（软状态）和Eventually consistent（最终一致性）三个短语的缩写。
+BASEYesBasically Available（basically available）、Soft state（soft state）andEventually consistent（最终consistency）abbreviation for three phrases。
 
-1. 基本可用（Basically Available）
+1. basically available（Basically Available）
 
-    指分布式系统在出现不可预知故障的时候，允许损失部分可用性。
+    指分布式系统exist出现不可预知故障的时候，允许损失部分Availability。
 
-2. 软状态（ Soft State）
+2. soft state（ Soft State）
 
-    指允许系统中的数据存在中间状态，并认为该中间状态的存在不会影响系统的整体可用性。
+    指允许系统中的数据存exist中间状态，并认为该中间状态的存exist不会影响系统的整体Availability。
 
-3. 最终一致（ Eventual Consistency）
+3. eventually consistent（ Eventual Consistency）
 
-    强调的是所有的数据更新操作，在经过一段时间的同步之后，最终都能够达到一个一致的状态。因此，最终一致性的本质是需要系统保证最终数据能够达到一致，而不需要实时保证系统数据的强一致性。
+    强调的Yes所有的数据更新操作，exist经过一段时间的同步之后，eventually reach a consistent state。therefore，最终consistency的本质Yesneed系统保证最终数据能够达到一致，而不need实时保证系统数据的强consistency。
 
-BASE理论面向的是大型高可用可扩展的分布式系统，和传统的事物ACID特性是相反的。它完全不同于ACID的强一致性模型，而是通过牺牲强一致性来获得可用性，并允许数据在一段时间内是不一致的，但最终达到一致状态。但同时，在实际的分布式场景中，不同业务单元和组件对数据一致性的要求是不同的，因此在具体的分布式系统架构设计过程中，ACID特性和BASE理论往往又会结合在一起。
+BASEtheory面向的Yes大型高可用可扩展的分布式系统，and传统的事物ACID特性Yes相反的。it is totally different fromACID的强consistency模型，而Yes通过牺牲强consistency来获得Availability，并允许数据exist一段时间内Yes不一致的，but eventually reached a consistent state。But at the same time，exist实际的分布式场景中，不同业务单元and组件right数据consistency的要求Yes不同的，thereforeexist具体的分布式系统架构设计过程中，ACID特性andBASEtheory往往又会结合exist一起。
 
 
-典型的柔性事务方案：
+Typical Flexible Transaction Scenario：
 
-1. 最大努力通知（非可靠消息、定期校对）
+1. best effort notice（unreliable news、Regular proofreading）
 
-2. 可靠消息最终一致性（异步确保型）
+2. 可靠消息最终consistency（asynchronous guarantee）
 
-3. TCC（两阶段型、补偿型）
+3. TCC（two-stage、Compensation）
 
-## Silky框架分布式事务的实现方式
+## Silky框架Distributed transaction的实现方式
 
-silky框架的分布式事务解决方案采用的TCC事务模型实现了分布式事务的最终一致性。在开发过程中参考和借鉴了[hmily](https://github.com/dromara/hmily)。使用AOP的编程思想,在rpc通信过程中通过拦截器的方式对全局事务或是分支事务进行管理和协调。
+silky框架的Distributed transaction解决方案采用的TCC事务模型实现了Distributed transaction的最终consistency。exist开发过程中参考and借鉴了[hmily](https://github.com/dromara/hmily)。useAOPprogramming ideas,existrpc通信过程中通过拦截器的方式right全局事务或Yes分支事务进行管理and协调。
 
-## 如何使用
+## 如何use
 
-在一个分布式事务中,参与分布式事务的方法可能存在多个,在使用过程中,对**每个**参与分布式事务的方法的写法都一致。
+exist一个Distributed transaction中,参与Distributed transaction的方法可能存exist多个,existuse过程中,right**each**参与Distributed transaction的方法的写法都一致。
 
-1. 在需要参与分布式事务的应用服务接口中,通过特性`TransactionAttribute`进行标注。
+1. existneed参与Distributed transaction的应用服务接口中,by feature`TransactionAttribute`label。
 
 ```csharp
 [Transaction]
 Task<string> Delete(string name);
 ```
 
-2. 应用服务接口实现方法通过`TccTransactionAttribute`特性标注，并通过参数`ConfirmMethod`、`CancelMethod`指定确认、取消步骤时执行的方法。
+2. The application service interface implementation method passes`TccTransactionAttribute`feature callout，and pass the parameter`ConfirmMethod`、`CancelMethod`Specify confirmation、Method executed when a step is canceled。
 
 ```csharp
 [TccTransaction(ConfirmMethod = "DeleteConfirm", CancelMethod = "DeleteCancel")]
@@ -88,13 +88,13 @@ public async Task<string> Delete(string name)
     return name + " v1";
 }
 
-// 分布式事务Comfirm时执行的方法
+// Distributed transactionComfirmmethod to execute
 public async Task<string> DeleteConfirm(string name)
 {
     return name + " DeleteConfirm v1";
 }
 
-// 分布式事务Cancel时执行的方法
+// Distributed transactionCancelmethod to execute
 public async Task<string> DeleteCancel(string name)
 {
     return name + "DeleteConcel v1";
@@ -102,11 +102,11 @@ public async Task<string> DeleteCancel(string name)
 
 ```
 
-关于分布式事务的更详细用法,开发者可以参考[silky框架分布式事务使用简介](/blog/silky-sample-order.md)。
+关于Distributed transaction的更详细用法,Developers can refer to[silky框架Distributed transactionuse简介](/blog/silky-sample-order.md)。
 
 ::: warning
 
-指定的`ConfirmMethod`、`CancelMethod`方法声明必须为`public`,输入参数与应用服务接口定义的参数一致。
+Specified`ConfirmMethod`、`CancelMethod`The method declaration must be`public`,The input parameters are consistent with the parameters defined by the application service interface。
 
 :::
 

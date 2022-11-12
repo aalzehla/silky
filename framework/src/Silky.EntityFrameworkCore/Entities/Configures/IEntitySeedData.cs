@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Silky.EntityFrameworkCore.Locators;
@@ -6,19 +6,19 @@ using Silky.EntityFrameworkCore.Locators;
 namespace Silky.EntityFrameworkCore.Entities.Configures
 {
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public interface IEntitySeedData<TEntity> : IEntitySeedData<TEntity, MasterDbContextLocator>
         where TEntity : class, IPrivateEntity, new()
     {
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1> : IPrivateEntitySeedData<TEntity>
         where TEntity : class, IPrivateEntity, new()
         where TDbContextLocator1 : class, IDbContextLocator
@@ -26,11 +26,11 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2> : IPrivateEntitySeedData<TEntity>
         where TEntity : class, IPrivateEntity, new()
         where TDbContextLocator1 : class, IDbContextLocator
@@ -39,12 +39,12 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
     public interface
         IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2,
             TDbContextLocator3> : IPrivateEntitySeedData<TEntity>
@@ -56,13 +56,13 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4> : IPrivateEntitySeedData<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -74,14 +74,14 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5> : IPrivateEntitySeedData<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -94,15 +94,15 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6> : IPrivateEntitySeedData<TEntity>
         where TEntity : class, IPrivateEntity, new()
@@ -116,16 +116,16 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6,
         TDbContextLocator7> : IPrivateEntitySeedData<TEntity>
@@ -141,17 +141,17 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口
+    /// Database seed data dependency interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator1">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator2">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator3">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator4">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator5">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator6">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator7">数据库上下文定位器</typeparam>
-    /// <typeparam name="TDbContextLocator8">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator1">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator2">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator3">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator4">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator5">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator6">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator7">database context locator</typeparam>
+    /// <typeparam name="TDbContextLocator8">database context locator</typeparam>
     public interface IEntitySeedData<TEntity, TDbContextLocator1, TDbContextLocator2, TDbContextLocator3,
         TDbContextLocator4, TDbContextLocator5, TDbContextLocator6, TDbContextLocator7,
         TDbContextLocator8> : IPrivateEntitySeedData<TEntity>
@@ -168,17 +168,17 @@ namespace Silky.EntityFrameworkCore.Entities.Configures
     }
 
     /// <summary>
-    /// 数据库种子数据依赖接口（禁止外部继承）
+    /// Database seed data dependency interface（Forbid external inheritance）
     /// </summary>
     /// <typeparam name="TEntity"></typeparam>
     public interface IPrivateEntitySeedData<TEntity> : IPrivateModelBuilder
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 配置种子数据
+        /// Configure seed data
         /// </summary>
-        /// <param name="dbContext">数据库上下文</param>
-        /// <param name="dbContextLocator">数据库上下文定位器</param>
+        /// <param name="dbContext">database context</param>
+        /// <param name="dbContextLocator">database context locator</param>
         /// <returns></returns>
         IEnumerable<TEntity> HasData(DbContext dbContext, Type dbContextLocator);
     }

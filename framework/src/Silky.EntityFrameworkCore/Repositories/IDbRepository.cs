@@ -1,25 +1,25 @@
-﻿using Silky.EntityFrameworkCore.Entities;
+using Silky.EntityFrameworkCore.Entities;
 using Silky.EntityFrameworkCore.Locators;
 
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 多数据库仓储
+    /// Multi-database warehousing
     /// </summary>
     /// <typeparam name="TDbContextLocator"></typeparam>
     public partial interface IDbRepository<TDbContextLocator>
         where TDbContextLocator : class, IDbContextLocator
     {
         /// <summary>
-        /// 切换仓储
+        /// switch storage
         /// </summary>
-        /// <typeparam name="TEntity">实体类型</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TEntity">entity type</typeparam>
+        /// <returns>Warehousing</returns>
         IRepository<TEntity, TDbContextLocator> Change<TEntity>()
             where TEntity : class, IPrivateEntity, new();
 
         /// <summary>
-        /// 获取 Sql 操作仓储
+        /// Obtain Sql 操作Warehousing
         /// </summary>
         /// <returns></returns>
         ISqlRepository<TDbContextLocator> Sql();

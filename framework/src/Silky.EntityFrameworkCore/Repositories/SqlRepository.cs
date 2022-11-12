@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,27 +11,27 @@ using Silky.EntityFrameworkCore.Locators;
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// Sql 操作仓储实现
+    /// Sql Operational warehouse implementation
     /// </summary>
     public partial class SqlRepository : SqlRepository<MasterDbContextLocator>, ISqlRepository
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
-        /// <param name="serviceProvider">服务提供器</param>
+        /// <param name="serviceProvider">service provider</param>
         public SqlRepository(IServiceProvider serviceProvider) : base(serviceProvider)
         {
         }
     }
 
     /// <summary>
-    /// Sql 操作仓储实现
+    /// Sql Operational warehouse implementation
     /// </summary>
     public partial class SqlRepository<TDbContextLocator> : PrivateSqlRepository, ISqlRepository<TDbContextLocator>
         where TDbContextLocator : class, IDbContextLocator
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public SqlRepository(IServiceProvider serviceProvider) : base(typeof(TDbContextLocator))
         {
@@ -39,45 +39,45 @@ namespace Silky.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// 私有 Sql 仓储
+    /// private Sql Warehousing
     /// </summary>
     public partial class PrivateSqlRepository : IPrivateSqlRepository
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="dbContextLocator"></param>
         public PrivateSqlRepository(Type dbContextLocator)
         {
-            // 解析数据库上下文
+            // Parse the database context
             var dbContextResolve = EngineContext.Current.Resolve<Func<Type, IScopedDependency, DbContext>>();
             var dbContext = dbContextResolve(dbContextLocator, default);
             DynamicContext = Context = dbContext;
 
-            // 初始化数据库相关数据
+            // Initialize database related data
             Database = Context.Database;
         }
 
         /// <summary>
-        /// 数据库上下文
+        /// database context
         /// </summary>
         public virtual DbContext Context { get; }
 
         /// <summary>
-        /// 动态数据库上下文
+        /// 动态database context
         /// </summary>
         public virtual dynamic DynamicContext { get; }
 
         /// <summary>
-        /// 数据库操作对象
+        /// database operation object
         /// </summary>
         public virtual DatabaseFacade Database { get; }
 
         /// <summary>
-        /// 切换仓储
+        /// 切换Warehousing
         /// </summary>
-        /// <typeparam name="TChangeDbContextLocator">数据库上下文定位器</typeparam>
-        /// <returns>仓储</returns>
+        /// <typeparam name="TChangeDbContextLocator">database context定位器</typeparam>
+        /// <returns>Warehousing</returns>
         public virtual ISqlRepository<TChangeDbContextLocator> Change<TChangeDbContextLocator>()
             where TChangeDbContextLocator : class, IDbContextLocator
         {
@@ -85,7 +85,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 解析服务
+        /// Parse service
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
@@ -96,7 +96,7 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 解析服务
+        /// Parse service
         /// </summary>
         /// <typeparam name="TService"></typeparam>
         /// <returns></returns>
@@ -107,9 +107,9 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 将仓储约束为特定仓储
+        /// 将Warehousing约束为特定Warehousing
         /// </summary>
-        /// <typeparam name="TRestrainRepository">特定仓储</typeparam>
+        /// <typeparam name="TRestrainRepository">特定Warehousing</typeparam>
         /// <returns>TRestrainRepository</returns>
         public virtual TRestrainRepository Constraint<TRestrainRepository>()
             where TRestrainRepository : class, IPrivateRootRepository
@@ -125,17 +125,17 @@ namespace Silky.EntityFrameworkCore.Repositories
         }
 
         /// <summary>
-        /// 确保工作单元（事务）可用
+        /// ensure unit of work（affairs）available
         /// </summary>
         public virtual void EnsureTransaction()
         {
-            // 获取数据库上下文
+            // 获取database context
             var dbContextPool = EngineContext.Current.Resolve<ISilkyDbContextPool>() as EfCoreDbContextPool;
             if (dbContextPool == null) return;
 
-            // 追加上下文
+            // append context
             dbContextPool.AddToPool(Context);
-            // 开启事务
+            // 开启affairs
             dbContextPool.BeginTransaction();
         }
     }

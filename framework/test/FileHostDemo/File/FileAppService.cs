@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -24,10 +24,10 @@ public class FileAppService : IFileAppService
 
     public async Task<FileResult> Download()
     {
-        var bytes = System.IO.File.ReadAllBytes("./Contents/测试.xlsx").ToArray();
+        var bytes = System.IO.File.ReadAllBytes("./Contents/test.xlsx").ToArray();
         return new FileContentResult(bytes, "application/octet-stream")
         {
-            FileDownloadName = "测试文件.xlsx"
+            FileDownloadName = "test文件.xlsx"
         };
     }
 }

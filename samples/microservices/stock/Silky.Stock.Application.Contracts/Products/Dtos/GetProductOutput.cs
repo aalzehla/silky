@@ -7,7 +7,7 @@ namespace Silky.Stock.Application.Contracts.Products.Dtos
     public class GetProductOutput : ProductDtoBase
     {
         /// <summary>
-        /// 产品Id
+        /// productId
         /// </summary>
         public long Id { get; set; }
     }

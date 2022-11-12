@@ -1,4 +1,4 @@
 ---
-title: Silky框架分布式设计与实现
+title: SilkyFramework distributed design and implementation
 lang: zh-cn
 ---

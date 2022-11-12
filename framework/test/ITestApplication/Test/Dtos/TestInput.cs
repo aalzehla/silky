@@ -7,10 +7,10 @@ namespace ITestApplication.Test.Dtos
     {
        
         [HashKey]
-        [Required(ErrorMessage = "名称不允许为空")]
+        [Required(ErrorMessage = "Name is not allowed to be empty")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "地址不允许为空")]
+        [Required(ErrorMessage = "Address is not allowed to be empty")]
         [CacheKey(1)]
         public string Address { get; set; }
         

@@ -12,14 +12,14 @@ namespace Silky.Stock.Application.Contracts.Products
     public interface IProductAppService
     {
         /// <summary>
-        /// 新增产品
+        /// Add product
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
         Task<GetProductOutput> Create(CreateProductInput input);
 
         /// <summary>
-        /// 更新产品
+        /// update product
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -27,16 +27,16 @@ namespace Silky.Stock.Application.Contracts.Products
         Task<GetProductOutput> Update(UpdateProductInput input);
 
         /// <summary>
-        /// 通过Id获取产品信息
+        /// passIdGet product information
         /// </summary>
-        /// <param name="id">产品Id</param>
+        /// <param name="id">productId</param>
         /// <returns></returns>
         [GetCachingIntercept("Product:Id:{0}")]
         [HttpGet("{id:long}")]
         Task<GetProductOutput> Get([CacheKey(0)]long id);
 
         /// <summary>
-        /// 通过Id删除产品
+        /// passId删除product
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

@@ -1,27 +1,27 @@
 ---
-title: 对象到对象的映射
+title: object-to-object mapping
 lang: zh-cn
 ---
 
-## 对象映射的概念
+## Object Mapping Concept
 
-将一个对象的数据根据特定规则批量映射到另一个对象中，减少手工操作和降低人为出错率。如将 DTO 对象映射到 Entity 实体中，反之亦然。
+Batch map data from one object to another object according to specific rules，Reduce manual operations and reduce human error rates。as will DTO object maps to Entity in entity，vice versa。
 
-silky框架使用[AutoMapper](https://github.com/AutoMapper/AutoMapper)包作为对象映射工具。
+silkyframe usage[AutoMapper](https://github.com/AutoMapper/AutoMapper)Packages as Object Mapping Tools。
 
-后期,silky框架也准备扩展使用[Mapster](https://github.com/MapsterMapper/Mapster)包作为对象映射工具。
+late,silkyThe framework is also ready to be extended using[Mapster](https://github.com/MapsterMapper/Mapster)Packages as Object Mapping Tools。
 
-## 用法
+## usage
 
-### 使用AutoMapper作为映射工具
+### useAutoMapperas a mapping tool
 
-1. 在在启动模块(StartUpModule)中，显式的依赖`AutoMapperModule`模块。
+1. starting the module(StartUpModule)middle，explicit dependencies`AutoMapperModule`module。
    
-   如果启动模块指定的是`NormHostModule`,那么,该模块已经指定依赖`AutoMapperModule`模块。
+   如果启动module指定的是`NormHostModule`,So,该module已经指定依赖`AutoMapperModule`module。
 
-2. 通过继承`Profile`基类,在其构造器中指定`源`与`目的`的类型映射关系。
+2. by inheritance`Profile`base class,在其构造器middle指定`source`and`Purpose`The type mapping relationship of。
   
-  例如:
+  E.g:
 
 ```csharp
     public class AccountProfile : Profile
@@ -39,15 +39,15 @@ silky框架使用[AutoMapper](https://github.com/AutoMapper/AutoMapper)包作为
     }
 ```
 
-3. 通过`MapTo`方法实现对象属性映射
+3. pass`MapTo`method to implement object property mapping
 
 ```csharp
 public async Task<GetAccountOutput> Create(CreateAccountInput input)
 {
-   // 输入类型对象映射为实体
+   // Input type objects are mapped to entities
    var account = input.MapTo<Domain.Accounts.Account>();
    account = await _accountDomainService.Create(account);
-   // 实体对象映射为输出对象   
+   // Entity objects are mapped to output objects   
    return account.MapTo<GetAccountOutput>();
 }
 ```
@@ -56,6 +56,6 @@ public async Task<GetAccountOutput> Create(CreateAccountInput input)
 public async void Update(UpdateAccountInput input)
 {
    var account = await GetAccountById(input.Id);
-   account = input.MapTo(account); //通过输入对象更新实体属性
+   account = input.MapTo(account); //pass输入对象更新实体属性
 }
 ```

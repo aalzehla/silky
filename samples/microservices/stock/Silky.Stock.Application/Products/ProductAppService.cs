@@ -47,7 +47,7 @@ namespace Silky.Stock.Application.Products
             var product = await _productDomainService.GetById(input.ProductId);
             if (input.Quantity > product.Stock)
             {
-                throw new BusinessException("订单数量超过库存数量,无法完成订单");
+                throw new BusinessException("The order quantity exceeds the stock quantity,Unable to complete order");
             }
 
             product.LockStock += input.Quantity;

@@ -1,15 +1,15 @@
-﻿using System.Data;
+using System.Data;
 
 namespace System.ComponentModel.DataAnnotations.Schema
 {
     /// <summary>
-    /// DbParameter 配置特性
+    /// DbParameter Configuration Features
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class DbParameterAttribute : Attribute
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         public DbParameterAttribute()
         {
@@ -17,28 +17,28 @@ namespace System.ComponentModel.DataAnnotations.Schema
         }
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
-        /// <param name="direction">参数方向</param>
+        /// <param name="direction">parameter direction</param>
         public DbParameterAttribute(ParameterDirection direction)
         {
             Direction = direction;
         }
 
         /// <summary>
-        /// 参数输出方向
+        /// Parameter output direction
         /// </summary>
         public ParameterDirection Direction { get; set; }
 
         /// <summary>
-        /// 数据库对应类型
+        /// database type
         /// </summary>
         public object DbType { get; set; }
 
         /// <summary>
-        /// 大小
+        /// size
         /// </summary>
-        /// <remarks>Nvarchar/varchar类型需指定</remarks>
+        /// <remarks>Nvarchar/varchartype to be specified</remarks>
         public int Size { get; set; }
     }
 }

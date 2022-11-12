@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
@@ -8,22 +8,22 @@ using Silky.Core;
 namespace Silky.EntityFrameworkCore.Extensions.DatabaseProvider
 {
     /// <summary>
-    /// 常量、公共方法配置类
+    /// constant、public method configuration class
     /// </summary>
     internal static class Penetrates
     {
         /// <summary>
-        /// 数据库上下文和定位器缓存
+        /// Database context and locator cache
         /// </summary>
         internal static readonly ConcurrentDictionary<Type, Type> DbContextWithLocatorCached;
 
         /// <summary>
-        /// 数据库上下文定位器缓存
+        /// Database context locator cache
         /// </summary>
         internal static readonly ConcurrentDictionary<string, Type> DbContextLocatorTypeCached;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         static Penetrates()
         {
@@ -32,17 +32,17 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseProvider
         }
 
         /// <summary>
-        /// 配置 SqlServer 数据库上下文
+        /// configure SqlServer database context
         /// </summary>
-        /// <param name="optionBuilder">数据库上下文选项构建器</param>
-        /// <param name="interceptors">拦截器</param>
+        /// <param name="optionBuilder">database context选项构建器</param>
+        /// <param name="interceptors">interceptor</param>
         /// <returns></returns>
         internal static Action<IServiceProvider, DbContextOptionsBuilder> ConfigureDbContext(
             Action<DbContextOptionsBuilder> optionBuilder, params IInterceptor[] interceptors)
         {
             return (serviceProvider, options) =>
             {
-                // 只有开发环境开启
+                // Only the development environment is enabled
                 if (EngineContext.Current.HostEnvironment.IsDevelopment())
                 {
                     options /*.UseLazyLoadingProxies()*/
@@ -52,22 +52,22 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseProvider
 
                 optionBuilder.Invoke(options);
 
-                // 添加拦截器
+                // 添加interceptor
                 AddInterceptors(interceptors, options);
 
-                // .NET 5 版本已不再起作用
+                // .NET 5 version no longer works
                 // options.UseInternalServiceProvider(serviceProvider);
             };
         }
 
         /// <summary>
-        /// 数据库数据库拦截器
+        /// 数据库数据库interceptor
         /// </summary>
-        /// <param name="interceptors">拦截器</param>
+        /// <param name="interceptors">interceptor</param>
         /// <param name="options"></param>
         private static void AddInterceptors(IInterceptor[] interceptors, DbContextOptionsBuilder options)
         {
-            // 添加拦截器
+            // 添加interceptor
             var interceptorList = DbProvider.GetDefaultInterceptors();
 
             if (interceptors != null || interceptors.Length > 0)

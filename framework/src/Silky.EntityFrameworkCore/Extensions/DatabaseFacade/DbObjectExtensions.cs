@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Text;
@@ -17,27 +17,27 @@ using Silky.EntityFrameworkCore.Helpers;
 namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 {
     /// <summary>
-    /// DatabaseFacade 拓展类
+    /// DatabaseFacade Extended class
     /// </summary>
     public static class DbObjectExtensions
     {
         /// <summary>
-        /// MiniProfiler 分类名
+        /// MiniProfiler Category name
         /// </summary>
         private const string MiniProfilerCategory = "connection";
 
         /// <summary>
-        /// 是否是开发环境
+        /// Is it a development environment
         /// </summary>
         private static readonly bool IsDevelopment;
 
         /// <summary>
-        /// 是否记录 EFCore 执行 sql 命令打印日志
+        /// whether to record EFCore implement sql command print log
         /// </summary>
         private static readonly bool IsLogEntityFrameworkCoreSqlExecuteCommand;
 
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         static DbObjectExtensions()
         {
@@ -51,199 +51,199 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 初始化数据库命令对象
+        /// Initialize the database command object
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
         /// <returns>(DbConnection dbConnection, DbCommand dbCommand)</returns>
         public static (DbConnection dbConnection, DbCommand dbCommand) PrepareDbCommand(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
-            // 支持读取配置渲染
+            // Support read configuration rendering
             var realSql = sql.Render();
 
-            // 创建数据库连接对象及数据库命令对象
+            // Create database connection objects and database command objects
             var (dbConnection, dbCommand) = databaseFacade.CreateDbCommand(realSql, commandType);
             SetDbParameters(databaseFacade.ProviderName, ref dbCommand, parameters);
 
-            // 打开数据库连接
+            // Open database connection
             OpenConnection(databaseFacade, dbConnection, dbCommand);
 
-            // 返回
+            // return
             return (dbConnection, dbCommand);
         }
 
         /// <summary>
-        /// 初始化数据库命令对象
+        /// Initialize the database command object
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
         /// <returns>(DbConnection dbConnection, DbCommand dbCommand, DbParameter[] dbParameters)</returns>
         public static (DbConnection dbConnection, DbCommand dbCommand, DbParameter[] dbParameters) PrepareDbCommand(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text)
         {
-            // 支持读取配置渲染
+            // Support read configuration rendering
             var realSql = sql.Render();
 
-            // 创建数据库连接对象及数据库命令对象
+            // Create database connection objects and database command objects
             var (dbConnection, dbCommand) = databaseFacade.CreateDbCommand(realSql, commandType);
             SetDbParameters(databaseFacade.ProviderName, ref dbCommand, model, out var dbParameters);
 
-            // 打开数据库连接
+            // Open database connection
             OpenConnection(databaseFacade, dbConnection, dbCommand);
 
-            // 返回
+            // return
             return (dbConnection, dbCommand, dbParameters);
         }
 
         /// <summary>
-        /// 初始化数据库命令对象
+        /// Initialize the database command object
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(DbConnection dbConnection, DbCommand dbCommand)</returns>
         public static async Task<(DbConnection dbConnection, DbCommand dbCommand)> PrepareDbCommandAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CancellationToken cancellationToken = default)
         {
-            // 支持读取配置渲染
+            // Support read configuration rendering
             var realSql = sql.Render();
 
-            // 创建数据库连接对象及数据库命令对象
+            // Create database connection objects and database command objects
             var (dbConnection, dbCommand) = databaseFacade.CreateDbCommand(realSql, commandType);
             SetDbParameters(databaseFacade.ProviderName, ref dbCommand, parameters);
 
-            // 打开数据库连接
+            // Open database connection
             await OpenConnectionAsync(databaseFacade, dbConnection, dbCommand, cancellationToken);
 
-            // 返回
+            // return
             return (dbConnection, dbCommand);
         }
 
         /// <summary>
-        /// 初始化数据库命令对象
+        /// Initialize the database command object
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(DbConnection dbConnection, DbCommand dbCommand, DbParameter[] dbParameters)</returns>
         public static async Task<(DbConnection dbConnection, DbCommand dbCommand, DbParameter[] dbParameters)>
             PrepareDbCommandAsync(this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade,
                 string sql, object model, CommandType commandType = CommandType.Text,
                 CancellationToken cancellationToken = default)
         {
-            // 支持读取配置渲染
+            // Support read configuration rendering
             var realSql = sql.Render();
 
-            // 创建数据库连接对象及数据库命令对象
+            // Create database connection objects and database command objects
             var (dbConnection, dbCommand) = databaseFacade.CreateDbCommand(realSql, commandType);
             SetDbParameters(databaseFacade.ProviderName, ref dbCommand, model, out var dbParameters);
 
-            // 打开数据库连接
+            // Open database connection
             await OpenConnectionAsync(databaseFacade, dbConnection, dbCommand, cancellationToken);
 
-            // 返回
+            // return
             return (dbConnection, dbCommand, dbParameters);
         }
 
         /// <summary>
-        /// 创建数据库命令对象
+        /// Create database command object
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="commandType">命令类型</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="commandType">Command type</param>
         /// <returns>(DbConnection dbConnection, DbCommand dbCommand)</returns>
         private static (DbConnection dbConnection, DbCommand dbCommand) CreateDbCommand(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             CommandType commandType = CommandType.Text)
         {
-            // 检查是否支持存储过程
+            // Check if stored procedures are supported
             // DbProvider.CheckStoredProcedureSupported(databaseFacade.ProviderName, commandType);
 
-            // 判断是否启用 MiniProfiler 组件，如果有，则包装链接
+            // Determine whether to enable MiniProfiler components，If there is，then the packaging link
             var dbConnection = databaseFacade.GetDbConnection();
 
-            // 创建数据库命令对象
+            // Create database command object
             var dbCommand = dbConnection.CreateCommand();
 
-            // 设置基本参数
+            // Set basic parameters
             dbCommand.Transaction = databaseFacade.CurrentTransaction?.GetDbTransaction();
             dbCommand.CommandType = commandType;
             dbCommand.CommandText = sql;
 
-            // 设置超时
+            // set timeout
             var commandTimeout = databaseFacade.GetCommandTimeout();
             if (commandTimeout != null) dbCommand.CommandTimeout = commandTimeout.Value;
 
-            // 返回
+            // return
             return (dbConnection, dbCommand);
         }
 
         /// <summary>
-        /// 打开数据库连接
+        /// Open database connection
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="dbConnection">数据库连接对象</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="dbConnection">database connection object</param>
         /// <param name="dbCommand"></param>
         private static void OpenConnection(Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade,
             DbConnection dbConnection, DbCommand dbCommand)
         {
-            // 判断连接字符串是否关闭，如果是，则开启
+            // Check if the connection string is closed，in the case of，then on
             if (dbConnection.State == ConnectionState.Closed)
             {
                 dbConnection.Open();
             }
 
-            // 记录 Sql 执行命令日志
+            // Record Sql implement命令日志
             LogSqlExecuteCommand(databaseFacade, dbCommand);
         }
 
         /// <summary>
-        /// 打开数据库连接
+        /// Open database connection
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="dbConnection">数据库连接对象</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="dbConnection">database connection object</param>
         /// <param name="dbCommand"></param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns></returns>
         private static async Task OpenConnectionAsync(
             Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, DbConnection dbConnection,
             DbCommand dbCommand, CancellationToken cancellationToken = default)
         {
-            // 判断连接字符串是否关闭，如果是，则开启
+            // Check if the connection string is closed，in the case of，then on
             if (dbConnection.State == ConnectionState.Closed)
             {
                 await dbConnection.OpenAsync(cancellationToken);
             }
 
-            // 记录 Sql 执行命令日志
+            // Record Sql implement命令日志
             LogSqlExecuteCommand(databaseFacade, dbCommand);
         }
 
         /// <summary>
-        /// 设置数据库命令对象参数
+        /// Set database command object parameters
         /// </summary>
         /// <param name="providerName"></param>
-        /// <param name="dbCommand">数据库命令对象</param>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="dbCommand">database command object</param>
+        /// <param name="parameters">Command parameters</param>
         private static void SetDbParameters(string providerName, ref DbCommand dbCommand,
             DbParameter[] parameters = null)
         {
             if (parameters == null || parameters.Length == 0) return;
 
-            // 添加命令参数前缀
+            // 添加Command parameters前缀
             foreach (var parameter in parameters)
             {
                 parameter.ParameterName = DbHelpers.FixSqlParameterPlaceholder(providerName, parameter.ParameterName);
@@ -252,12 +252,12 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 设置数据库命令对象参数
+        /// Set database command object parameters
         /// </summary>
         /// <param name="providerName"></param>
-        /// <param name="dbCommand">数据库命令对象</param>
-        /// <param name="model">参数模型</param>
-        /// <param name="dbParameters">命令参数</param>
+        /// <param name="dbCommand">database command object</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="dbParameters">Command parameters</param>
         private static void SetDbParameters(string providerName, ref DbCommand dbCommand, object model,
             out DbParameter[] dbParameters)
         {
@@ -267,35 +267,35 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 
 
         /// <summary>
-        /// 记录 Sql 执行命令日志
+        /// Record Sql implement命令日志
         /// </summary>
         /// <param name="databaseFacade"></param>
         /// <param name="dbCommand"></param>
         private static void LogSqlExecuteCommand(
             Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, DbCommand dbCommand)
         {
-            // 打印执行 SQL
+            // 打印implement SQL
             //App.PrintToMiniProfiler("sql", "Execution", dbCommand.CommandText);
 
-            // 判断是否启用
+            // Determine whether to enable
             if (!IsLogEntityFrameworkCoreSqlExecuteCommand) return;
 
-            // 获取日志对象
+            // get log object
             var logger = databaseFacade.GetService<ILogger<Microsoft.EntityFrameworkCore.Database.SqlExecuteCommand>>();
 
-            // 构建日志内容
+            // build log content
             var sqlLogBuilder = new StringBuilder();
             sqlLogBuilder.Append(@"Executed DbCommand (NaN) ");
             sqlLogBuilder.Append(@" [Parameters=[");
 
-            // 拼接命令参数
+            // 拼接Command parameters
             var parameters = dbCommand.Parameters;
             for (var i = 0; i < parameters.Count; i++)
             {
                 var parameter = parameters[i];
                 var parameterType = parameter.GetType();
 
-                // 处理 OracleParameter 参数打印
+                // deal with OracleParameter parameter print
                 var dbType = parameterType.FullName.Equals("Oracle.ManagedDataAccess.Client.OracleParameter",
                     StringComparison.OrdinalIgnoreCase)
                     ? parameterType.GetProperty("OracleDbType").GetValue(parameter)
@@ -313,7 +313,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                 ? "EXEC " + dbCommand.CommandText
                 : dbCommand.CommandText);
 
-            // 打印日志
+            // print log
             logger.LogInformation(sqlLogBuilder.ToString());
         }
     }

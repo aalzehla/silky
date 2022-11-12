@@ -11,18 +11,18 @@ namespace Silky.Core.Configuration
         }
 
         /// <summary>
-        /// 是否显示堆栈信息
+        /// Whether to display stack information
         /// </summary>
         public bool DisplayFullErrorStack { get; set; }
 
         /// <summary>
-        /// 是否记录 EFCore Sql 执行命令日志
+        /// whether to record EFCore Sql execute command log
         /// </summary>
         public bool? LogEntityFrameworkCoreSqlExecuteCommand { get; set; }
 
 
         /// <summary>
-        /// 是否自动校验输入参数
+        /// Whether to automatically verify input parameters
         /// </summary>
         public bool AutoValidationParameters { get; set; }
         

@@ -1,17 +1,17 @@
 namespace Silky.EntityFrameworkCore.Values
 {
     /// <summary>
-    /// 存储过程输出值模型
+    /// Stored procedure output value model
     /// </summary>
     public sealed class ProcedureOutputValue
     {
         /// <summary>
-        /// 输出参数名
+        /// output parameter name
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// 输出参数值
+        /// output parameter value
         /// </summary>
         public object Value { get; set; }
     }

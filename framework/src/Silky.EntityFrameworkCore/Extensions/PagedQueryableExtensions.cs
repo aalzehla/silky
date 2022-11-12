@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 namespace Silky.EntityFrameworkCore.Extensions
 {
     /// <summary>
-    /// 分部拓展类
+    /// branch extension
     /// </summary>
     public static class PagedQueryableExtensions
     {
         /// <summary>
-        /// 分页拓展
+        /// Pagination expansion
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entities"></param>
-        /// <param name="pageIndex">页码，必须大于0</param>
+        /// <param name="pageIndex">page number，must be greater than0</param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
         public static PagedList<TEntity> ToPagedList<TEntity>(this IQueryable<TEntity> entities, int pageIndex = 1,
@@ -42,11 +42,11 @@ namespace Silky.EntityFrameworkCore.Extensions
         }
 
         /// <summary>
-        /// 分页拓展
+        /// Pagination expansion
         /// </summary>
         /// <typeparam name="TEntity"></typeparam>
         /// <param name="entities"></param>
-        /// <param name="pageIndex">页码，必须大于0</param>
+        /// <param name="pageIndex">page number，must be greater than0</param>
         /// <param name="pageSize"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>

@@ -1,37 +1,37 @@
 ---
-title: 网关
+title: gateway
 lang: zh-cn
 ---
 
-## 网关概述
+## gateway概述
 
-不同的微服务一般会有不同的网络地址，而外部客户端可能需要调用多个服务的接口才能完成一个业务需求，如果让客户端直接与各个微服务通信，会有以下的问题：
+Different microservices generally have different network addresses，The external client may need to call the interface of multiple services to complete a business requirement，If you let the client communicate directly with each microservice，There will be the following problems：
 
-- 客户端会多次请求不同的微服务，增加了客户端的复杂性
-- 存在跨域请求，在一定场景下处理相对复杂
-- 认证复杂，每个服务都需要独立认证
-- 难以重构，随着项目的迭代，可能需要重新划分微服务。例如，可能将多个服务合并成一个或者将一个服务拆分成多个。如果客户端直接与微服务通信，那么重构将会很难实施
-- 某些微服务可能使用了防火墙 / 浏览器不友好的协议，直接访问会有一定的困难
+- The client will request different microservices multiple times，Increased client-side complexity
+- There is a cross-domain request，Relatively complex to deal with in certain scenarios
+- Authentication is complicated，Each service requires independent certification
+- hard to refactor，As the project iterates，May need to repartition microservices。E.g，May combine multiple services into one or split one service into multiple。If the client communicates directly with the microservice，then refactoring will be difficult to implement
+- Some microservices may use firewalls / Browser unfriendly protocol，Direct access will be difficult
 
-以上这些问题可以借助**网关**解决。
+The above problems can be solved by**gateway**solve。
 
-**网关**是介于客户端和服务器端之间的中间层，所有的外部请求都会先经过 网关这一层。也就是说，API 的实现方面更多的考虑业务逻辑，而安全、性能、监控可以交由 网关来做，这样既提高业务灵活性又不缺安全性。
+**gateway**is the middle layer between the client and the server，All external requests go through first gateway这一层。That is to say，API In terms of implementation; more consideration is given to business logic，while safe、performance、Monitoring can be handed over to gateway来做，This increases business flexibility without sacrificing security。
 
 ![gateway1.png](/assets/imgs/gateway1.png)
 
-## silky框架网关
+## silky框架gateway
 
-silky框架的普通微服务被设计为使用.net的[通用主机](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-5.0)进行托管,并自定义rpc端口与其他微服务应用进行通信(rpc端口号缺省值为:`2200`)。为保证微服务应用的安全性,通过`rpc.token`的设计方式,避免了集群外部rpc端口号直接与微服务内部进行通信。
+silkyThe framework's normal microservices are designed to use.netof[Universal host](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/host/generic-host?view=aspnetcore-5.0)escrow,and customizerpcPorts to communicate with other microservice applications(rpcThe default port number is:`2200`)。为保证微服务应用of安全性,pass`rpc.token`of设计方式,Avoid outside the clusterrpcThe port number communicates directly with the inside of the microservice。
 
-那么,服务外部(前端)是如何与微服务应用进行通信呢?
+So,outside of service(front end)How to communicate with microservice applications?
 
-silky网关被设计为对微服务应用集群的聚合，需要安装每个微服务应用的应用接口项目(包)，前端通过http请求到达网关,silky中间件通过`webapi`+`http方法`在路由表中找到应用服务Id,然后通过rpc与服务提供者进行通信,并将返回结果封装后返回给前端。
+silkygateway被设计为对微服务应用集群of聚合，需要Install每个微服务应用of应用接口项目(Bag)，front endpasshttp请求到达gateway,silkymiddlewarepass`webapi`+`httpmethod`Find the application service in the routing tableId,然后passrpcCommunicate with service providers,并将返回结果封装后返回给front end。
 
-在网关应用,开发者可以增加或自定义中间件实现接口的统一认证与授权,服务限流,流量监控等功能。
+existgateway应用,开发者可以增加或自定义middleware实现接口of统一认证与授权,Service current limit,Traffic monitoring and other functions。
 
-## 构建网关应用
+## 构建gateway应用
 
-1. 通过nuget安装`Silky.WebHost`包，在主函数中注册和构建主机
+1. passnugetInstall`Silky.WebHost`Bag，Register and build the host in the main function
 
 ```csharp
     public class Program
@@ -48,7 +48,7 @@ silky网关被设计为对微服务应用集群的聚合，需要安装每个微
     }
 ```
 
-2. 在`Startup`类中添加**swagger在线文档**,和配置silky请求管道(自动注册一系列的silky中间件)。
+2. exist`Startup`class added**swaggerexist线文档**,and configurationsilkyrequest pipeline(自动注册一系列ofsilkymiddleware)。
 
 ```csharp
         public void ConfigureServices(IServiceCollection services)
@@ -85,6 +85,6 @@ silky网关被设计为对微服务应用集群的聚合，需要安装每个微
         }
 ```
 
-3. 通过项目引用的方式或是nuget包的方式安装各个微服务应用的应用服务接口层(包)
+3. pass项目引用of方式或是nugetBagof方式Install各个微服务应用of应用服务接口层(Bag)
 
-silky通过引用各个微服务应用的应用接口,可以为每个应用服务接口生成webapi,开发者可以通过swagger在线文档进行开发调式。
+silkypass引用各个微服务应用of应用接口,can be generated for each application service interfacewebapi,开发者可以passswaggerexist线文档进行开发调式。

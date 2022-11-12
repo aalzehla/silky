@@ -18,9 +18,9 @@ public class MarkStopwatchLogger
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="moudleName">模块或类名等描述</param>
-    /// <param name="isAllowPrint">是否允许打印日志</param>
-    /// <param name="isMarkStart">是否直接开始埋点</param>
+    /// <param name="moudleName">Description such as module or class name</param>
+    /// <param name="isAllowPrint">Whether to allow printing of logs</param>
+    /// <param name="isMarkStart">Whether to start burying directly</param>
     public MarkStopwatchLogger(string moudleName = "", bool isAllowPrint = true, bool isMarkStart = true)
     {
         _isAllowPrint = isAllowPrint;
@@ -42,9 +42,9 @@ public class MarkStopwatchLogger
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="mark">标记名</param>
-    /// <param name="markAppendMarkSections">分段标记名 不为空时 用时追加到分段标记 进行汇总</param>
-    /// <param name="logLevel">日志级别</param>
+    /// <param name="mark">tagname</param>
+    /// <param name="markAppendMarkSections">分段tagname not empty Append time to segment marker to aggregate</param>
+    /// <param name="logLevel">log level</param>
     /// <param name="agrs"></param>
     /// <returns></returns>
     public string PrintAndMarkRestart(string mark, string[] markAppendMarkSections = null,
@@ -80,7 +80,7 @@ public class MarkStopwatchLogger
     }
 
     /// <summary>
-    /// 未标记就用开始到现在时间
+    /// If not marked; use start to present time
     /// </summary>
     /// <param name="name"></param>
     /// <returns></returns>
@@ -94,9 +94,9 @@ public class MarkStopwatchLogger
     }
 
     /// <summary>
-    /// 打印分段标记
+    /// print segment markers
     /// </summary>
-    /// <param name="markSectionName">分段标记名</param>
+    /// <param name="markSectionName">分段tagname</param>
     /// <returns></returns>
     public string PrintMarkSection(string markSectionName)
     {

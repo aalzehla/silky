@@ -1,14 +1,14 @@
-﻿using System.Linq.Expressions;
+using System.Linq.Expressions;
 
 namespace Microsoft.EntityFrameworkCore.Query
 {
     /// <summary>
-    /// SqlServer 查询转换器
+    /// SqlServer query converter
     /// </summary>
     internal class SqlServer2008QueryTranslationPostprocessor : RelationalQueryTranslationPostprocessor
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="dependencies"></param>
         /// <param name="relationalDependencies"></param>
@@ -21,7 +21,7 @@ namespace Microsoft.EntityFrameworkCore.Query
         }
 
         /// <summary>
-        /// 替换分页语句
+        /// Replace pagination statement
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>

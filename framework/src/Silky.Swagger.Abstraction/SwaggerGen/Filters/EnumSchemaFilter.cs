@@ -13,7 +13,7 @@ namespace Silky.Swagger.Abstraction.SwaggerGen.Filters
     public class EnumSchemaFilter : ISchemaFilter
     {
         /// <summary>
-        /// JSON 序列化
+        /// JSON Serialization
         /// </summary>
         private readonly ISerializer _serializer;
 
@@ -23,7 +23,7 @@ namespace Silky.Swagger.Abstraction.SwaggerGen.Filters
         }
 
         /// <summary>
-        /// 实现过滤器方法
+        /// Implement the filter method
         /// </summary>
         /// <param name="model"></param>
         /// <param name="context"></param>
@@ -31,7 +31,7 @@ namespace Silky.Swagger.Abstraction.SwaggerGen.Filters
         {
             var type = context.Type;
 
-            // 排除其他程序集的枚举
+            // Exclude enumeration of other assemblies
             if (type.IsEnum && EngineContext.Current.TypeFinder.GetAssemblies().Contains(type.Assembly))
             {
                 model.Enum.Clear();
@@ -41,7 +41,7 @@ namespace Silky.Swagger.Abstraction.SwaggerGen.Filters
                 var enumValues = Enum.GetValues(type);
                 foreach (var value in enumValues)
                 {
-                    // 获取枚举成员特性
+                    // Get enum member properties
                     var fieldinfo = type.GetField(Enum.GetName(type, value));
                     var descriptionAttribute = fieldinfo.GetCustomAttribute<DescriptionAttribute>(true);
                     model.Enum.Add(OpenApiAnyFactory.CreateFromJson(_serializer.Serialize(value)));

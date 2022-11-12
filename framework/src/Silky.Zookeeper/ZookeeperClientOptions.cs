@@ -1,24 +1,24 @@
-﻿using System;
+using System;
 
 namespace Silky.Zookeeper
 {
     /// <summary>
-    /// ZooKeeper客户端选项。
+    /// ZooKeeperClient Options。
     /// </summary>
     public class ZookeeperClientOptions
     {
         /// <summary>
-        /// 创建一个新的ZooKeeper客户端选项。
+        /// create a newZooKeeperClient Options。
         /// </summary>
         /// <remarks>
-        /// <see cref="ConnectionTimeout"/> 为10秒。
-        /// <see cref="SessionTimeout"/> 为20秒。
-        /// <see cref="OperatingTimeout"/> 为60秒。
-        /// <see cref="ReadOnly"/> 为false。
-        /// <see cref="SessionId"/> 为0。
-        /// <see cref="SessionPasswd"/> 为null。
-        /// <see cref="BasePath"/> 为null。
-        /// <see cref="EnableEphemeralNodeRestore"/> 为true。
+        /// <see cref="ConnectionTimeout"/> for10second。
+        /// <see cref="SessionTimeout"/> for20second。
+        /// <see cref="OperatingTimeout"/> for60second。
+        /// <see cref="ReadOnly"/> forfalse。
+        /// <see cref="SessionId"/> for0。
+        /// <see cref="SessionPasswd"/> fornull。
+        /// <see cref="BasePath"/> fornull。
+        /// <see cref="EnableEphemeralNodeRestore"/> fortrue。
         /// </remarks>
         protected ZookeeperClientOptions()
         {
@@ -32,19 +32,19 @@ namespace Silky.Zookeeper
         }
 
         /// <summary>
-        /// 创建一个新的ZooKeeper客户端选项。
+        /// create a newZooKeeperClient Options。
         /// </summary>
-        /// <param name="connectionString">连接字符串。</param>
-        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> 为空。</exception>
+        /// <param name="connectionString">connection string。</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> for空。</exception>
         /// <remarks>
-        /// <see cref="ConnectionTimeout"/> 为10秒。
-        /// <see cref="SessionTimeout"/> 为20秒。
-        /// <see cref="OperatingTimeout"/> 为60秒。
-        /// <see cref="ReadOnly"/> 为false。
-        /// <see cref="SessionId"/> 为0。
-        /// <see cref="SessionPasswd"/> 为null。
-        /// <see cref="BasePath"/> 为null。
-        /// <see cref="EnableEphemeralNodeRestore"/> 为true。
+        /// <see cref="ConnectionTimeout"/> for10second。
+        /// <see cref="SessionTimeout"/> for20second。
+        /// <see cref="OperatingTimeout"/> for60second。
+        /// <see cref="ReadOnly"/> forfalse。
+        /// <see cref="SessionId"/> for0。
+        /// <see cref="SessionPasswd"/> fornull。
+        /// <see cref="BasePath"/> fornull。
+        /// <see cref="EnableEphemeralNodeRestore"/> fortrue。
         /// </remarks>
         public ZookeeperClientOptions(string connectionString) : this()
         {
@@ -55,47 +55,47 @@ namespace Silky.Zookeeper
         }
 
         /// <summary>
-        /// 连接字符串。
+        /// connection string。
         /// </summary>
         public string ConnectionString { get; set; }
 
         /// <summary>
-        /// 等待ZooKeeper连接的时间。
+        /// waitZooKeepertime to connect。
         /// </summary>
         public TimeSpan ConnectionTimeout { get; set; }
 
         /// <summary>
-        /// 执行ZooKeeper操作的重试等待时间。
+        /// implementZooKeeper操作的重试wait时间。
         /// </summary>
         public TimeSpan OperatingTimeout { get; set; }
 
         /// <summary>
-        /// zookeeper会话超时时间。
+        /// zookeepersession timeout。
         /// </summary>
         public TimeSpan SessionTimeout { get; set; }
 
         /// <summary>
-        /// 是否只读，默认为false。
+        /// read-only，默认forfalse。
         /// </summary>
         public bool ReadOnly { get; set; }
 
         /// <summary>
-        /// 会话Id。
+        /// conversationId。
         /// </summary>
         public long SessionId { get; set; }
 
         /// <summary>
-        /// 会话密码。
+        /// conversation密码。
         /// </summary>
         public byte[] SessionPasswd { get; set; }
 
         /// <summary>
-        /// 基础路径，会在所有的zk操作节点路径上加入此基础路径。
+        /// base path，will be in allzk操作节点路径上加入此base path。
         /// </summary>
         public string BasePath { get; set; }
 
         /// <summary>
-        /// 是否启用短暂类型节点的恢复。
+        /// Whether to enable recovery of ephemeral type nodes。
         /// </summary>
         public bool EnableEphemeralNodeRestore { get; set; }
     }

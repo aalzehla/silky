@@ -1,12 +1,12 @@
-﻿namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
+namespace Silky.EntityFrameworkCore.MultiTenants.Dependencies
 {
     /// <summary>
-    /// 基于数据库架构的多租户模式
+    /// Multi-tenant mode based on database architecture
     /// </summary>
     public interface IMultiTenantOnSchema : IPrivateMultiTenant
     {
         /// <summary>
-        /// 获取数据库架构名称
+        /// Get database schema name
         /// </summary>
         /// <returns></returns>
         string GetSchemaName();

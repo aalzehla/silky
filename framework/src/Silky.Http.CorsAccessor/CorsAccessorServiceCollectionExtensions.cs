@@ -9,10 +9,10 @@ namespace Microsoft.Extensions.DependencyInjection
     public static class CorsAccessorServiceCollectionExtensions
     {
         /// <summary>
-        /// 配置跨域
+        /// Configure cross domain
         /// </summary>
-        /// <param name="services">服务集合</param>
-        /// <returns>服务集合</returns>
+        /// <param name="services">service collection</param>
+        /// <returns>service collection</returns>
         public static IServiceCollection AddCorsAccessor(this IServiceCollection services,
             Action<CorsOptions> corsOptionsHandler = default,
             Action<CorsPolicyBuilder> corsPolicyBuilderHandler = default)
@@ -20,55 +20,55 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddOptions<CorsAccessorOptions>()
                 .Bind(EngineContext.Current.Configuration.GetSection(CorsAccessorOptions.CorsAccessor));
 
-            // 获取选项
+            // get options
             var corsAccessorSettings =
                 EngineContext.Current.Configuration.GetSection(CorsAccessorOptions.CorsAccessor)
                     .Get<CorsAccessorOptions>() ??
                 new CorsAccessorOptions();
 
-            // 添加跨域服务
+            // Add cross domain service
             services.AddCors(options =>
             {
-                // 添加策略跨域
+                // Add policy cross domain
                 options.AddPolicy(name: corsAccessorSettings.PolicyName, builder =>
                 {
-                    // 判断是否设置了来源，因为 AllowAnyOrigin 不能和 AllowCredentials一起公用
+                    // Determine whether the source is set，because AllowAnyOrigin cannot and AllowCredentialsshare together
                     var isNotSetOrigins = corsAccessorSettings.WithOrigins == null ||
                                           corsAccessorSettings.WithOrigins.Length == 0;
 
-                    // 如果没有配置来源，则允许所有来源
+                    // If no source is configured，all sources are allowed
                     if (isNotSetOrigins) builder.AllowAnyOrigin();
                     else
                         builder.WithOrigins(corsAccessorSettings.WithOrigins)
                             .SetIsOriginAllowedToAllowWildcardSubdomains();
 
-                    // 如果没有配置请求标头，则允许所有表头
+                    // If no request headers are configured，all headers are allowed
                     if (corsAccessorSettings.WithHeaders == null || corsAccessorSettings.WithHeaders.Length == 0)
                         builder.AllowAnyHeader();
                     else builder.WithHeaders(corsAccessorSettings.WithHeaders);
 
-                    // 如果没有配置任何请求谓词，则允许所有请求谓词
+                    // If no request verb is configured，then all request verbs are allowed
                     if (corsAccessorSettings.WithMethods == null || corsAccessorSettings.WithMethods.Length == 0)
                         builder.AllowAnyMethod();
                     else builder.WithMethods(corsAccessorSettings.WithMethods);
 
-                    // 配置跨域凭据
+                    // Configure cross domain凭据
                     if (corsAccessorSettings.AllowCredentials == true && !isNotSetOrigins) builder.AllowCredentials();
 
-                    // 配置响应头
+                    // Configure response headers
                     if (corsAccessorSettings.WithExposedHeaders != null &&
                         corsAccessorSettings.WithExposedHeaders.Length > 0)
                         builder.WithExposedHeaders(corsAccessorSettings.WithExposedHeaders);
 
-                    // 设置预检过期时间
+                    // Set preflight expiration time
                     if (corsAccessorSettings.SetPreflightMaxAge.HasValue)
                         builder.SetPreflightMaxAge(TimeSpan.FromSeconds(corsAccessorSettings.SetPreflightMaxAge.Value));
 
-                    // 添加自定义配置
+                    // Add custom configuration
                     corsPolicyBuilderHandler?.Invoke(builder);
                 });
 
-                // 添加自定义配置
+                // Add custom configuration
                 corsOptionsHandler?.Invoke(options);
             });
 

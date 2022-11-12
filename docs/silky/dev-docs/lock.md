@@ -1,24 +1,24 @@
 ---
-title: 分布式锁
+title: Distributed lock
 lang: zh-cn
 ---
 
-## 介绍
+## introduce
 
-为了保证一个方法或属性在高并发情况下的同一时间只能被同一个线程执行，在传统单体应用单机部署的情况下，可以使用并发处理相关的功能进行互斥控制。但是，随着业务发展的需要，原单体单机部署的系统被演化成分布式集群系统后，由于分布式系统多线程、多进程并且分布在不同机器上，这将使原单机部署情况下的并发控制锁策略失效，单纯的应用并不能提供分布式锁的能力。为了解决这个问题就需要一种跨机器的互斥机制来控制共享资源的访问，这就是分布式锁要解决的问题。
+In order to ensure that a method or property can only be executed by the same thread at the same time under high concurrency，In the case of traditional single application single machine deployment，Mutual exclusion control can be performed using concurrent processing related functions。but，As business needs grow，After the original single-machine deployment system is evolved into a distributed cluster system，Due to the multi-threading of distributed systems、Multiprocess and distributed on different machines，This will invalidate the concurrency control lock strategy in the original stand-alone deployment，单纯的应用并不能提供Distributed lock的能力。In order to solve this problem; a cross-machine mutual exclusion mechanism is needed to control access to shared resources，这就是Distributed lock要解决的问题。
 
-分布式锁应该具备哪些条件？
+Distributed lock应该具备哪些条件？
 
-1. 在分布式系统环境下，一个方法在同一时间只能被一个机器的一个线程执行；
-2. 高可用的获取锁与释放锁；
-3. 高性能的获取锁与释放锁；
-4. 具备可重入特性；
-5. 具备锁失效机制，防止死锁；
-6. 具备非阻塞锁特性，即没有获取到锁将直接返回获取锁失败。
+1. in a distributed system environment，A method can only be executed by one thread of one machine at a time；
+2. Highly available lock acquisition and lock release；
+3. High-performance lock acquisition and lock release；
+4. Reentrant；
+5. With lock failure mechanism，prevent deadlock；
+6. Has a non-blocking lock feature，That is; if the lock is not acquired; it will directly return the failure to acquire the lock。
 
-## silky框架的分布式锁
+## silky框架的Distributed lock
 
-silky框架使用[RedLock.net](https://github.com/samcook/RedLock.net)实现分布式锁,RedLock.net使用redis服务实现的分布式锁。
+silkyframe usage[RedLock.net](https://github.com/samcook/RedLock.net)实现Distributed lock,RedLock.netuseredis服务实现的Distributed lock。
 
-silky框架在服务条目注册的过程中,使用到了分布式锁,避免由于多个服务实例同时注册统一服务条目,导致服务地址未被更新的问题。由于在框架层面使用了分布式锁,所以,在普通业务应用服务中,开发者必须要对分布式锁使用到的`redis`服务进行配置。
+silkyThe framework is in the process of service entry registration,use到了Distributed lock,Avoid the simultaneous registration of unified service entries due to multiple service instances,The problem that caused the service address not to be updated。由于在框架层面use了Distributed lock,so,In common business application services,开发者必须要对Distributed lockuse到的`redis`service to configure。
 

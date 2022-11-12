@@ -14,13 +14,13 @@ namespace Silky.EntityFrameworkCore
         internal static bool CustomizeMultiTenants { get; set; }
 
         /// <summary>
-        /// 基于表的多租户外键名
+        /// Table-based multi-tenant foreign key names
         /// </summary>
         internal static string OnTableTenantId = "TenantId";
 
         public static DbContext GetDbContext(Type dbContextLocator)
         {
-            // 判断是否注册了数据库上下文
+            // Determine whether the database context is registered
             if (!Penetrates.DbContextWithLocatorCached.ContainsKey(dbContextLocator)) return default;
 
             var dbContextResolve = EngineContext.Current.Resolve<Func<Type, IScopedDependency, DbContext>>();

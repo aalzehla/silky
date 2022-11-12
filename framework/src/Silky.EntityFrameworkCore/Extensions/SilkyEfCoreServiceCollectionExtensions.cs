@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore;
 using Silky.Core.DbContext;
 using Silky.Core.DependencyInjection;
@@ -17,27 +17,27 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection services,
             Action<IServiceCollection> configure = null, string migrationAssemblyName = default)
         {
-            // 设置迁移类库名称
+            // Set the migration class library name
             if (!string.IsNullOrWhiteSpace(migrationAssemblyName)) Db.MigrationAssemblyName = migrationAssemblyName;
 
             configure?.Invoke(services);
 
-            // 注册数据库上下文池
+            // Register database context pool
             services.AddScoped<ISilkyDbContextPool, EfCoreDbContextPool>();
 
-            // 注册 Sql 仓储
+            // register Sql Warehousing
             services.AddScoped(typeof(ISqlRepository<>), typeof(SqlRepository<>));
 
-            // 注册 Sql 非泛型仓储
+            // register Sql 非泛型Warehousing
             services.AddScoped<ISqlRepository, SqlRepository>();
 
-            // 注册多数据库上下文仓储
+            // register多数据库上下文Warehousing
             services.AddScoped(typeof(IRepository<,>), typeof(EFCoreRepository<,>));
 
-            // 注册泛型仓储
+            // register泛型Warehousing
             services.AddScoped(typeof(IRepository<>), typeof(EFCoreRepository<>));
 
-            // 注册主从库仓储
+            // register主从库Warehousing
             services.AddScoped(typeof(IMSRepository), typeof(MSRepository));
             services.AddScoped(typeof(IMSRepository<>), typeof(MSRepository<>));
             services.AddScoped(typeof(IMSRepository<,>), typeof(MSRepository<,>));
@@ -48,13 +48,13 @@ namespace Microsoft.Extensions.DependencyInjection
             services.AddScoped(typeof(IMSRepository<,,,,,,>), typeof(MSRepository<,,,,,,>));
             services.AddScoped(typeof(IMSRepository<,,,,,,,>), typeof(MSRepository<,,,,,,,>));
 
-            // 注册非泛型仓储
+            // register非泛型Warehousing
             services.AddScoped<IRepository, EFCoreRepository>();
 
-            // 注册多数据库仓储
+            // register多数据库Warehousing
             services.AddScoped(typeof(IDbRepository<>), typeof(DbRepository<>));
 
-            // 解析数据库上下文
+            // Parse the database context
             services.AddTransient(provider =>
             {
                 DbContext dbContextResolve(Type locator, ITransientDependency transient)
@@ -78,30 +78,30 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 通过定位器解析上下文
+        /// Parse context by locator
         /// </summary>
         /// <param name="provider"></param>
         /// <param name="locator"></param>
         /// <returns></returns>
         private static DbContext ResolveDbContext(IServiceProvider provider, Type locator)
         {
-            // 判断定位器是否绑定了数据库上下文
+            // Determine whether the locator is bound to the database context
             var isRegistered = Penetrates.DbContextWithLocatorCached.TryGetValue(locator, out var dbContextType);
             if (!isRegistered)
                 throw new InvalidOperationException(
                     $"The DbContext for locator `{locator.FullName}` binding was not found.");
 
-            // 动态解析数据库上下文
+            // 动态Parse the database context
             var dbContext = provider.GetService(dbContextType) as DbContext;
 
-            // 实现动态数据库上下文功能，刷新 OnModelCreating
+            // Implement dynamic database context function，refresh OnModelCreating
             var dbContextAttribute = DbProvider.GetAppDbContextAttribute(dbContextType);
             if (dbContextAttribute?.Mode == DbContextMode.Dynamic)
             {
                 DynamicModelCacheKeyFactory.RebuildModels();
             }
 
-            // 添加数据库上下文到池中
+            // Add database context to pool
             var dbContextPool = provider.GetService<ISilkyDbContextPool>() as EfCoreDbContextPool;
             dbContextPool?.AddToPool(dbContext);
 
@@ -109,10 +109,10 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
         /// <summary>
-        /// 启动自定义租户类型
+        /// Start custom tenant type
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="onTableTenantId">基于表的多租户Id名称</param>
+        /// <param name="onTableTenantId">table based multi-tenancyIdname</param>
         /// <returns></returns>
         public static IServiceCollection CustomizeMultiTenants(this IServiceCollection services,
             string onTableTenantId = default)

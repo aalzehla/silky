@@ -1,66 +1,66 @@
 ---
-title: 通过silky.samples熟悉silky微服务框架的使用
+title: passsilky.samplesfamiliarsilkyThe use of microservice frameworks
 lang: zh-cn
 ---
 
 
-经过一段时间的开发与测试,终于发布了Silky框架的第一个正式版本(1.0.0版本),并给出了silky框架的样例项目**silky.samples**。本文通过对**silky.samples**的介绍，简述如何通过silky框架快速的构建一个微服务的业务框架，并进行应用开发。
+After a period of development and testing,finally releasedSilkyThe first official version of the framework(1.0.0Version),and givessilkySample project for the framework**silky.samples**。本文passright**silky.samples**introduction，简述如何passsilkyThe framework quickly builds a business framework for microservices，and application development。
 
 
-## silky.samples项目基本介绍
+## silky.samplesBasic introduction to the project
 
-silky.sample项目由三个独立的微服务应用模块组成:account、stock、order和一个网关项目gateway构成。
+silky.sampleThe project consists of three independent microservice application modules:account、stock、orderand a gateway projectgatewayconstitute。
 
-### 业务应用模块
+### business application module
 
-每个独立的微服务应用采用模块化设计，主要由如下几部分组成：
+Each independent microservice application adopts a modular design，It is mainly composed of the following parts：
 
-1. **主机(Host):** 主要用于托管微服务应用本身，主机通过引用应用服务项目(应用接口的实现),托管微服务应用，通过托管应用服务,在主机启动的过程中,向服务注册中心注册服务路由。
+1. **host(Host):** Primarily used to host the microservice application itself，hostpass引用application serviceproject(Implementation of the application interface),Managed Microservice Applications，pass托管application service,existhost启动of过程middle,Register a service route with the service registry。
 
-2. **应用接口层(Application.Contracts):** 用于定义应用服务接口,通过应用接口,该微服务模块与其他微服务模块或是网关进行rpc通信的能力。在该项目中,除了定义应用服务接口之前,一般还定义与该应用接口相关的`DTO`对象。应用接口除了被该微服务应用项目引用,并实现应用服务之前,还可以被网关或是其他微服务模块引用。网关或是其他微服务项目通过应用接口生成的代理与该微服务模块通过rpc进行通信。
+2. **Application interface layer(Application.Contracts):** Used to define application service interface,passApplication interface,The microservice module communicates with other microservice modules or gatewaysrpcability to communicate。in this project,Except before defining the application service interface,Generally also define the interface related to the application`DTO`object。In addition to being referenced by the microservice application project; the application interface,and before implementing the app service,It can also be referenced by gateways or other microservice modules。网关or其他MicroservicesprojectpassApplication interface生成of代理与该Microservicesmodulepassrpccommunicate。
 
-3. **应用服务层(Application):** 应用服务是该微服务定义的应用接口的实现。应用服务与DDD传统分层架构的应用层的概念一致。主要负责外部通信与领域层之间的协调。一般地，应用服务进行业务流程控制，但是不包含业务逻辑的实现。
+3. **Application service layer(Application):** application service是该Microservices定义ofImplementation of the application interface。application service andDDDThe concept of the application layer of the traditional layered architecture is consistent。Mainly responsible for the coordination between external communication and the domain layer。normally，Application Services for Business Process Control，But does not include the implementation of business logic。
 
-4. **领域层(Domain):** 负责表达业务概念,业务状态信息以及业务规则,是该微服务模块的业务核心。一般地,在该层可以定义聚合根、实体、领域服务等对象。
+4. **Domain layer(Domain):** Responsible for expressing business concepts,Business state information and business rules,is the business core of the microservice module。normally,Aggregate roots can be defined at this level、entity、Domain Services等object。
 
-5. **领域共享层(Domain.Shared):** 该层用于定义与领域对象相关的模型、实体等相关类型。不包含任何业务实现，可以被其他微服务引用。
+5. **Domain Shared Layer(Domain.Shared):** 该Floor用于定义与领域object相关of模型、entity等相关类型。Does not contain any business implementation，Can be referenced by other microservices。
 
-6. **数据访问(DataAccess)层:** 该层一般用于封装数据访问相关的对象。例如：仓库对象、 `SqlHelper`、或是ORM相关的类型等。在silky.samples中,通过efcore实现数据的读写操作。
+6. **data access(DataAccess)Floor:** 该Floor一般用于封装data access相关ofobject。E.g：仓库object、 `SqlHelper`、orORMrelated types; etc.。existsilky.samplesmiddle,passefcoreImplement data read and write operations。
 
 ![project-arch.jpg](/assets/imgs/project-arch.jpg)
 
-### 服务聚合与网关
+### Service Aggregation and Gateway
 
-silky框架不允许服务外部与微服务主机直接通信,应用请求必须通过http请求到达网关,网关通过silky提供的中间件解析到服务条目,并通过rpc与集群内部的微服务进行通信。所以，如果服务需要与集群外部进行通信,那么,开发者定义的网关必须要引用各个微服务模块的应用接口层；以及必须要使用silky相关的中间件。
+silkyframenot allowed服务外部与Microserviceshost直接communication,应用Please求必须passhttpThe request arrives at the gateway,网关passsilky提供ofmiddle间件解析到服务条目,并passrpc与cluster内部ofMicroservicescommunicate。so，如果服务需要与cluster外部communicate,So,开发者定义of网关必须要引用各个MicroservicesmoduleofApplication interface layer；and must usesilky相关ofmiddle间件。
 
 
-## 开发环境
+## development environment
 
-1. .net版本: 5.0.101
+1. .netVersion: 5.0.101
 
-2. silky版本: 1.0.0
+2. silkyVersion: 1.0.0
 
-3. IDE: (1) visual studio 最新版 (2) Rider(推荐)
+3. IDE: (1) visual studio new (2) Rider(recommend)
 
-## 主机与应用托管
+## host与应用托管
 
-### 主机的创建步骤
+### hostof创建步骤
 
-通过silky框架创建一个业务模块非常方便,只需要通过如下4个步骤,就可以轻松的创建一个silky应用业务模块。
+passsilkyIt is very convenient for the framework to create a business module,只需要pass如下4steps,you can easily create asilkyApplication business module。
 
-1. 创建项目
+1. Create project
 
-创建控制台应用(Console Application)项目,并且引用`Silky.NormHost`包。
+Create a console app(Console Application)project,and cite`Silky.NormHost`Bag。
 
 ```
 dotnet add package Silky.NormHost --version 1.0.0
 ```
 
-2. 应用程序入口与主机构建
+2. 应用程序入口与host构建
 
-在`main`方法中,通用.net的主机`Host`构建并注册silky微服务。在注册silky微服务时,需要指定silky启动的依赖模块。
+exist`main`方法middle,Universal.netofhost`Host`build and registersilkyMicroservices。exist注册silkyMicroservices时,needs to be specifiedsilkyStarted dependent modules。
 
-一般地,如果开发者不需要额外依赖其他模块,也无需在应用启动或停止时执行方法，那么您可以直接指定`NormHostModule`模块。
+normally,If the developer does not need additional dependencies on other modules,也无需exist应用启动或停止时执行方法，So您可by直接指定`NormHostModule`module。
 
 ```csharp
  public class Program
@@ -79,19 +79,19 @@ dotnet add package Silky.NormHost --version 1.0.0
     }
 ```
 
-3. 配置文件
+3. configuration file
 
-silky框架支持`yml`或是`json`格式作为配置文件。通过`appsettings.yml`对silky框架进行统一配置,通过`appsettings.${Environment}.yml`对不同环境变量下的配置项进行设置。
+silkyFramework support`yml`or`json`格式作forconfiguration file。pass`appsettings.yml`rightsilkyFramework for unified configuration,pass`appsettings.${Environment}.yml`right不同environment variable下ofconfigure项进行set up。
 
-开发者如果直接通过项目的方式启动应用,那么可以通过`Properties/launchSettings.json`的`environmentVariables.DOTNET_ENVIRONMENT`环境变量。如果通过`docker-compose`的方式启动应用,那么可以通过`.env`设置`DOTNET_ENVIRONMENT`环境变量。
+开发者如果直接passprojectof方式启动应用,So可bypass`Properties/launchSettings.json`of`environmentVariables.DOTNET_ENVIRONMENT`environment variable。如果pass`docker-compose`of方式启动应用,So可bypass`.env`set up`DOTNET_ENVIRONMENT`environment variable。
 
-为保证配置文件有效,开发者需要显式的将配置文件拷贝到项目生成目录下。
+for保证configuration file有效,开发者需要显式ofWillconfiguration file拷贝到project生成Under contents。
 
-4. 引用应用服务层和数据访问层
+4. 引用Application service layeranddata accessFloor
 
-一般地,主机项目需要引用该微服务模块的应用服务层和数据访问层。只有主机引用应用服务层,主机在启动时,才会生成服务条目的路由,并且将服务路由注册到服务注册中心。
+normally,hostproject需要引用该MicroservicesmoduleofApplication service layeranddata accessFloor。只有host引用Application service layer,hostexist启动时,才会生成服务条目ofrouting,并且Will服务routing注册到服务注册middle心。
 
-一个典型的主机项目文件如下所示:
+一个典型ofhostproject文件如下所示:
 
 ```xml
 <Project Sdk="Microsoft.NET.Sdk">
@@ -125,15 +125,15 @@ silky框架支持`yml`或是`json`格式作为配置文件。通过`appsettings.
 
 ```
 
-### 配置
+### configure
 
-一般地,一个微服务模块的主机必须要配置:服务注册中心、分布式锁链接、分布式缓存地址、集群rpc通信token、数据库链接地址等。
+normally,一个Microservicesmoduleofhost必须要configure:服务注册middle心、Distributed lock link、Distributed cache address、clusterrpccommunicationtoken、Database link address; etc.。
 
-如果使用docker-compose来启动和调试应用的话,那么,rpc配置节点下的的host和port可以缺省,因为生成的每个容器的都有自己的地址和端口号。
+If usingdocker-compose来启动and调试应用of话,So,rpcconfigure节点下ofofhostandportcan be defaulted,因for生成of每个containerof都有自己of地址and端口号。
 
-如果直接通过项目的方式启动和调试应用的话,那么,必须要配置rpc节点下的port,每个微服务模块的主机应用有自己的端口号。
+如果直接passprojectof方式启动and调试应用of话,So,必须要configurerpc节点下ofport,每个Microservicesmoduleofhost应用有自己of端口号。
 
-silky框架的必要配置如下所示:
+silkyframeof必要configure如下所示:
 
 ```yaml
 rpc:
@@ -141,7 +141,7 @@ rpc:
   Port: 2201
   token: ypjdYOzNd4FwENJiEARMLWwK0v7QUHPW
 registrycenter:
-  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 # 使用分号;来区分不同的服务注册中心
+  connectionStrings: 127.0.0.1:2181,127.0.0.1:2182,127.0.0.1:2183;127.0.0.1:2184,127.0.0.1:2185,127.0.0.1:2186 # use semicolon;来区分不同of服务注册middle心
   registryCenterType: Zookeeper
 distributedCache:
   redis:
@@ -151,62 +151,62 @@ connectionStrings:
     default: server=127.0.0.1;port=3306;database=account;uid=root;pwd=qwe!P4ss;
 ```
 
-## 应用接口
+## Application interface
 
-### 应用接口定义
+### Application interface定义
 
-一般地,在应用接口层开发者需要安装`Silky.Rpc`包。如果该微服务模块还涉及到分布式事务,那么还需要安装`Silky.Transaction.Tcc`,当然，您也可以选择在应用接口层安装`Silky.Transaction`包,在应用服务层安装`Silky.Transaction.Tcc`包。
+normally,existApplication interface layer开发者需要Install`Silky.Rpc`Bag。如果该Microservicesmodule还涉及到分布式事务,So还需要Install`Silky.Transaction.Tcc`,certainly，您也可by选择existApplication interface layerInstall`Silky.Transaction`Bag,existApplication service layerInstall`Silky.Transaction.Tcc`Bag。
 
-1. 开发者只需要在应用接口通过`ServiceRouteAttribute`特性对应用接口进行直接即可。
+1. 开发者只需要existApplication interfacepass`ServiceRouteAttribute`特性rightApplication interface进行直接即可。
 
-2. Silky约定应用接口应当以`IXxxAppService`命名，这样,服务条目生成的路由则会以`api/xxx`形式生成。当然这并不是强制的。
+2. Silky约定Application interface应当by`IXxxAppService`name，so,服务条目生成ofrouting则会by`api/xxx`Form generation。certainly这并不是强制of。
 
-3. 每个应用接口的方法都对应着一个服务条目,服务条目的Id为: 方法的完全限定名 + 参数名
+3. 每个Application interfaceof方法都right应着一个服务条目,服务条目ofIdfor: 方法of完全限定名 + parameter name
 
-4. 您可以在应用接口层对方法的缓存、路由、服务治理、分布式事务进行相关配置。该部分内容请参考[官方文档](http://docs.silky-fk.com/)
+4. 您可byexistApplication interface layerright方法of缓存、routing、Service Governance、分布式事务进行相关configure。Please refer to this section[official documentation](http://docs.silky-fk.com/)
 
-5. 网关或是其他模块的微服务项目需要引用服务应用接口项目或是通过nuget的方式安装服务应用接口生成的包。
+5. 网关or其他moduleofMicroservicesproject需要引用服务Application interfaceprojectorpassnugetof方式Install服务Application interface生成ofBag。
 
-6. `[Governance(ProhibitExtranet = true)]`可以标识一个方法禁止与集群外部进行通信,通过网关也不会生成swagger文档。
+6. `[Governance(ProhibitExtranet = true)]`可by标识一个方法禁止与cluster外部communicate,pass网关也不会生成swaggerDocumentation。
  
-7. 应用接口方法生成的WebApi支持restful API风格。Silky支持通过方法的约定命名生成对应http方法请求的WebApi。您当然开发者也可以通过`HttpMethodAttribute`特性对某个方法进行注解。
+7. Application interface方法生成ofWebApisupportrestful APIstyle。Silkysupportpass方法of约定name生成right应http方法Please求ofWebApi。您certainly开发者也可bypass`HttpMethodAttribute`特性right某个方法进行注解。
 
-### 一个典型的应用接口的定义
+### 一个典型ofApplication interfaceof定义
 
 ```csharp
     /// <summary>
-    /// 账号服务
+    /// Account service
     /// </summary>
     [ServiceRoute]
     public interface IAccountAppService
     {
         /// <summary>
-        /// 新增账号
+        /// Add account
         /// </summary>
-        /// <param name="input">账号信息</param>
+        /// <param name="input">account information</param>
         /// <returns></returns>
         Task<GetAccountOutput> Create(CreateAccountInput input);
 
         /// <summary>
-        /// 通过账号名称获取账号
+        /// passAccount Name获取account
         /// </summary>
-        /// <param name="name">账号名称</param>
+        /// <param name="name">Account Name</param>
         /// <returns></returns>
         [GetCachingIntercept("Account:Name:{0}")]
         [HttpGet("{name:string}")]
         Task<GetAccountOutput> GetAccountByName([CacheKey(0)] string name);
 
         /// <summary>
-        /// 通过Id获取账号信息
+        /// passId获取account information
         /// </summary>
-        /// <param name="id">账号Id</param>
+        /// <param name="id">accountId</param>
         /// <returns></returns>
         [GetCachingIntercept("Account:Id:{0}")]
         [HttpGet("{id:long}")]
         Task<GetAccountOutput> GetAccountById([CacheKey(0)] long id);
 
         /// <summary>
-        /// 更新账号信息
+        /// 更新account information
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -214,16 +214,16 @@ connectionStrings:
         Task<GetAccountOutput> Update(UpdateAccountInput input);
 
         /// <summary>
-        /// 删除账号信息
+        /// 删除account information
         /// </summary>
-        /// <param name="id">账号Id</param>
+        /// <param name="id">accountId</param>
         /// <returns></returns>
         [RemoveCachingIntercept("GetAccountOutput","Account:Id:{0}")]
         [HttpDelete("{id:long}")]
         Task Delete([CacheKey(0)]long id);
 
         /// <summary>
-        /// 订单扣款
+        /// Order debit
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
@@ -235,19 +235,19 @@ connectionStrings:
 ```
 
 
-## 应用服务--应用接口的实现
+## application service--Implementation of the application interface
 
-1. 应用服务层只需要引用应用服务接口层以及领域服务层,并实现应用接口相关的方法。
+1. Application service layer只需要引用application serviceinterfaceFlooras well asDomain ServicesFloor,并实现Application interface相关of方法。
 
-2. 确保该微服务模块的主机引用了该模块的应用服务层,这样主机才能够托管该应用本身。
+2. 确保该Microservicesmoduleofhost引用了该moduleofApplication service layer,sohost才能够托管该应用本身。
 
-3. 应用服务层可以通过引用其他微服务模块的应用接口层项目(或是安装nuget包,取决于开发团队的项目管理方法),与其他微服务模块进行rpc通信。
+3. Application service layer可bypass引用其他MicroservicesmoduleofApplication interface layerproject(orInstallnugetBag,取决于开发团队ofproject管理方法),与其他Microservicesmodule进行rpccommunication。
 
-4. 应用服务层需要依赖领域服务,通过调用领域服务的相关接口,实现该模块的核心业务逻辑。
+4. Application service layer需要依赖Domain Services,pass调用Domain Servicesof相关interface,实现该moduleof核心业务逻辑。
 
-5. DTO到实体对象或是实体对DTO对象的映射关系可以在该层指定映射关系。
+5. DTO到entityobjectorentityrightDTOobjectof映射关系可byexist该Floor指定映射关系。
 
-一个典型的应用服务的实现如下所示:
+一个典型ofapplication serviceof实现如下所示:
 
 ```csharp
 public class AccountAppService : IAccountAppService
@@ -295,7 +295,7 @@ public class AccountAppService : IAccountAppService
             var account = await _accountDomainService.GetAccountById(input.AccountId);
             if (input.OrderBalance > account.Balance)
             {
-                throw new BusinessException("账号余额不足");
+                throw new BusinessException("account余额不足");
             }
             return await _accountDomainService.DeductBalance(input, TccMethodType.Try);
         }
@@ -312,19 +312,19 @@ public class AccountAppService : IAccountAppService
     }
 ```
 
-## 领域层--微服务的核心业务实现
+## Domain layer--Microservicesof核心业务实现
 
-1. 领域层是该微服务模块核心业务处理的模块,一般用于定于聚合根、实体、领域服务、仓储等业务对象。
+1. Domain layer是该Microservicesmodule核心业务处理ofmodule,Generally used to target aggregate roots、entity、Domain Services、仓储等业务object。
 
-2. 领域层引用该微服务模块的应用接口层,方便使用dto对象。
+2. Domain layer引用该MicroservicesmoduleofApplication interface layer,easy to usedtoobject。
 
-3. 领域层可以通过引用其他微服务模块的应用接口层项目(或是安装nuget包,取决于开发团队的项目管理方法),与其他微服务模块进行rpc通信。
+3. Domain layer可bypass引用其他MicroservicesmoduleofApplication interface layerproject(orInstallnugetBag,取决于开发团队ofproject管理方法),与其他Microservicesmodule进行rpccommunication。
 
-4. 领域服务必须要直接或间接继承`ITransientDependency`接口,这样,该领域服务才会被注入到ioc容器。
+4. Domain Services必须要直接或间接继承`ITransientDependency`interface,so,该Domain Services才会被注入到ioccontainer。
 
-6. silky.samples 项目使用[TanvirArjel.EFCore.GenericRepository](https://github.com/TanvirArjel/EFCore.GenericRepository)包实现数据的读写操作。
+6. silky.samples projectuse[TanvirArjel.EFCore.GenericRepository](https://github.com/TanvirArjel/EFCore.GenericRepository)BagImplement data read and write operations。
 
-一个典型的领域服务的实现如下所示:
+一个典型ofDomain Servicesof实现如下所示:
 
 ```csharp
   public class AccountDomainService : IAccountDomainService
@@ -344,13 +344,13 @@ public class AccountAppService : IAccountAppService
             var exsitAccountCount = await _repository.GetCountAsync<Account>(p => p.Name == account.Name);
             if (exsitAccountCount > 0)
             {
-                throw new BusinessException($"已经存在{account.Name}名称的账号");
+                throw new BusinessException($"已经存exist{account.Name}名称ofaccount");
             }
 
             exsitAccountCount = await _repository.GetCountAsync<Account>(p => p.Email == account.Email);
             if (exsitAccountCount > 0)
             {
-                throw new BusinessException($"已经存在{account.Email}Email的账号");
+                throw new BusinessException($"已经存exist{account.Email}Emailofaccount");
             }
 
             await _repository.InsertAsync<Account>(account);
@@ -362,7 +362,7 @@ public class AccountAppService : IAccountAppService
             var accountEntry = _repository.GetQueryable<Account>().FirstOrDefault(p => p.Name == name);
             if (accountEntry == null)
             {
-                throw new BusinessException($"不存在名称为{name}的账号");
+                throw new BusinessException($"不存exist名称for{name}ofaccount");
             }
 
             return accountEntry;
@@ -373,7 +373,7 @@ public class AccountAppService : IAccountAppService
             var accountEntry = _repository.GetQueryable<Account>().FirstOrDefault(p => p.Id == id);
             if (accountEntry == null)
             {
-                throw new BusinessException($"不存在Id为{id}的账号");
+                throw new BusinessException($"不存existIdfor{id}ofaccount");
             }
 
             return accountEntry;
@@ -387,7 +387,7 @@ public class AccountAppService : IAccountAppService
                 var exsitAccountCount = await _repository.GetCountAsync<Account>(p => p.Email == input.Email);
                 if (exsitAccountCount > 0)
                 {
-                    throw new BusinessException($"系统中已经存在Email为{input.Email}的账号");
+                    throw new BusinessException($"系统middle已经存existEmailfor{input.Email}ofaccount");
                 }
             }
 
@@ -396,7 +396,7 @@ public class AccountAppService : IAccountAppService
                 var exsitAccountCount = await _repository.GetCountAsync<Account>(p => p.Name == input.Name);
                 if (exsitAccountCount > 0)
                 {
-                    throw new BusinessException($"系统中已经存在Name为{input.Name}的账号");
+                    throw new BusinessException($"系统middle已经存existNamefor{input.Name}ofaccount");
                 }
             }
 
@@ -464,11 +464,11 @@ public class AccountAppService : IAccountAppService
     }
 ```
 
-## 数据访问(EntityFrameworkCore)--通过efcore实现数据读写
+## data access(EntityFrameworkCore)--passefcoreRealize data read and write
 
-1. silky.samples项目使用orm框架efcore进行数据读写。
+1. silky.samplesprojectuseormframeefcoreread and write data。
 
-2. silky提供了`IConfigureService`,通过继承该接口即可使用`IServiceCollection`的实例指定数据上下文对象和注册仓库服务。
+2. silkyprovided`IConfigureService`,pass继承该interface即可use`IServiceCollection`of实例指定数据上下文objectand注册仓库服务。
 
 ```csharp
   public class EfCoreConfigureService : IConfigureService
@@ -486,15 +486,15 @@ public class AccountAppService : IAccountAppService
     }
 ```
 
-3. 主机项目需要显式的引用该项目，只有这样,该项目的`ConfigureServices`才会被调用。
+3. hostproject需要显式of引用该project，只有so,该projectof`ConfigureServices`will be called。
 
-4. 数据迁移,请[参考](https://docs.microsoft.com/zh-cn/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli)
+4. data migration,Please[refer to](https://docs.microsoft.com/zh-cn/ef/core/cli/dbcontext-creation?tabs=dotnet-core-cli)
 
-## 应用启动与调试
+## Application startup and debugging
 
-### 获取源码
+### Get the source code
 
-1. 使用git 克隆silky项目源代码,silky.samples存放在`samples`目录下
+1. usegit clonesilkyproject源代码,silky.samples存放exist`samples`Under contents
 
 ```cmd
 # github
@@ -504,94 +504,94 @@ git clone https://github.com/liuhll/silky.git
 git clone https://gitee.com/liuhll2/silky.git
 ```
 
-### 必要的前提
+### 必要of前提
 
-1. 服务注册中心`zookeeper`
+1. 服务注册middle心`zookeeper`
 
-2. 缓存服务`redis`
+2. cache service`redis`
 
-3. mysql数据库 
+3. mysqldatabase 
 
-如果您电脑已经安装了[docker](https://docs.docker.com/docker-for-windows/install)以及[docker-compose](https://docs.docker.com/compose/install/)命令,那么您只需要进入`samples\docker-compose\infrastr`目录下,打开命令行工作,执行如下命令就可以自动安装`zookeeper`、`redis`、`mysql`等服务:
+If your computer has already installed[docker](https://docs.docker.com/docker-for-windows/install)as well as[docker-compose](https://docs.docker.com/compose/install/)Order,So您只需要进入`samples\docker-compose\infrastr`Under contents,OpenOrder行工作,执行如下Order就可by自动Install`zookeeper`、`redis`、`mysql`and other services:
 
 ```cmd
 docker-compose -f .\docker-compose.mysql.yml -f .\docker-compose.redis.yml -f .\docker-compose.zookeeper.yml up -d
 ```
 
-### 数据库迁移
+### database迁移
 
-需要分别进入到各个微服务模块下的`EntityFrameworkCore`项目(例如:),执行如下命令:
+需要分别Enter各个Microservicesmodule下of`EntityFrameworkCore`project(E.g:),执行如下Order:
 
 ```cmd
 dotnet ef database update
 ```
 
-例如: 需要迁移account模块的数据库如下所示:
+E.g: need to migrateaccountmoduleofdatabase如下所示:
 
 ![db-migrations.png](/assets/imgs/db-migrations.png)
 
-order模块和stock模块与account模块一致,在服务运行前都需要通过数据库迁移命令生成相关数据库。
+ordermoduleandstockmodule与accountmodule一致,exist服务运行前都需要passdatabase迁移Order生成相关database。
 
-::: warning 注意
+::: warning Notice
 
-1. 数据库迁移指定数据库连接地址默认指定的是`appsettings.Development.yml`中配置的,您可以通过修改该配置文件中的`connectionStrings.default`配置项来指定自己的数据库服务地址。
+1. database迁移指定database连接地址默认指定of是`appsettings.Development.yml`middleconfigureof,您可bypass修改该configuration filemiddleof`connectionStrings.default`configure项来指定自己ofdatabase服务地址。
 
-2. 如果没有`dotnet ef`命令,则需要通过`dotnet tool install --global dotnet-ef`安装ef工具,请[参考](https://docs.microsoft.com/zh-cn/ef/core/get-started/overview/install)
+2. if there is not`dotnet ef`Order,则需要pass`dotnet tool install --global dotnet-ef`Installeftool,Please[refer to](https://docs.microsoft.com/zh-cn/ef/core/get-started/overview/install)
 
 
 :::
 
-### 以项目的方式启动和调试
+### byprojectof方式启动and调试
 
-#### 使用visual studio作为开发工具
+#### usevisual studio作for开发tool
 
-进入到samples目录下,使用visual studio打开`silky.samples.sln`解决方案,将项目设置为多启动项目,并将网关和各个模块的微服务主机设置为启动项目，如下图:
+EntersamplesUnder contents,usevisual studioOpen`silky.samples.sln`solution,Willprojectset upfor多启动project,并Will网关and各个moduleofMicroserviceshostset upfor启动project，As shown below:
 
 ![visual-studio-debug-1](/assets/imgs/visual-studio-debug-1.png)
 
-设置完成后直接启动即可。
+set up完成后直接启动即可。
 
-#### 使用rider作为开发工具
+#### userider作for开发tool
 
-1. 进入到samples目录下,使用rider打开`silky.samples.sln`解决方案,打开各个微服务模块下的`Properties/launchSettings.json`,点击图中绿色的箭头即可启动项目。
+1. EntersamplesUnder contents,useriderOpen`silky.samples.sln`solution,Open各个Microservicesmodule下of`Properties/launchSettings.json`,点击图middle绿色of箭头即可启动project。
 
 ![rider-debug.png](/assets/imgs/rider-debug.png)
 
-2. 启动网关项目后,可以看到应用接口的服务条目生成的webapi接口。
+2. 启动网关project后,可by看到Application interfaceof服务条目生成ofwebapiinterface。
 
 ![swagger-ui.png](/assets/imgs/swagger-ui.png)
 
-::: warning 注意
+::: warning Notice
 
-1. 默认的环境变量为: `Development`,如果需要修改环境变量的话,可以通过`Properties/launchSettings.json`下的`environmentVariables`节点修改相关环境变量,请参考[在 ASP.NET Core 中使用多个环境](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/environments?view=aspnetcore-5.0)。
+1. 默认ofenvironment variablefor: `Development`,如果需要修改environment variableof话,可bypass`Properties/launchSettings.json`下of`environmentVariables`节点修改相关environment variable,Pleaserefer to[exist ASP.NET Core middleuse多个环境](https://docs.microsoft.com/zh-cn/aspnet/core/fundamentals/environments?view=aspnetcore-5.0)。
 
-2. 数据库连接、服务注册中心地址、以及redis缓存地址和分布式锁连接等配置项可以通过修改`appsettings.Development.yml`配置项自定义指定。
+2. database连接、服务注册middle心地址、as well asredis缓存地址and分布式锁连接等configure项可bypass修改`appsettings.Development.yml`configure项自定义指定。
 
 :::
 
-### 以docker-compose的方式启动和调试
+### bydocker-composeof方式启动and调试
 
-1. 进入到samples目录下,使用visual studio打开`silky.samples.dockercompose.sln`解决方案,将**docker-compose**设置为启动项目，即可启动和调式。
+1. EntersamplesUnder contents,usevisual studioOpen`silky.samples.dockercompose.sln`solution,Will**docker-compose**set upfor启动project，即可启动and调式。
 
-2. 应用启动成功后,打开: [http://127.0.0.1/swagger](http://127.0.0.1/swagger),即可看到swagger api文档
+2. After the application starts successfully,Open: [http://127.0.0.1/swagger](http://127.0.0.1/swagger),to seeswagger apiDocumentation
 
 ![swagger-ui2.png](/assets/imgs/swagger-ui2.png)
 
 
-::: warning 注意
+::: warning Notice
 
-1. 以docker-compose的方式启动和调试,则指定的环境变量为:`ContainerDev`
+1. bydocker-composeof方式启动and调试,则指定ofenvironment variablefor:`ContainerDev`
 
-2. 数据库连接、服务注册中心地址、以及redis缓存地址和分布式锁连接等配置项可以通过修改`appsettings.ContainerDev.yml`配置项自定义指定,配置的服务连接地址**不允许**为: `127.0.0.1`或是`localhost`
+2. database连接、服务注册middle心地址、as well asredis缓存地址and分布式锁连接等configure项可bypass修改`appsettings.ContainerDev.yml`configure项自定义指定,configureof服务连接地址**not allowed**for: `127.0.0.1`or`localhost`
 
 :::
 
 
-### 测试和调式
+### 测试and调式
 
-服务启动成功后,您可以通过`/api/account-post`接口和`/api/product-post`接口新增账号和产品,然后通过`/api/order-post`接口进行测试和调式。
+After the service starts successfully,您可bypass`/api/account-post`interfaceand`/api/product-post`interfaceAdd accountand产品,然后pass`/api/order-post`interface进行测试and调式。
 
-## 开源地址
+## open source address
 
 github: [https://github.com/liuhll/silky](https://github.com/liuhll/silky)
 

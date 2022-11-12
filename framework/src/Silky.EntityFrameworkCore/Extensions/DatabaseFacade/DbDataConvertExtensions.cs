@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
@@ -11,14 +11,14 @@ using Silky.Core.Extensions;
 namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 {
     /// <summary>
-    /// 数据库数据转换拓展
+    /// Database data conversion extension
     /// </summary>
     public static class DbDataConvertExtensions
     {
         /// <summary>
-        /// 将 DataTable 转 List 集合
+        /// Will DataTable change List gather
         /// </summary>
-        /// <typeparam name="T">返回值类型</typeparam>
+        /// <typeparam name="T">return value type</typeparam>
         /// <param name="dataTable">DataTable</param>
         /// <returns>List{T}</returns>
         public static List<T> ToList<T>(this DataTable dataTable)
@@ -27,9 +27,9 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataTable 转 List 集合
+        /// Will DataTable change List gather
         /// </summary>
-        /// <typeparam name="T">返回值类型</typeparam>
+        /// <typeparam name="T">return value type</typeparam>
         /// <param name="dataTable">DataTable</param>
         /// <returns>List{T}</returns>
         public static async Task<List<T>> ToListAsync<T>(this DataTable dataTable)
@@ -39,11 +39,11 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static List<T1> ToList<T1>(this DataSet dataSet)
         {
             var tuple = dataSet.ToList(typeof(List<T1>));
@@ -51,12 +51,12 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2) ToList<T1, T2>(this DataSet dataSet)
         {
             var tuple = dataSet.ToList(typeof(List<T1>), typeof(List<T2>));
@@ -64,13 +64,13 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3) ToList<T1, T2, T3>(this DataSet dataSet)
         {
             var tuple = dataSet.ToList(typeof(List<T1>), typeof(List<T2>), typeof(List<T3>));
@@ -78,14 +78,14 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
+        /// <typeparam name="T4">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4) ToList<T1, T2, T3, T4>(
             this DataSet dataSet)
         {
@@ -94,15 +94,15 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
+        /// <typeparam name="T4">tuple元素type</typeparam>
+        /// <typeparam name="T5">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5) ToList<T1, T2,
             T3, T4, T5>(this DataSet dataSet)
         {
@@ -113,16 +113,16 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
+        /// <typeparam name="T4">tuple元素type</typeparam>
+        /// <typeparam name="T5">tuple元素type</typeparam>
+        /// <typeparam name="T6">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)
             ToList<T1, T2, T3, T4, T5, T6>(this DataSet dataSet)
         {
@@ -133,17 +133,17 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
+        /// <typeparam name="T4">tuple元素type</typeparam>
+        /// <typeparam name="T5">tuple元素type</typeparam>
+        /// <typeparam name="T6">tuple元素type</typeparam>
+        /// <typeparam name="T7">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7) ToList<T1, T2, T3, T4, T5, T6, T7>(this DataSet dataSet)
         {
@@ -154,18 +154,18 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 元组
+        /// Will DataSet change tuple
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
+        /// <typeparam name="T1">tuple元素type</typeparam>
+        /// <typeparam name="T2">tuple元素type</typeparam>
+        /// <typeparam name="T3">tuple元素type</typeparam>
+        /// <typeparam name="T4">tuple元素type</typeparam>
+        /// <typeparam name="T5">tuple元素type</typeparam>
+        /// <typeparam name="T6">tuple元素type</typeparam>
+        /// <typeparam name="T7">tuple元素type</typeparam>
+        /// <typeparam name="T8">tuple元素type</typeparam>
         /// <param name="dataSet">DataSet</param>
-        /// <returns>元组类型</returns>
+        /// <returns>tupletype</returns>
         public static (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8) ToList<T1, T2, T3, T4, T5, T6, T7, T8>(this DataSet dataSet)
         {
@@ -176,29 +176,29 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 特定类型
+        /// Will DataSet change specific type
         /// </summary>
         /// <param name="dataSet">DataSet</param>
-        /// <param name="returnTypes">特定类型集合</param>
+        /// <param name="returnTypes">specific typegather</param>
         /// <returns>List{object}</returns>
         public static List<object> ToList(this DataSet dataSet, params Type[] returnTypes)
         {
-            // 获取所有的 DataTable
+            // get all DataTable
             var dataTables = dataSet.Tables;
 
-            // 处理元组类型
+            // deal withtupletype
             if (returnTypes.Length == 1 && returnTypes[0].IsValueType)
             {
                 returnTypes = returnTypes[0].GenericTypeArguments;
             }
 
-            // 处理不传入 returnTypes 类型
+            // handle not incoming returnTypes type
             if (returnTypes == null || returnTypes.Length == 0)
             {
                 returnTypes = Enumerable.Range(0, dataTables.Count).Select(u => typeof(List<object>)).ToArray();
             }
 
-            // 处理 8 个结果集
+            // deal with 8 result sets
             if (returnTypes.Length >= 8)
             {
                 return new List<object>
@@ -213,7 +213,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[7].ToList(returnTypes[7])
                 };
             }
-            // 处理 7 个结果集
+            // deal with 7 result sets
             else if (returnTypes.Length == 7)
             {
                 return new List<object>
@@ -227,7 +227,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[6].ToList(returnTypes[6])
                 };
             }
-            // 处理 6 个结果集
+            // deal with 6 result sets
             else if (returnTypes.Length == 6)
             {
                 return new List<object>
@@ -240,7 +240,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[5].ToList(returnTypes[5])
                 };
             }
-            // 处理 5 个结果集
+            // deal with 5 result sets
             else if (returnTypes.Length == 5)
             {
                 return new List<object>
@@ -252,7 +252,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[4].ToList(returnTypes[4])
                 };
             }
-            // 处理 4 个结果集
+            // deal with 4 result sets
             else if (returnTypes.Length == 4)
             {
                 return new List<object>
@@ -263,7 +263,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[3].ToList(returnTypes[3])
                 };
             }
-            // 处理 3 个结果集
+            // deal with 3 result sets
             else if (returnTypes.Length == 3)
             {
                 return new List<object>
@@ -273,7 +273,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[2].ToList(returnTypes[2])
                 };
             }
-            // 处理 2 个结果集
+            // deal with 2 result sets
             else if (returnTypes.Length == 2)
             {
                 return new List<object>
@@ -282,7 +282,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                     dataTables[1].ToList(returnTypes[1])
                 };
             }
-            // 处理 1 个结果集
+            // deal with 1 result sets
             else
             {
                 return new List<object>
@@ -293,10 +293,10 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataSet 转 特定类型
+        /// Will DataSet change specific type
         /// </summary>
         /// <param name="dataSet">DataSet</param>
-        /// <param name="returnTypes">特定类型集合</param>
+        /// <param name="returnTypes">specific typegather</param>
         /// <returns>object</returns>
         public static Task<List<object>> ToListAsync(this DataSet dataSet, params Type[] returnTypes)
         {
@@ -304,45 +304,45 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataTable 转 特定类型
+        /// Will DataTable change specific type
         /// </summary>
         /// <param name="dataTable">DataTable</param>
-        /// <param name="returnType">返回值类型</param>
+        /// <param name="returnType">return value type</param>
         /// <returns>object</returns>
         public static object ToList(this DataTable dataTable, Type returnType)
         {
             var isGenericType = returnType.IsGenericType;
-            // 获取类型真实返回类型
+            // 获取type真实返回type
             var underlyingType = isGenericType ? returnType.GenericTypeArguments.First() : returnType;
 
             var resultType = typeof(List<>).MakeGenericType(underlyingType);
             var list = Activator.CreateInstance(resultType);
             var addMethod = resultType.GetMethod("Add");
 
-            // 将 DataTable 转为行集合
+            // Will DataTable change为行gather
             var dataRows = dataTable.AsEnumerable();
 
-            // 如果是基元类型
+            // if是基元type
             if (underlyingType.IsRichPrimitive())
             {
-                // 遍历所有行
+                // iterate over all rows
                 foreach (var dataRow in dataRows)
                 {
-                    // 只取第一列数据
+                    // Only take the first column of data
                     var firstColumnValue = dataRow[0];
-                    // 转换成目标类型数据
+                    // change换成目标type数据
                     var destValue = firstColumnValue?.ChangeType(underlyingType);
-                    // 添加到集合中
+                    // 添加到gather中
                     _ = addMethod.Invoke(list, new[] { destValue });
                 }
             }
-            // 处理Object类型
+            // deal withObjecttype
             else if (underlyingType == typeof(object))
             {
-                // 获取所有列名
+                // get all column names
                 var columns = dataTable.Columns;
 
-                // 遍历所有行
+                // iterate over all rows
                 foreach (var dataRow in dataRows)
                 {
                     var dic = new Dictionary<string, object>();
@@ -356,20 +356,20 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
             }
             else
             {
-                // 获取所有的数据列和类公开实例属性
+                // get all数据列和类公开实例属性
                 var dataColumns = dataTable.Columns;
                 var properties = underlyingType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
-                //.Where(p => !p.IsDefined(typeof(NotMappedAttribute), true));  // sql 数据转换无需判断 [NotMapperd] 特性
+                //.Where(p => !p.IsDefined(typeof(NotMappedAttribute), true));  // sql 数据change换无需判断 [NotMapperd] characteristic
 
-                // 遍历所有行
+                // iterate over all rows
                 foreach (var dataRow in dataRows)
                 {
                     var model = Activator.CreateInstance(underlyingType);
 
-                    // 遍历所有属性并一一赋值
+                    // Iterate over all properties and assign values ​​one by one
                     foreach (var property in properties)
                     {
-                        // 获取属性对应的真实列名
+                        // Get the real column name corresponding to the attribute
                         var columnName = property.Name;
                         if (property.IsDefined(typeof(ColumnAttribute), true))
                         {
@@ -377,20 +377,20 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                             if (!string.IsNullOrWhiteSpace(columnAttribute.Name)) columnName = columnAttribute.Name;
                         }
 
-                        // 如果 DataTable 不包含该列名，则跳过
+                        // if DataTable does not contain the column name，skip
                         if (!dataColumns.Contains(columnName)) continue;
 
-                        // 获取列值
+                        // get column value
                         var columnValue = dataRow[columnName];
-                        // 如果列值未空，则跳过
+                        // if列值未空，skip
                         if (columnValue == DBNull.Value) continue;
 
-                        // 转换成目标类型数据
+                        // change换成目标type数据
                         var destValue = columnValue?.ChangeType(property.PropertyType);
                         property.SetValue(model, destValue);
                     }
 
-                    // 添加到集合中
+                    // 添加到gather中
                     _ = addMethod.Invoke(list, new[] { model });
                 }
             }
@@ -399,10 +399,10 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DataTable 转 特定类型
+        /// Will DataTable change specific type
         /// </summary>
         /// <param name="dataTable">DataTable</param>
-        /// <param name="returnType">返回值类型</param>
+        /// <param name="returnType">return value type</param>
         /// <returns>object</returns>
         public static Task<object> ToListAsync(this DataTable dataTable, Type returnType)
         {
@@ -410,7 +410,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DbDataReader 转 DataTable
+        /// Will DbDataReader change DataTable
         /// </summary>
         /// <param name="dataReader"></param>
         /// <returns></returns>
@@ -418,7 +418,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         {
             var dataTable = new DataTable();
 
-            // 创建列
+            // Create column
             for (var i = 0; i < dataReader.FieldCount; i++)
             {
                 var dataClumn = new DataColumn
@@ -430,10 +430,10 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                 dataTable.Columns.Add(dataClumn);
             }
 
-            // 循环读取
+            // cyclic read
             while (dataReader.Read())
             {
-                // 创建行
+                // create row
                 var dataRow = dataTable.NewRow();
                 for (var i = 0; i < dataReader.FieldCount; i++)
                 {
@@ -447,7 +447,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
         }
 
         /// <summary>
-        /// 将 DbDataReader 转 DataSet
+        /// Will DbDataReader change DataSet
         /// </summary>
         /// <param name="dataReader"></param>
         /// <returns></returns>
@@ -457,7 +457,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 
             do
             {
-                // 获取元数据
+                // get metadata
                 var schemaTable = dataReader.GetSchemaTable();
                 var dataTable = new DataTable();
 
@@ -474,7 +474,7 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 
                     dataSet.Tables.Add(dataTable);
 
-                    // 循环读取
+                    // cyclic read
                     while (dataReader.Read())
                     {
                         var dataRow = dataTable.NewRow();
@@ -499,21 +499,21 @@ namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
                 }
             }
 
-            // 读取下一个结果
+            // read next result
             while (dataReader.NextResult());
 
             return dataSet;
         }
 
         /// <summary>
-        /// 处理元组类型返回值
+        /// deal withtupletype返回值
         /// </summary>
-        /// <param name="dataSet">数据集</param>
-        /// <param name="tupleType">返回值类型</param>
+        /// <param name="dataSet">data set</param>
+        /// <param name="tupleType">return value type</param>
         /// <returns></returns>
         internal static object ToValueTuple(this DataSet dataSet, Type tupleType)
         {
-            // 获取元组最底层类型
+            // 获取tuple最底层type
             var underlyingTypes = tupleType.GetGenericArguments()
                 .Select(u => u.IsGenericType ? u.GetGenericArguments().First() : u);
 

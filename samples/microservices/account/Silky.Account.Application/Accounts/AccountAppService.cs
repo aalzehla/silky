@@ -70,7 +70,7 @@ namespace Silky.Account.Application.Accounts
             var account = await _accountDomainService.GetAccountById(input.AccountId);
             if (input.OrderBalance > account.Balance)
             {
-                throw new BusinessException("账号余额不足");
+                throw new BusinessException("Insufficient account balance");
             }
         
             return await _accountDomainService.DeductBalance(input, TccMethodType.Try);

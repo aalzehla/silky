@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -12,14 +12,14 @@ using Silky.EntityFrameworkCore.Values;
 namespace Silky.EntityFrameworkCore
 {
     /// <summary>
-    /// 构建 Sql 字符串执行部件
+    /// Construct Sql String execution part
     /// </summary>
     public sealed partial class SqlStringExecutePart
     {
         /// <summary>
-        /// Sql 查询返回 DataTable
+        /// Sql query returns DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataTable</returns>
         public DataTable SqlQuery(params DbParameter[] parameters)
         {
@@ -27,9 +27,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 DataTable
+        /// Sql query returns DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>DataTable</returns>
         public DataTable SqlQuery(object model)
         {
@@ -37,9 +37,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 DataTable
+        /// Sql query returns DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlQueryAsync(params DbParameter[] parameters)
         {
@@ -47,10 +47,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 DataTable
+        /// Sql query returns DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlQueryAsync(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -58,10 +58,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 DataTable
+        /// Sql query returns DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlQueryAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -69,10 +69,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 List 集合
+        /// Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T}</returns>
         public List<T> SqlQuery<T>(params DbParameter[] parameters)
         {
@@ -80,10 +80,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 List 集合
+        /// Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="model">parametric model</param>
         /// <returns>List{T}</returns>
         public List<T> SqlQuery<T>(object model)
         {
@@ -91,10 +91,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 List 集合
+        /// Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlQueryAsync<T>(params DbParameter[] parameters)
         {
@@ -102,11 +102,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 List 集合
+        /// Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlQueryAsync<T>(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -114,11 +114,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 List 集合
+        /// Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlQueryAsync<T>(object model, CancellationToken cancellationToken = default)
         {
@@ -126,9 +126,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 DataSet
+        ///  Sql query returns DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataSet</returns>
         public DataSet SqlQueries(params DbParameter[] parameters)
         {
@@ -136,9 +136,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 DataSet
+        ///  Sql query returns DataSet
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>DataSet</returns>
         public DataSet SqlQueries(object model)
         {
@@ -146,9 +146,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 DataSet
+        ///  Sql query returns DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{DataSet}</returns>
         public Task<DataSet> SqlQueriesAsync(params DbParameter[] parameters)
         {
@@ -156,10 +156,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 DataSet
+        ///  Sql query returns DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataSet}</returns>
         public Task<DataSet> SqlQueriesAsync(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -167,10 +167,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 DataSet
+        ///  Sql query returns DataSet
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataSet}</returns>
         public Task<DataSet> SqlQueriesAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -178,10 +178,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 List 集合
+        ///  Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T1}</returns>
         public List<T1> SqlQueries<T1>(params DbParameter[] parameters)
         {
@@ -189,39 +189,39 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2) SqlQueries<T1, T2>(params DbParameter[] parameters)
         {
             return GetSqlRepository().SqlQueries<T1, T2>(SqlString, parameters);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3) SqlQueries<T1, T2, T3>(params DbParameter[] parameters)
         {
             return GetSqlRepository().SqlQueries<T1, T2, T3>(SqlString, parameters);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4) SqlQueries<T1, T2, T3, T4>(
             params DbParameter[] parameters)
         {
@@ -229,15 +229,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5) SqlQueries<T1, T2, T3,
             T4, T5>(params DbParameter[] parameters)
         {
@@ -245,16 +245,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)
             SqlQueries<T1, T2, T3, T4, T5, T6>(params DbParameter[] parameters)
         {
@@ -262,17 +262,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7) SqlQueries<T1, T2, T3, T4, T5, T6, T7>(params DbParameter[] parameters)
         {
@@ -280,18 +280,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7, List<T8> list8) SqlQueries<T1, T2, T3, T4, T5, T6, T7, T8>(params DbParameter[] parameters)
         {
@@ -299,10 +299,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 List 集合
+        ///  Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="model">parametric model</param>
         /// <returns>List{T1}</returns>
         public List<T1> SqlQueries<T1>(object model)
         {
@@ -310,54 +310,54 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2) SqlQueries<T1, T2>(object model)
         {
             return GetSqlRepository().SqlQueries<T1, T2>(SqlString, model);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3) SqlQueries<T1, T2, T3>(object model)
         {
             return GetSqlRepository().SqlQueries<T1, T2, T3>(SqlString, model);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4) SqlQueries<T1, T2, T3, T4>(object model)
         {
             return GetSqlRepository().SqlQueries<T1, T2, T3, T4>(SqlString, model);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5) SqlQueries<T1, T2, T3,
             T4, T5>(object model)
         {
@@ -365,16 +365,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)
             SqlQueries<T1, T2, T3, T4, T5, T6>(object model)
         {
@@ -382,17 +382,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7) SqlQueries<T1, T2, T3, T4, T5, T6, T7>(object model)
         {
@@ -400,18 +400,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7, List<T8> list8) SqlQueries<T1, T2, T3, T4, T5, T6, T7, T8>(object model)
         {
@@ -419,10 +419,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 List 集合
+        ///  Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{List{T1}}</returns>
         public Task<List<T1>> SqlQueriesAsync<T1>(params DbParameter[] parameters)
         {
@@ -430,11 +430,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 List 集合
+        ///  Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T1}}</returns>
         public Task<List<T1>> SqlQueriesAsync<T1>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -443,25 +443,25 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlQueriesAsync<T1, T2>(params DbParameter[] parameters)
         {
             return GetSqlRepository().SqlQueriesAsync<T1, T2>(SqlString, parameters);
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlQueriesAsync<T1, T2>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
         {
@@ -469,13 +469,13 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlQueriesAsync<T1, T2, T3>(
             params DbParameter[] parameters)
         {
@@ -483,14 +483,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlQueriesAsync<T1, T2, T3>(
             DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -498,14 +498,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)> SqlQueriesAsync<T1, T2, T3, T4>(
             params DbParameter[] parameters)
         {
@@ -513,15 +513,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)> SqlQueriesAsync<T1, T2, T3, T4>(
             DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -529,15 +529,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlQueriesAsync<T1, T2, T3, T4, T5>(params DbParameter[] parameters)
         {
@@ -545,16 +545,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlQueriesAsync<T1, T2, T3, T4, T5>(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -562,16 +562,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlQueriesAsync<T1, T2, T3, T4, T5, T6>(params DbParameter[] parameters)
         {
@@ -579,17 +579,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlQueriesAsync<T1, T2, T3, T4, T5, T6>(DbParameter[] parameters,
                 CancellationToken cancellationToken = default)
@@ -598,17 +598,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(params DbParameter[] parameters)
         {
@@ -616,18 +616,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -637,18 +637,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(
             params DbParameter[] parameters)
@@ -657,19 +657,19 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -679,11 +679,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  Sql 查询返回 List 集合
+        ///  Sql query returns List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>List{T1}</returns>
         public Task<List<T1>> SqlQueriesAsync<T1>(object model, CancellationToken cancellationToken = default)
         {
@@ -691,13 +691,13 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlQueriesAsync<T1, T2>(object model,
             CancellationToken cancellationToken = default)
         {
@@ -705,14 +705,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlQueriesAsync<T1, T2, T3>(object model,
             CancellationToken cancellationToken = default)
         {
@@ -720,15 +720,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)> SqlQueriesAsync<T1, T2, T3, T4>(
             object model, CancellationToken cancellationToken = default)
         {
@@ -736,16 +736,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlQueriesAsync<T1, T2, T3, T4, T5>(object model, CancellationToken cancellationToken = default)
         {
@@ -753,17 +753,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlQueriesAsync<T1, T2, T3, T4, T5, T6>(object model, CancellationToken cancellationToken = default)
         {
@@ -771,18 +771,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(object model,
             CancellationToken cancellationToken = default)
@@ -791,19 +791,19 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// Sql 查询返回 元组 集合
+        /// Sql query returns tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(object model,
             CancellationToken cancellationToken = default)
@@ -813,9 +813,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 无数据返回
+        /// implement Sql no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>int</returns>
         public int SqlNonQuery(params DbParameter[] parameters)
         {
@@ -823,9 +823,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 无数据返回
+        /// implement Sql no data returned
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>int</returns>
         public int SqlNonQuery(object model)
         {
@@ -833,9 +833,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 无数据返回
+        /// implement Sql no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>int</returns>
         public Task<int> SqlNonQueryAsync(params DbParameter[] parameters)
         {
@@ -843,10 +843,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 无数据返回
+        /// implement Sql no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>int</returns>
         public Task<int> SqlNonQueryAsync(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -854,10 +854,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 无数据返回
+        /// implement Sql no data returned
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>int</returns>
         public Task<int> SqlNonQueryAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -865,9 +865,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public object SqlScalar(params DbParameter[] parameters)
         {
@@ -875,9 +875,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>object</returns>
         public object SqlScalar(object model)
         {
@@ -885,9 +885,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public Task<object> SqlScalarAsync(params DbParameter[] parameters)
         {
@@ -895,10 +895,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlScalarAsync(DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -906,10 +906,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlScalarAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -917,9 +917,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public TResult SqlScalar<TResult>(params DbParameter[] parameters)
         {
@@ -927,9 +927,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>TResult</returns>
         public TResult SqlScalar<TResult>(object model)
         {
@@ -937,9 +937,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlScalarAsync<TResult>(params DbParameter[] parameters)
         {
@@ -947,10 +947,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlScalarAsync<TResult>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -959,10 +959,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行 Sql 返回 单行单列
+        /// implement Sql return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlScalarAsync<TResult>(object model, CancellationToken cancellationToken = default)
         {
@@ -970,9 +970,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataTable
+        /// implement存储过程return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataTable</returns>
         public DataTable SqlProcedureQuery(params DbParameter[] parameters)
         {
@@ -980,9 +980,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataTable
+        /// implement存储过程return DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>DataTable</returns>
         public DataTable SqlProcedureQuery(object model)
         {
@@ -990,9 +990,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataTable
+        /// implement存储过程return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataTable</returns>
         public Task<DataTable> SqlProcedureQueryAsync(params DbParameter[] parameters)
         {
@@ -1000,10 +1000,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataTable
+        /// implement存储过程return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataTable</returns>
         public Task<DataTable> SqlProcedureQueryAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1012,10 +1012,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataTable
+        /// implement存储过程return DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataTable</returns>
         public Task<DataTable> SqlProcedureQueryAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -1023,9 +1023,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 List 集合
+        /// implement存储过程return List gather
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T}</returns>
         public List<T> SqlProcedureQuery<T>(params DbParameter[] parameters)
         {
@@ -1033,9 +1033,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 List 集合
+        /// implement存储过程return List gather
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>List{T}</returns>
         public List<T> SqlProcedureQuery<T>(object model)
         {
@@ -1043,9 +1043,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 List 集合
+        /// implement存储过程return List gather
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T}</returns>
         public Task<List<T>> SqlProcedureQueryAsync<T>(params DbParameter[] parameters)
         {
@@ -1053,10 +1053,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 List 集合
+        /// implement存储过程return List gather
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>List{T}</returns>
         public Task<List<T>> SqlProcedureQueryAsync<T>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1065,10 +1065,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 List 集合
+        /// implement存储过程return List gather
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>List{T}</returns>
         public Task<List<T>> SqlProcedureQueryAsync<T>(object model, CancellationToken cancellationToken = default)
         {
@@ -1076,9 +1076,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataSet
+        /// implement存储过程return DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataSet</returns>
         public DataSet SqlProcedureQueries(params DbParameter[] parameters)
         {
@@ -1086,9 +1086,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataSet
+        /// implement存储过程return DataSet
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>DataSet</returns>
         public DataSet SqlProcedureQueries(object model)
         {
@@ -1096,9 +1096,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataSet
+        /// implement存储过程return DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataSet</returns>
         public Task<DataSet> SqlProcedureQueriesAsync(params DbParameter[] parameters)
         {
@@ -1106,10 +1106,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataSet
+        /// implement存储过程return DataSet
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataSet</returns>
         public Task<DataSet> SqlProcedureQueriesAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1118,10 +1118,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 DataSet
+        /// implement存储过程return DataSet
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataSet</returns>
         public Task<DataSet> SqlProcedureQueriesAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -1129,10 +1129,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  执行存储过程返回 List 集合
+        ///  implement存储过程return List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T1}</returns>
         public List<T1> SqlProcedureQueries<T1>(params DbParameter[] parameters)
         {
@@ -1140,25 +1140,25 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2) SqlProcedureQueries<T1, T2>(params DbParameter[] parameters)
         {
             return GetSqlRepository().SqlProcedureQueries<T1, T2>(SqlString, parameters);
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3) SqlProcedureQueries<T1, T2, T3>(
             params DbParameter[] parameters)
         {
@@ -1166,14 +1166,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4) SqlProcedureQueries<T1, T2, T3, T4>(
             params DbParameter[] parameters)
         {
@@ -1181,15 +1181,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5) SqlProcedureQueries<T1,
             T2, T3, T4, T5>(params DbParameter[] parameters)
         {
@@ -1197,16 +1197,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)
             SqlProcedureQueries<T1, T2, T3, T4, T5, T6>(params DbParameter[] parameters)
         {
@@ -1214,17 +1214,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7) SqlProcedureQueries<T1, T2, T3, T4, T5, T6, T7>(params DbParameter[] parameters)
         {
@@ -1232,18 +1232,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7, List<T8> list8) SqlProcedureQueries<T1, T2, T3, T4, T5, T6, T7, T8>(params DbParameter[] parameters)
         {
@@ -1251,10 +1251,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  执行存储过程返回 List 集合
+        ///  implement存储过程return List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="model">parametric model</param>
         /// <returns>List{T1}</returns>
         public List<T1> SqlProcedureQueries<T1>(object model)
         {
@@ -1262,39 +1262,39 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2) SqlProcedureQueries<T1, T2>(object model)
         {
             return GetSqlRepository().SqlProcedureQueries<T1, T2>(SqlString, model);
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3) SqlProcedureQueries<T1, T2, T3>(object model)
         {
             return GetSqlRepository().SqlProcedureQueries<T1, T2, T3>(SqlString, model);
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4) SqlProcedureQueries<T1, T2, T3, T4>(
             object model)
         {
@@ -1302,15 +1302,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5) SqlProcedureQueries<T1,
             T2, T3, T4, T5>(object model)
         {
@@ -1318,16 +1318,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)
             SqlProcedureQueries<T1, T2, T3, T4, T5, T6>(object model)
         {
@@ -1335,17 +1335,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7) SqlProcedureQueries<T1, T2, T3, T4, T5, T6, T7>(object model)
         {
@@ -1353,18 +1353,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <returns>tuple类型</returns>
         public (List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6, List<T7>
             list7, List<T8> list8) SqlProcedureQueries<T1, T2, T3, T4, T5, T6, T7, T8>(object model)
         {
@@ -1372,10 +1372,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  执行存储过程返回 List 集合
+        ///  implement存储过程return List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{List{T1}}</returns>
         public Task<List<T1>> SqlProcedureQueriesAsync<T1>(params DbParameter[] parameters)
         {
@@ -1383,11 +1383,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  执行存储过程返回 List 集合
+        ///  implement存储过程return List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T1}}</returns>
         public Task<List<T1>> SqlProcedureQueriesAsync<T1>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1396,25 +1396,25 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlProcedureQueriesAsync<T1, T2>(params DbParameter[] parameters)
         {
             return GetSqlRepository().SqlProcedureQueriesAsync<T1, T2>(SqlString, parameters);
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlProcedureQueriesAsync<T1, T2>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
         {
@@ -1422,13 +1422,13 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlProcedureQueriesAsync<T1, T2, T3>(
             params DbParameter[] parameters)
         {
@@ -1436,14 +1436,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlProcedureQueriesAsync<T1, T2, T3>(
             DbParameter[] parameters, CancellationToken cancellationToken = default)
         {
@@ -1451,14 +1451,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)> SqlProcedureQueriesAsync<T1, T2,
             T3, T4>(params DbParameter[] parameters)
         {
@@ -1466,15 +1466,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4>(DbParameter[] parameters,
                 CancellationToken cancellationToken = default)
@@ -1484,15 +1484,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5>(params DbParameter[] parameters)
         {
@@ -1500,16 +1500,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5>(DbParameter[] parameters,
                 CancellationToken cancellationToken = default)
@@ -1519,16 +1519,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6>(params DbParameter[] parameters)
         {
@@ -1536,17 +1536,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6>(DbParameter[] parameters,
                 CancellationToken cancellationToken = default)
@@ -1556,17 +1556,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(params DbParameter[] parameters)
         {
@@ -1574,18 +1574,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1595,18 +1595,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(
             params DbParameter[] parameters)
@@ -1615,19 +1615,19 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(
             DbParameter[] parameters, CancellationToken cancellationToken = default)
@@ -1637,11 +1637,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        ///  执行存储过程返回 List 集合
+        ///  implement存储过程return List gather
         /// </summary>
-        /// <typeparam name="T1">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T1">return type</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>List{T1}</returns>
         public Task<List<T1>> SqlProcedureQueriesAsync<T1>(object model, CancellationToken cancellationToken = default)
         {
@@ -1649,13 +1649,13 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2)> SqlProcedureQueriesAsync<T1, T2>(object model,
             CancellationToken cancellationToken = default)
         {
@@ -1663,14 +1663,14 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3)> SqlProcedureQueriesAsync<T1, T2, T3>(object model,
             CancellationToken cancellationToken = default)
         {
@@ -1678,15 +1678,15 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4>(object model, CancellationToken cancellationToken = default)
         {
@@ -1694,16 +1694,16 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5>(object model, CancellationToken cancellationToken = default)
         {
@@ -1711,17 +1711,17 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6)>
             SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6>(object model,
                 CancellationToken cancellationToken = default)
@@ -1731,18 +1731,18 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7>(object model,
             CancellationToken cancellationToken = default)
@@ -1752,19 +1752,19 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 元组 集合
+        /// implement存储过程return tuple gather
         /// </summary>
-        /// <typeparam name="T1">元组元素类型</typeparam>
-        /// <typeparam name="T2">元组元素类型</typeparam>
-        /// <typeparam name="T3">元组元素类型</typeparam>
-        /// <typeparam name="T4">元组元素类型</typeparam>
-        /// <typeparam name="T5">元组元素类型</typeparam>
-        /// <typeparam name="T6">元组元素类型</typeparam>
-        /// <typeparam name="T7">元组元素类型</typeparam>
-        /// <typeparam name="T8">元组元素类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>元组类型</returns>
+        /// <typeparam name="T1">tuple元素类型</typeparam>
+        /// <typeparam name="T2">tuple元素类型</typeparam>
+        /// <typeparam name="T3">tuple元素类型</typeparam>
+        /// <typeparam name="T4">tuple元素类型</typeparam>
+        /// <typeparam name="T5">tuple元素类型</typeparam>
+        /// <typeparam name="T6">tuple元素类型</typeparam>
+        /// <typeparam name="T7">tuple元素类型</typeparam>
+        /// <typeparam name="T8">tuple元素类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>tuple类型</returns>
         public Task<(List<T1> list1, List<T2> list2, List<T3> list3, List<T4> list4, List<T5> list5, List<T6> list6,
             List<T7> list7, List<T8> list8)> SqlProcedureQueriesAsync<T1, T2, T3, T4, T5, T6, T7, T8>(object model,
             CancellationToken cancellationToken = default)
@@ -1774,9 +1774,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public object SqlProcedureScalar(params DbParameter[] parameters)
         {
@@ -1784,9 +1784,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>object</returns>
         public object SqlProcedureScalar(object model)
         {
@@ -1794,9 +1794,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public Task<object> SqlProcedureScalarAsync(params DbParameter[] parameters)
         {
@@ -1804,10 +1804,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlProcedureScalarAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1816,10 +1816,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlProcedureScalarAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -1827,9 +1827,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public TResult SqlProcedureScalar<TResult>(params DbParameter[] parameters)
         {
@@ -1837,9 +1837,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>TResult</returns>
         public TResult SqlProcedureScalar<TResult>(object model)
         {
@@ -1847,9 +1847,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlProcedureScalarAsync<TResult>(params DbParameter[] parameters)
         {
@@ -1857,10 +1857,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlProcedureScalarAsync<TResult>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1869,10 +1869,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回 单行单列
+        /// implement存储过程return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlProcedureScalarAsync<TResult>(object model,
             CancellationToken cancellationToken = default)
@@ -1881,9 +1881,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程无数据返回
+        /// implement存储过程no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>int</returns>
         public int SqlProcedureNonQuery(params DbParameter[] parameters)
         {
@@ -1891,9 +1891,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程无数据返回
+        /// implement存储过程no data returned
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>int</returns>
         public int SqlProcedureNonQuery(object model)
         {
@@ -1901,9 +1901,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程无数据返回
+        /// implement存储过程no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>int</returns>
         public Task<int> SqlProcedureNonQueryAsync(params DbParameter[] parameters)
         {
@@ -1911,10 +1911,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程无数据返回
+        /// implement存储过程no data returned
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>int</returns>
         public Task<int> SqlProcedureNonQueryAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1923,10 +1923,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程无数据返回
+        /// implement存储过程no data returned
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>int</returns>
         public Task<int> SqlProcedureNonQueryAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -1934,9 +1934,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>ProcedureOutput</returns>
         public ProcedureOutputResult SqlProcedureOutput(DbParameter[] parameters)
         {
@@ -1944,10 +1944,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>ProcedureOutput</returns>
         public Task<ProcedureOutputResult> SqlProcedureOutputAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -1956,9 +1956,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <param name="model">命令模型</param>
+        /// <param name="model">command model</param>
         /// <returns>ProcedureOutput</returns>
         public ProcedureOutputResult SqlProcedureOutput(object model)
         {
@@ -1966,10 +1966,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <param name="model">命令模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">command model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>ProcedureOutput</returns>
         public Task<ProcedureOutputResult> SqlProcedureOutputAsync(object model,
             CancellationToken cancellationToken = default)
@@ -1978,10 +1978,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <typeparam name="TResult">数据集结果</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="TResult">dataset results</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>ProcedureOutput</returns>
         public ProcedureOutputResult<TResult> SqlProcedureOutput<TResult>(DbParameter[] parameters)
         {
@@ -1989,11 +1989,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <typeparam name="TResult">数据集结果</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="TResult">dataset results</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>ProcedureOutput</returns>
         public Task<ProcedureOutputResult<TResult>> SqlProcedureOutputAsync<TResult>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -2002,10 +2002,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <typeparam name="TResult">数据集结果</typeparam>
-        /// <param name="model">命令模型</param>
+        /// <typeparam name="TResult">dataset results</typeparam>
+        /// <param name="model">command model</param>
         /// <returns>ProcedureOutput</returns>
         public ProcedureOutputResult<TResult> SqlProcedureOutput<TResult>(object model)
         {
@@ -2013,11 +2013,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行存储过程返回OUPUT、RETURN、结果集
+        /// implement存储过程returnOUPUT、RETURN、result set
         /// </summary>
-        /// <typeparam name="TResult">数据集结果</typeparam>
-        /// <param name="model">命令模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="TResult">dataset results</typeparam>
+        /// <param name="model">command model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>ProcedureOutput</returns>
         public Task<ProcedureOutputResult<TResult>> SqlProcedureOutputAsync<TResult>(object model,
             CancellationToken cancellationToken = default)
@@ -2026,9 +2026,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public object SqlFunctionScalar(params DbParameter[] parameters)
         {
@@ -2036,7 +2036,7 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
         /// <param name="model"></param>
         /// <returns>object</returns>
@@ -2046,9 +2046,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>object</returns>
         public Task<object> SqlFunctionScalarAsync(params DbParameter[] parameters)
         {
@@ -2056,10 +2056,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlFunctionScalarAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -2068,10 +2068,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<object> SqlFunctionScalarAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -2079,10 +2079,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <typeparam name="TResult">返回值类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="TResult">return值类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public TResult SqlFunctionScalar<TResult>(params DbParameter[] parameters)
         {
@@ -2090,10 +2090,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <typeparam name="TResult">返回值类型</typeparam>
-        /// <param name="model">参数模型</param>
+        /// <typeparam name="TResult">return值类型</typeparam>
+        /// <param name="model">parametric model</param>
         /// <returns>TResult</returns>
         public TResult SqlFunctionScalar<TResult>(object model)
         {
@@ -2101,10 +2101,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <typeparam name="TResult">返回值类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="TResult">return值类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlFunctionScalarAsync<TResult>(params DbParameter[] parameters)
         {
@@ -2112,11 +2112,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <typeparam name="TResult">返回值类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="TResult">return值类型</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>TResult</returns>
         public Task<TResult> SqlFunctionScalarAsync<TResult>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -2125,11 +2125,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行标量函数返回 单行单列
+        /// implement标量函数return single row single column
         /// </summary>
-        /// <typeparam name="TResult">返回值类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="TResult">return值类型</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>object</returns>
         public Task<TResult> SqlFunctionScalarAsync<TResult>(object model,
             CancellationToken cancellationToken = default)
@@ -2138,9 +2138,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 DataTable
+        /// implement表值函数return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>DataTable</returns>
         public DataTable SqlFunctionQuery(params DbParameter[] parameters)
         {
@@ -2148,9 +2148,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 DataTable
+        /// implement表值函数return DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
+        /// <param name="model">parametric model</param>
         /// <returns>DataTable</returns>
         public DataTable SqlFunctionQuery(object model)
         {
@@ -2158,9 +2158,9 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 DataTable
+        /// implement表值函数return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlFunctionQueryAsync(params DbParameter[] parameters)
         {
@@ -2168,10 +2168,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 DataTable
+        /// implement表值函数return DataTable
         /// </summary>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlFunctionQueryAsync(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -2180,10 +2180,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 DataTable
+        /// implement表值函数return DataTable
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{DataTable}</returns>
         public Task<DataTable> SqlFunctionQueryAsync(object model, CancellationToken cancellationToken = default)
         {
@@ -2191,10 +2191,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 List 集合
+        /// implement表值函数return List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>List{T}</returns>
         public List<T> SqlFunctionQuery<T>(params DbParameter[] parameters)
         {
@@ -2202,10 +2202,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 List 集合
+        /// implement表值函数return List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="model">parametric model</param>
         /// <returns>List{T}</returns>
         public List<T> SqlFunctionQuery<T>(object model)
         {
@@ -2213,10 +2213,10 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 List 集合
+        /// implement表值函数return List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlFunctionQueryAsync<T>(params DbParameter[] parameters)
         {
@@ -2224,11 +2224,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 List 集合
+        /// implement表值函数return List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlFunctionQueryAsync<T>(DbParameter[] parameters,
             CancellationToken cancellationToken = default)
@@ -2237,11 +2237,11 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 执行表值函数返回 List 集合
+        /// implement表值函数return List gather
         /// </summary>
-        /// <typeparam name="T">返回类型</typeparam>
-        /// <param name="model">参数模型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <typeparam name="T">return type</typeparam>
+        /// <param name="model">parametric model</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task{List{T}}</returns>
         public Task<List<T>> SqlFunctionQueryAsync<T>(object model, CancellationToken cancellationToken = default)
         {
@@ -2249,7 +2249,7 @@ namespace Silky.EntityFrameworkCore
         }
 
         /// <summary>
-        /// 获取 Sql 执行仓储
+        /// Obtain Sql implement仓储
         /// </summary>
         /// <returns></returns>
         private IPrivateSqlRepository GetSqlRepository()
@@ -2257,7 +2257,7 @@ namespace Silky.EntityFrameworkCore
             var repository =
                 EngineContext.Current.Resolve(typeof(ISqlRepository<>).MakeGenericType(DbContextLocator)) as
                     IPrivateSqlRepository;
-            // 设置超时时间
+            // set timeout
             if (Timeout > 0)
             {
                 repository.Context.Database.SetCommandTimeout(TimeSpan.FromSeconds(Timeout));

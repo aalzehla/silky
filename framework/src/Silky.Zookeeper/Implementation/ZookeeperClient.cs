@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ using TaskEx = System.Threading.Tasks.Task;
 namespace Silky.Zookeeper.Implementation
 {
     /// <summary>
-    /// ZooKeeper客户端。
+    /// ZooKeeperclient。
     /// </summary>
     public class ZookeeperClient : Watcher, IZookeeperClient
     {
@@ -39,19 +39,19 @@ namespace Silky.Zookeeper.Implementation
         #region Constructor
 
         /// <summary>
-        /// 创建一个新的ZooKeeper客户端。
+        /// create a newZooKeeperclient。
         /// </summary>
-        /// <param name="connectionString">连接字符串。</param>
-        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> 为空。</exception>
+        /// <param name="connectionString">connection string。</param>
+        /// <exception cref="ArgumentNullException"><paramref name="connectionString"/> Is empty。</exception>
         public ZookeeperClient(string connectionString)
             : this(new ZookeeperClientOptions(connectionString))
         {
         }
 
         /// <summary>
-        /// 创建一个新的ZooKeeper客户端。
+        /// create a newZooKeeperclient。
         /// </summary>
-        /// <param name="options">客户端选项。</param>
+        /// <param name="options">client选项。</param>
         public ZookeeperClient(ZookeeperClientOptions options)
         {
             Options = options;
@@ -63,21 +63,21 @@ namespace Silky.Zookeeper.Implementation
         #region Public Method
 
         /// <summary>
-        /// 具体的ZooKeeper连接。
+        /// specificZooKeeperconnect。
         /// </summary>
         public ZooKeeper ZooKeeper { get; private set; }
 
         /// <summary>
-        /// 客户端选项。
+        /// client选项。
         /// </summary>
         public ZookeeperClientOptions Options { get; }
 
         /// <summary>
-        /// 等待zk连接到具体的某一个状态。
+        /// waitzkconnect到specific某一个状态。
         /// </summary>
-        /// <param name="states">希望达到的状态。</param>
-        /// <param name="timeout">最长等待时间。</param>
-        /// <returns>如果成功则返回true，否则返回false。</returns>
+        /// <param name="states">desired state。</param>
+        /// <param name="timeout">最长wait时间。</param>
+        /// <returns>return if successfultrue，otherwise returnfalse。</returns>
         public bool WaitForKeeperState(Event.KeeperState states, TimeSpan timeout)
         {
             var stillWaiting = true;
@@ -95,11 +95,11 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 重试直到zk连接上。
+        /// retry untilzkconnect上。
         /// </summary>
-        /// <typeparam name="T">返回类型。</typeparam>
-        /// <param name="callable">执行的zk操作。</param>
-        /// <returns>执行结果。</returns>
+        /// <typeparam name="T">return type。</typeparam>
+        /// <param name="callable">implementedzkoperate。</param>
+        /// <returns>Results of the。</returns>
         public async Task<T> RetryUntilConnected<T>(Func<Task<T>> callable)
         {
             var operationStartTime = DateTime.Now;
@@ -148,10 +148,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 获取指定节点的数据。
+        /// Get the data of the specified node。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <returns>节点数据。</returns>
+        /// <param name="path">node path。</param>
+        /// <returns>Node data。</returns>
         public async Task<IEnumerable<byte>> GetDataAsync(string path)
         {
             path = GetZooKeeperPath(path);
@@ -161,10 +161,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 获取指定节点下的所有子节点。
+        /// Get all child nodes under the specified node。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <returns>子节点集合。</returns>
+        /// <param name="path">node path。</param>
+        /// <returns>child node collection。</returns>
         public async Task<IEnumerable<string>> GetChildrenAsync(string path)
         {
             path = GetZooKeeperPath(path);
@@ -174,10 +174,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 判断节点是否存在。
+        /// Check if a node exists。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <returns>如果存在则返回true，否则返回false。</returns>
+        /// <param name="path">node path。</param>
+        /// <returns>return if existstrue，otherwise returnfalse。</returns>
         public async Task<bool> ExistsAsync(string path)
         {
             path = GetZooKeeperPath(path);
@@ -187,15 +187,15 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 创建节点。
+        /// create node。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="data">节点数据。</param>
-        /// <param name="acls">权限。</param>
-        /// <param name="createMode">创建模式。</param>
-        /// <returns>节点路径。</returns>
+        /// <param name="path">node path。</param>
+        /// <param name="data">Node data。</param>
+        /// <param name="acls">permission。</param>
+        /// <param name="createMode">Create a schema。</param>
+        /// <returns>node path。</returns>
         /// <remarks>
-        /// 因为使用序列方式创建节点zk会修改节点name，所以需要返回真正的节点路径。
+        /// 因为使用序列方式create nodezkwill modify the nodename，所以需要返回真正的node path。
         /// </remarks>
         public async Task<string> CreateAsync(string path, byte[] data, List<ACL> acls, CreateMode createMode)
         {
@@ -206,12 +206,12 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 设置节点数据。
+        /// 设置Node data。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="data">节点数据。</param>
-        /// <param name="version">版本号。</param>
-        /// <returns>节点状态。</returns>
+        /// <param name="path">node path。</param>
+        /// <param name="data">Node data。</param>
+        /// <param name="version">version number。</param>
+        /// <returns>node status。</returns>
         public async Task<Stat> SetDataAsync(string path, byte[] data, int version = -1)
         {
             path = GetZooKeeperPath(path);
@@ -221,10 +221,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 删除节点。
+        /// delete node。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="version">版本号。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="version">version number。</param>
         public async Task DeleteAsync(string path, int version = -1)
         {
             path = GetZooKeeperPath(path);
@@ -238,10 +238,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 订阅节点数据变更。
+        /// 订阅Node data变更。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="listener">监听者。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="listener">listener。</param>
         public async Task SubscribeDataChange(string path, NodeDataChangeHandler listener)
         {
             path = GetZooKeeperPath(path);
@@ -251,10 +251,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 取消订阅节点数据变更。
+        /// 取消订阅Node data变更。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="listener">监听者。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="listener">listener。</param>
         public void UnSubscribeDataChange(string path, NodeDataChangeHandler listener)
         {
             path = GetZooKeeperPath(path);
@@ -264,28 +264,28 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 订阅连接状态变更。
+        /// 订阅connect状态变更。
         /// </summary>
-        /// <param name="listener">监听者。</param>
+        /// <param name="listener">listener。</param>
         public void SubscribeStatusChange(ConnectionStateChangeHandler listener)
         {
             _connectionStateChangeHandler += listener;
         }
 
         /// <summary>
-        /// 取消订阅连接状态变更。
+        /// 取消订阅connect状态变更。
         /// </summary>
-        /// <param name="listener">监听者。</param>
+        /// <param name="listener">listener。</param>
         public void UnSubscribeStatusChange(ConnectionStateChangeHandler listener)
         {
             _connectionStateChangeHandler -= listener;
         }
 
         /// <summary>
-        /// 订阅节点子节点变更。
+        /// Subscribe node child node changes。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="listener">监听者。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="listener">listener。</param>
         public async Task<IEnumerable<string>> SubscribeChildrenChange(string path, NodeChildrenChangeHandler listener)
         {
             path = GetZooKeeperPath(path);
@@ -295,10 +295,10 @@ namespace Silky.Zookeeper.Implementation
         }
 
         /// <summary>
-        /// 取消订阅节点子节点变更。
+        /// 取消Subscribe node child node changes。
         /// </summary>
-        /// <param name="path">节点路径。</param>
-        /// <param name="listener">监听者。</param>
+        /// <param name="path">node path。</param>
+        /// <param name="listener">listener。</param>
         public void UnSubscribeChildrenChange(string path, NodeChildrenChangeHandler listener)
         {
             path = GetZooKeeperPath(path);
@@ -346,7 +346,7 @@ namespace Silky.Zookeeper.Implementation
 
         #region Implementation of IDisposable
 
-        /// <summary>执行与释放或重置非托管资源关联的应用程序定义的任务。</summary>
+        /// <summary>Execute application-defined tasks associated with releasing or resetting unmanaged resources。</summary>
         public void Dispose()
         {
             if (_isDispose)

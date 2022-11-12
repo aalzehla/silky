@@ -21,7 +21,7 @@
         <None Update="Contents\DownloadTest.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
-        <None Update="Contents\测试.xlsx">
+        <None Update="Contents\test.xlsx">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </None>
     </ItemGroup>

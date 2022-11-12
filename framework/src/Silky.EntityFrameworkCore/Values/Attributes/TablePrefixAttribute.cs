@@ -1,13 +1,13 @@
-﻿namespace System.ComponentModel.DataAnnotations.Schema
+namespace System.ComponentModel.DataAnnotations.Schema
 {
     /// <summary>
-    /// 配置表名称前缀
+    /// Configuration table name prefix
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class TablePrefixAttribute : Attribute
     {
         /// <summary>
-        /// 构造函数
+        /// Constructor
         /// </summary>
         /// <param name="prefix"></param>
         public TablePrefixAttribute(string prefix)
@@ -16,7 +16,7 @@
         }
 
         /// <summary>
-        /// 前缀
+        /// prefix
         /// </summary>
         public string Prefix { get; set; }
     }

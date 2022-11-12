@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
@@ -8,19 +8,19 @@ using Silky.EntityFrameworkCore.Locators;
 namespace Silky.EntityFrameworkCore.Repositories
 {
     /// <summary>
-    /// 可删除仓储接口
+    /// Deletable repository interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public partial interface IDeletableRepository<TEntity> : IDeletableRepository<TEntity, MasterDbContextLocator>
         where TEntity : class, IPrivateEntity, new()
     {
     }
 
     /// <summary>
-    /// 可删除仓储接口
+    /// Deletable repository interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
-    /// <typeparam name="TDbContextLocator">数据库上下文定位器</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
+    /// <typeparam name="TDbContextLocator">database context locator</typeparam>
     public partial interface IDeletableRepository<TEntity, TDbContextLocator> : IPrivateDeletableRepository<TEntity>
         where TEntity : class, IPrivateEntity, new()
         where TDbContextLocator : class, IDbContextLocator
@@ -28,195 +28,195 @@ namespace Silky.EntityFrameworkCore.Repositories
     }
 
     /// <summary>
-    /// 可删除仓储接口
+    /// Deletable repository interface
     /// </summary>
-    /// <typeparam name="TEntity">实体类型</typeparam>
+    /// <typeparam name="TEntity">entity type</typeparam>
     public interface IPrivateDeletableRepository<TEntity> : IPrivateRootRepository
         where TEntity : class, IPrivateEntity, new()
     {
         /// <summary>
-        /// 删除一条记录
+        /// delete a record
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns>代理中的实体</returns>
+        /// <param name="entity">entity</param>
+        /// <returns>代理中的entity</returns>
         EntityEntry<TEntity> Delete(TEntity entity);
 
         /// <summary>
-        /// 删除多条记录
+        /// delete multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         void Delete(params TEntity[] entities);
 
         /// <summary>
-        /// 删除多条记录
+        /// delete multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         void Delete(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// 删除一条记录
+        /// delete a record
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns>代理中的实体</returns>
+        /// <param name="entity">entity</param>
+        /// <returns>代理中的entity</returns>
         Task<EntityEntry<TEntity>> DeleteAsync(TEntity entity);
 
         /// <summary>
-        /// 删除多条记录
+        /// delete multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         Task DeleteAsync(params TEntity[] entities);
 
         /// <summary>
-        /// 删除多条记录
+        /// delete multiple records
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         Task DeleteAsync(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// 删除一条记录并立即提交
+        /// delete a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <returns>代理中的实体</returns>
+        /// <param name="entity">entity</param>
+        /// <returns>代理中的entity</returns>
         EntityEntry<TEntity> DeleteNow(TEntity entity);
 
         /// <summary>
-        /// 删除一条记录并立即提交
+        /// delete a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         /// <returns></returns>
         EntityEntry<TEntity> DeleteNow(TEntity entity, bool acceptAllChangesOnSuccess);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         void DeleteNow(params TEntity[] entities);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         void DeleteNow(TEntity[] entities, bool acceptAllChangesOnSuccess);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         void DeleteNow(IEnumerable<TEntity> entities);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         void DeleteNow(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess);
 
         /// <summary>
-        /// 删除一条记录并立即提交
+        /// delete a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>代理中的实体</returns>
+        /// <param name="entity">entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>代理中的entity</returns>
         Task<EntityEntry<TEntity>> DeleteNowAsync(TEntity entity, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 删除一条记录并立即提交
+        /// delete a record并立即提交
         /// </summary>
-        /// <param name="entity">实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
-        /// <returns>代理中的实体</returns>
+        /// <param name="entity">entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
+        /// <returns>代理中的entity</returns>
         Task<EntityEntry<TEntity>> DeleteNowAsync(TEntity entity, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
+        /// <param name="entities">多个entity</param>
         /// <returns>Task</returns>
         Task DeleteNowAsync(params TEntity[] entities);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         Task DeleteNowAsync(TEntity[] entities, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         Task DeleteNowAsync(TEntity[] entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         Task DeleteNowAsync(IEnumerable<TEntity> entities, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 删除多条记录并立即提交
+        /// delete multiple records并立即提交
         /// </summary>
-        /// <param name="entities">多个实体</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">取消异步令牌</param>
+        /// <param name="entities">多个entity</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Cancel async token</param>
         /// <returns>Task</returns>
         Task DeleteNowAsync(IEnumerable<TEntity> entities, bool acceptAllChangesOnSuccess,
             CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 根据主键删除一条记录
+        /// 根据primary keydelete a record
         /// </summary>
-        /// <param name="key">主键</param>
+        /// <param name="key">primary key</param>
         void Delete(object key);
 
         /// <summary>
-        /// 根据主键删除一条记录
+        /// 根据primary keydelete a record
         /// </summary>
-        /// <param name="key">主键</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="key">primary key</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>Task</returns>
         Task DeleteAsync(object key, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 根据主键删除一条记录并立即提交
+        /// 根据primary keydelete a record并立即提交
         /// </summary>
-        /// <param name="key">主键</param>
+        /// <param name="key">primary key</param>
         void DeleteNow(object key);
 
         /// <summary>
-        /// 根据主键删除一条记录并立即提交
+        /// 根据primary keydelete a record并立即提交
         /// </summary>
-        /// <param name="key">主键</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
+        /// <param name="key">primary key</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
         void DeleteNow(object key, bool acceptAllChangesOnSuccess);
 
         /// <summary>
-        /// 根据主键删除一条记录并立即提交
+        /// 根据primary keydelete a record并立即提交
         /// </summary>
-        /// <param name="key">主键</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="key">primary key</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns></returns>
         Task DeleteNowAsync(object key, CancellationToken cancellationToken = default);
 
         /// <summary>
-        /// 根据主键删除一条记录并立即提交
+        /// 根据primary keydelete a record并立即提交
         /// </summary>
-        /// <param name="key">主键</param>
-        /// <param name="acceptAllChangesOnSuccess">接受所有更改</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="key">primary key</param>
+        /// <param name="acceptAllChangesOnSuccess">accept all changes</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns></returns>
         Task DeleteNowAsync(object key, bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default);
     }

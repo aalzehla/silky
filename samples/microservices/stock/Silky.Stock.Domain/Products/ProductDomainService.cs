@@ -20,7 +20,7 @@ namespace Silky.Stock.Domain.Products
             var existProduct = _productRepository.FirstOrDefault(p => p.Name == product.Name);
             if (existProduct != null)
             {
-                throw new BusinessException($"系统中已经存在{product.Name}的产品");
+                throw new BusinessException($"already exists in the system{product.Name}The product");
             }
 
             await _productRepository.InsertNowAsync(product);
@@ -46,7 +46,7 @@ namespace Silky.Stock.Domain.Products
             var product = _productRepository.FirstOrDefault(p => p.Id == id);
             if (product == null)
             {
-                throw new BusinessException($"不存在Id为{id}的产品信息");
+                throw new BusinessException($"does not existIdfor{id}The product信息");
             }
 
             return Task.FromResult(product);

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
@@ -7,445 +7,445 @@ using System.Threading.Tasks;
 namespace Silky.EntityFrameworkCore.Extensions.DatabaseFacade
 {
     /// <summary>
-    /// ADONET 拓展类
+    /// ADONET Extended class
     /// </summary>
     public static class SqlAdoNetExtensions
     {
         /// <summary>
-        /// 执行 Sql 返回 DataTable
+        /// implement Sql return DataTable
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="behavior">行为</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="behavior">Behavior</param>
         /// <returns>DataTable</returns>
         public static DataTable ExecuteReader(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CommandBehavior behavior = CommandBehavior.Default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) = databaseFacade.PrepareDbCommand(sql, parameters, commandType);
 
-            // 读取数据
+            // read data
             using var dbDataReader = dbCommand.ExecuteReader(behavior);
 
-            // 填充到 DataTable
+            // fill to DataTable
             var dataTable = dbDataReader.ToDataTable();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return dataTable;
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataTable
+        /// implement Sql return DataTable
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="behavior">行为</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="model">command model</param>
+        /// <param name="behavior">Behavior</param>
         /// <returns>(DataTable dataTable, DbParameter[] dbParameters)</returns>
         public static (DataTable dataTable, DbParameter[] dbParameters) ExecuteReader(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CommandBehavior behavior = CommandBehavior.Default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) = databaseFacade.PrepareDbCommand(sql, model, commandType);
 
-            // 读取数据
+            // read data
             using var dbDataReader = dbCommand.ExecuteReader(behavior);
 
-            // 填充到 DataTable
+            // fill to DataTable
             var dataTable = dbDataReader.ToDataTable();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return (dataTable, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataTable
+        /// implement Sql return DataTable
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="behavior">行为</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="behavior">Behavior</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataTable</returns>
         public static async Task<DataTable> ExecuteReaderAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CommandBehavior behavior = CommandBehavior.Default, CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) =
                 await databaseFacade.PrepareDbCommandAsync(sql, parameters, commandType, cancellationToken);
 
-            // 读取数据
+            // read data
             using var dbDataReader = await dbCommand.ExecuteReaderAsync(behavior, cancellationToken);
 
-            // 填充到 DataTable
+            // fill to DataTable
             var dataTable = dbDataReader.ToDataTable();
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return dataTable;
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataTable
+        /// implement Sql return DataTable
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="behavior">行为</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="behavior">Behavior</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(DataTable dataTable, DbParameter[] dbParameters)</returns>
         public static async Task<(DataTable dataTable, DbParameter[] dbParameters)> ExecuteReaderAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CommandBehavior behavior = CommandBehavior.Default,
             CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) =
                 await databaseFacade.PrepareDbCommandAsync(sql, model, commandType, cancellationToken);
 
-            // 读取数据
+            // read data
             using var dbDataReader = await dbCommand.ExecuteReaderAsync(behavior, cancellationToken);
 
-            // 填充到 DataTable
+            // fill to DataTable
             var dataTable = dbDataReader.ToDataTable();
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return (dataTable, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 语句返回受影响行数
+        /// implement Sql statementreturnAffected rows
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <returns>受影响行数</returns>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <returns>Affected rows</returns>
         public static int ExecuteNonQuery(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) = databaseFacade.PrepareDbCommand(sql, parameters, commandType);
 
-            // 执行返回受影响行数
+            // implementreturnAffected rows
             var rowEffects = dbCommand.ExecuteNonQuery();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return rowEffects;
         }
 
         /// <summary>
-        /// 执行 Sql 语句返回受影响行数
+        /// implement Sql statementreturnAffected rows
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">参数模型</param>
-        /// <param name="commandType">命令类型</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="commandType">Command type</param>
         /// <returns>(int rowEffects, DbParameter[] dbParameters)</returns>
         public static (int rowEffects, DbParameter[] dbParameters) ExecuteNonQuery(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) = databaseFacade.PrepareDbCommand(sql, model, commandType);
 
-            // 执行返回受影响行数
+            // implementreturnAffected rows
             var rowEffects = dbCommand.ExecuteNonQuery();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return (rowEffects, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 语句返回受影响行数
+        /// implement Sql statementreturnAffected rows
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>受影响行数</returns>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>Affected rows</returns>
         public static async Task<int> ExecuteNonQueryAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) =
                 await databaseFacade.PrepareDbCommandAsync(sql, parameters, commandType, cancellationToken);
 
-            // 执行返回受影响行数
+            // implementreturnAffected rows
             var rowEffects = await dbCommand.ExecuteNonQueryAsync(cancellationToken);
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return rowEffects;
         }
 
         /// <summary>
-        /// 执行 Sql 语句返回受影响行数
+        /// implement Sql statementreturnAffected rows
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(int rowEffects, DbParameter[] dbParameters)</returns>
         public static async Task<(int rowEffects, DbParameter[] dbParameters)> ExecuteNonQueryAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) =
                 await databaseFacade.PrepareDbCommandAsync(sql, model, commandType, cancellationToken);
 
-            // 执行返回受影响行数
+            // implementreturnAffected rows
             var rowEffects = await dbCommand.ExecuteNonQueryAsync(cancellationToken);
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return (rowEffects, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 返回单行单列的值
+        /// implement Sql returnsingle row and single column value
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <returns>单行单列的值</returns>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <returns>single row and single column value</returns>
         public static object ExecuteScalar(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) = databaseFacade.PrepareDbCommand(sql, parameters, commandType);
 
-            // 执行返回单行单列的值
+            // implementreturnsingle row and single column value
             var result = dbCommand.ExecuteScalar();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return result != DBNull.Value ? result : default;
         }
 
         /// <summary>
-        /// 执行 Sql 返回单行单列的值
+        /// implement Sql returnsingle row and single column value
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
         /// <returns>(object result, DbParameter[] dbParameters)</returns>
         public static (object result, DbParameter[] dbParameters) ExecuteScalar(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) = databaseFacade.PrepareDbCommand(sql, model, commandType);
 
-            // 执行返回单行单列的值
+            // implementreturnsingle row and single column value
             var result = dbCommand.ExecuteScalar();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return (result != DBNull.Value ? result : default, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 返回单行单列的值
+        /// implement Sql returnsingle row and single column value
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
-        /// <returns>单行单列的值</returns>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
+        /// <returns>single row and single column value</returns>
         public static async Task<object> ExecuteScalarAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) =
                 await databaseFacade.PrepareDbCommandAsync(sql, parameters, commandType, cancellationToken);
 
-            // 执行返回单行单列的值
+            // implementreturnsingle row and single column value
             var result = await dbCommand.ExecuteScalarAsync(cancellationToken);
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return result != DBNull.Value ? result : default;
         }
 
         /// <summary>
-        /// 执行 Sql 返回单行单列的值
+        /// implement Sql returnsingle row and single column value
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(object result, DbParameter[] dbParameters)</returns>
         public static async Task<(object result, DbParameter[] dbParameters)> ExecuteScalarAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) =
                 await databaseFacade.PrepareDbCommandAsync(sql, model, commandType, cancellationToken);
 
-            // 执行返回单行单列的值
+            // implementreturnsingle row and single column value
             var result = await dbCommand.ExecuteScalarAsync(cancellationToken);
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return (result != DBNull.Value ? result : default, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataSet
+        /// implement Sql return DataSet
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="behavior">行为</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="behavior">Behavior</param>
         /// <returns>DataSet</returns>
         public static DataSet DataAdapterFill(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CommandBehavior behavior = CommandBehavior.Default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) = databaseFacade.PrepareDbCommand(sql, parameters, commandType);
 
-            // 读取数据
+            // read data
             using var dbDataReader = dbCommand.ExecuteReader(behavior);
 
-            // 填充到 DataSet
+            // fill to DataSet
             var dataSet = dbDataReader.ToDataSet();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return dataSet;
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataSet
+        /// implement Sql return DataSet
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="behavior">行为</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="model">command model</param>
+        /// <param name="behavior">Behavior</param>
         /// <returns>(DataSet dataSet, DbParameter[] dbParameters)</returns>
         public static (DataSet dataSet, DbParameter[] dbParameters) DataAdapterFill(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CommandBehavior behavior = CommandBehavior.Default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) = databaseFacade.PrepareDbCommand(sql, model, commandType);
 
-            // 读取数据
+            // read data
             using var dbDataReader = dbCommand.ExecuteReader(behavior);
 
-            // 填充到 DataSet
+            // fill to DataSet
             var dataSet = dbDataReader.ToDataSet();
 
-            // 释放命令对象
+            // release command object
             dbCommand.Dispose();
 
             return (dataSet, dbParameters);
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataSet
+        /// implement Sql return DataSet
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="behavior">行为</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="behavior">Behavior</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>DataSet</returns>
         public static async Task<DataSet> DataAdapterFillAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql,
             DbParameter[] parameters = null, CommandType commandType = CommandType.Text,
             CommandBehavior behavior = CommandBehavior.Default, CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand) =
                 await databaseFacade.PrepareDbCommandAsync(sql, parameters, commandType, cancellationToken);
 
-            // 读取数据
+            // read data
             using var dbDataReader = await dbCommand.ExecuteReaderAsync(behavior, cancellationToken);
 
-            // 填充到 DataSet
+            // fill to DataSet
             var dataSet = dbDataReader.ToDataSet();
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return dataSet;
         }
 
         /// <summary>
-        /// 执行 Sql 返回 DataSet
+        /// implement Sql return DataSet
         /// </summary>
-        /// <param name="databaseFacade">ADO.NET 数据库对象</param>
-        /// <param name="sql">sql 语句</param>
-        /// <param name="model">命令模型</param>
-        /// <param name="commandType">命令类型</param>
-        /// <param name="behavior">行为</param>
-        /// <param name="cancellationToken">异步取消令牌</param>
+        /// <param name="databaseFacade">ADO.NET database object</param>
+        /// <param name="sql">sql statement</param>
+        /// <param name="model">command model</param>
+        /// <param name="commandType">Command type</param>
+        /// <param name="behavior">Behavior</param>
+        /// <param name="cancellationToken">Asynchronous cancellation token</param>
         /// <returns>(DataSet dataSet, DbParameter[] dbParameters)</returns>
         public static async Task<(DataSet dataSet, DbParameter[] dbParameters)> DataAdapterFillAsync(
             this Microsoft.EntityFrameworkCore.Infrastructure.DatabaseFacade databaseFacade, string sql, object model,
             CommandType commandType = CommandType.Text, CommandBehavior behavior = CommandBehavior.Default,
             CancellationToken cancellationToken = default)
         {
-            // 初始化数据库连接对象和数据库命令对象
+            // Initialize database connection object and database command object
             var (_, dbCommand, dbParameters) =
                 await databaseFacade.PrepareDbCommandAsync(sql, model, commandType, cancellationToken);
 
-            // 读取数据
+            // read data
             using var dbDataReader = await dbCommand.ExecuteReaderAsync(behavior, cancellationToken);
 
-            // 填充到 DataSet
+            // fill to DataSet
             var dataSet = dbDataReader.ToDataSet();
 
-            // 释放命令对象
+            // release command object
             await dbCommand.DisposeAsync();
 
             return (dataSet, dbParameters);

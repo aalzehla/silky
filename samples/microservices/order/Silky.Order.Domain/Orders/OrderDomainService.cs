@@ -44,7 +44,7 @@ namespace Silky.Order.Domain.Orders
             var order = await _orderRepository.FindAsync(id);
             if (order == null)
             {
-                throw new BusinessException($"$不存在ID为{id}的订单");
+                throw new BusinessException($"$does not existIDfor{id}'s order");
             }
 
             return order;
@@ -58,20 +58,20 @@ namespace Silky.Order.Domain.Orders
         
         public async Task<GetOrderOutput> Create(CreateOrderInput input)
         {
-            // 扣减库存
+            // deducted inventory
             var product = await _productAppService.DeductStock(new DeductStockInput()
             {
                 Quantity = input.Quantity,
                 ProductId = input.ProductId
             });
 
-            // 创建订单
+            // Create Order
             var order = input.Adapt<Domain.Orders.Order>();
             order.Amount = product.UnitPrice * input.Quantity;
             order = await Create(order);
             RpcContext.Context.SetInvokeAttachment("orderId", order.Id);
 
-            //扣减账户余额
+            //Deduct account balance
             var deductBalanceInput = new DeductBalanceInput()
                 {OrderId = order.Id, AccountId = input.AccountId, OrderBalance = order.Amount};
             var orderBalanceId = await _accountAppService.DeductBalance(deductBalanceInput);

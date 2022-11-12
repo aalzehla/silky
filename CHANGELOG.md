@@ -1,53 +1,53 @@
-# 更新日志
-此项目的所有显着更改都将记录在此文件中。
+# Changelog
+All notable changes to this project will be recorded in this file。
 
 ## [2.0.0]
-### 新增
-- 支持Apollo作为服务注册中心
+### new
+- supportApolloas a service registry
 
-### 变更
-- 优化包的依赖关系
-- 优化RpcContext
-- 优化Rpc通信中服务的生命周期管理
-- 优化移除冗余路由的方式
-- 优化分布式锁的使用,避免服务路由注册导致死锁
-- 移除IEfCoreDbContextPool接口
-- 优化心跳检测
+### change
+- Optimize package dependencies
+- optimizationRpcContext
+- optimizationRpcLifecycle Management of Services in Communication
+- optimizationremove冗余路由的方式
+- optimization分布式锁的use,Avoid deadlock caused by service route registration
+- removeIEfCoreDbContextPoolinterface
+- optimization心跳检测
 
-### 修复
-- 修复使用内存缓存作为事务参与者导致服务实例存在多个的情况下Cancel 和 Confirm 阶段无法提交的bug
+### repair
+- repairuse内存缓存作为事务参与者导致服务实例存在多个的情况下Cancel and Confirm Stage Unable to Commitbug
 
 ## [1.2.0]
 
-### 新增
-- 新增 Serilog 作为记录器的使用
-- 新增身份认证授权包
+### new
+- new Serilog Use as a recorder
+- new身份认证授权包
 
-### 变更
-- 删除 Silky.Rpc 包的不必要的依赖项
-- 优化swagger文档生成
+### change
+- delete Silky.Rpc Unnecessary dependencies of packages
+- optimizationswaggerdocument generation
 
-### 修复
-- 修复Confirm阶段和Cancel阶段不会自动提交本地交易并在TCC交易中保存数据的bug
-- 修复分布式事务中使用 Json 作为编解码器时，Cancel 和 Confirm 阶段参数转换异常的问题
-- 修复 rpc 调用返回空结果的异常
-- 修复在rpc调用过程中使用Json作为编解码器时,输入参数校验失败的bug
+### repair
+- repairConfirm阶段andCancelstage does not automatically commit local transactions andTCCdata stored in the transactionbug
+- repair分布式事务中use Json as a codec，Cancel and Confirm The problem of abnormal stage parameter conversion
+- repair rpc Calling exceptions that return empty results
+- repair在rpcused during invocationJsonas a codec,input parameter validation failedbug
   
 ## [1.1.0]
 
-### 新增
-- 重命名项目名称和一些包的名称
-- 封装 EFCore 用于数据访问
-- 使用 miniProfile 进行性能监控
-- 使用 SkyApm 实现链接追踪
-- 添加通过Mapster实现对象映射的包
+### new
+- 重命名项目名称and一些包的名称
+- package EFCore for data access
+- use miniProfile Perform performance monitoring
+- use SkyApm Implement link tracking
+- add viaMapsterA package that implements object mapping
 
-### 变更
-- 通过ServiceCollection优化服务注册的模块加载和模块支持
-- 重构分布式事务
-- 使用Filter实现输入参数校验
+### change
+- passServiceCollectionoptimization服务注册的模块加载and模块support
+- Refactoring Distributed Transactions
+- useFilterImplement input parameter validation
 
-### 修复
-- 修复分布式锁中的bug
-- 修复客户端可能无法订阅服务注册中心的路由信息​​的问题
-- 修复zookeeper客户端会话超时无法订阅服务注册中心路由信息的bug
+### repair
+- repair分布式锁中的bug
+- repair客户端可能无法订阅服务注册中心的路由信息​​The problem
+- repairzookeeperThe client session timed out and could not subscribe to the routing information of the service registry.bug

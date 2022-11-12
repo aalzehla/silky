@@ -11,7 +11,7 @@ namespace Silky.Http.Identity.Authorization.Handlers
     public abstract class SilkyAuthorizationHandlerBase : IAuthorizationHandler
     {
         /// <summary>
-        /// 验证管道
+        /// Validation pipeline
         /// </summary>
         /// <param name="context"></param>
         /// <param name="httpContext"></param>
@@ -22,7 +22,7 @@ namespace Silky.Http.Identity.Authorization.Handlers
         }
 
         /// <summary>
-        /// 策略验证管道
+        /// 策略Validation pipeline
         /// </summary>
         /// <param name="context"></param>
         /// <param name="httpContext"></param>

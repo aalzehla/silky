@@ -9,12 +9,12 @@ namespace Silky.Http.Swagger.Internal
         }
 
         /// <summary>
-        /// 唯一Id
+        /// onlyId
         /// </summary>
         public string Id { get; set; }
 
         /// <summary>
-        /// 安全需求
+        /// Safety requirements
         /// </summary>
         public SpecificationOpenApiSecurityRequirementItem Requirement { get; set; }
     }

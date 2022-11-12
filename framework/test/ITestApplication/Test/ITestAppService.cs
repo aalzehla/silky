@@ -19,7 +19,7 @@ namespace ITestApplication.Test
     public interface ITestAppService
     {
         /// <summary>
-        ///  新增接口测试
+        ///  Add interface test
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>

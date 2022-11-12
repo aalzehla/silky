@@ -3,12 +3,12 @@ namespace Silky.EntityFrameworkCore.Values
     internal enum DbFunctionType
     {
         /// <summary>
-        /// 标量函数
+        /// Scalar function
         /// </summary>
         Scalar,
 
         /// <summary>
-        /// 表值函数
+        /// table-valued functions
         /// </summary>
         Table
     }

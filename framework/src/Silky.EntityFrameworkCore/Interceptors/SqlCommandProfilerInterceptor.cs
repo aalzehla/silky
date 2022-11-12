@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 
 namespace Silky.EntityFrameworkCore.Interceptors
 {
     /// <summary>
-    /// 数据库执行命令拦截
+    /// Database execution command interception
     /// </summary>
     internal sealed class SqlCommandProfilerInterceptor : DbCommandInterceptor
     {

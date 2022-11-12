@@ -16,7 +16,7 @@ namespace Silky.Rpc.Runtime.Server
                     .FirstOrDefault(p => p.GetCustomAttribute<ServiceRouteAttribute>() != null);
             if (serviceTypeInterface == null)
             {
-                throw new SilkyException($"{serviceType.FullName}不是服务类型,服务类型必须通过ServiceBundleAttribute特性进行标识");
+                throw new SilkyException($"{serviceType.FullName}not a service type,Service type must passServiceBundleAttributefeature to identify");
             }
 
             return serviceTypeInterface.GetCustomAttribute<ServiceRouteAttribute>();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -16,35 +16,35 @@ namespace Silky.EntityFrameworkCore.Helpers
     internal static class DbHelpers
     {
         /// <summary>
-        /// 将模型转为 DbParameter 集合
+        /// Convert the model to DbParameter gather
         /// </summary>
-        /// <param name="model">参数模型</param>
-        /// <param name="dbCommand">数据库命令对象</param>
+        /// <param name="model">parametric model</param>
+        /// <param name="dbCommand">database command object</param>
         /// <returns></returns>
         internal static DbParameter[] ConvertToDbParameters(object model, DbCommand dbCommand)
         {
             var modelType = model?.GetType();
 
-            // 处理字典类型参数
+            // Handling dictionary type parameters
             if (modelType == typeof(Dictionary<string, object>))
                 return ConvertToDbParameters((Dictionary<string, object>)model, dbCommand);
 
             var dbParameters = new List<DbParameter>();
             if (model == null || !modelType.IsClass) return dbParameters.ToArray();
 
-            // 获取所有公开实例属性
+            // Get all public instance properties
             var properties = modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             if (properties.Length == 0) return dbParameters.ToArray();
 
-            // 遍历所有属性
+            // iterate over all properties
             foreach (var property in properties)
             {
                 var propertyValue = property.GetValue(model) ?? DBNull.Value;
 
-                // 创建命令参数
+                // Create command parameters
                 var dbParameter = dbCommand.CreateParameter();
 
-                // 判断属性是否贴有 [DbParameter] 特性
+                // Determine whether the attribute is pasted [DbParameter] characteristic
                 if (property.IsDefined(typeof(DbParameterAttribute), true))
                 {
                     var dbParameterAttribute = property.GetCustomAttribute<DbParameterAttribute>(true);
@@ -54,7 +54,7 @@ namespace Silky.EntityFrameworkCore.Helpers
                 }
 
                 dbParameter.ParameterName = property.Name;
-                dbParameter.Value = propertyValue.ChangeType(propertyValue.GetActualType()); // 解决 object/json 类型值
+                dbParameter.Value = propertyValue.ChangeType(propertyValue.GetActualType()); // solve object/json type value
                 dbParameters.Add(dbParameter);
             }
 
@@ -62,10 +62,10 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 将字典转换成命令参数
+        /// Convert dictionary to command parameter
         /// </summary>
-        /// <param name="keyValues">字典</param>
-        /// <param name="dbCommand">数据库命令对象</param>
+        /// <param name="keyValues">dictionary</param>
+        /// <param name="dbCommand">database command object</param>
         /// <returns></returns>
         internal static DbParameter[] ConvertToDbParameters(Dictionary<string, object> keyValues, DbCommand dbCommand)
         {
@@ -76,7 +76,7 @@ namespace Silky.EntityFrameworkCore.Helpers
             {
                 var value = keyValues[key] ?? DBNull.Value;
 
-                // 创建命令参数
+                // Create command parameters
                 var dbParameter = dbCommand.CreateParameter();
                 dbParameter.ParameterName = key;
                 dbParameter.Value = value;
@@ -87,31 +87,31 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 配置数据库命令参数
+        /// Configure database command parameters
         /// </summary>
-        /// <param name="name">参数名</param>
-        /// <param name="value">参数值</param>
-        /// <param name="dbParameterAttribute">参数特性</param>
-        /// <param name="dbParameter">数据库命令参数</param>
+        /// <param name="name">parameter name</param>
+        /// <param name="value">parameter value</param>
+        /// <param name="dbParameterAttribute">parametercharacteristic</param>
+        /// <param name="dbParameter">Database command parameters</param>
         /// <returns>DbParameter</returns>
         internal static DbParameter ConfigureDbParameter(string name, object value,
             DbParameterAttribute dbParameterAttribute, DbParameter dbParameter)
         {
-            // 设置参数方向
+            // Set parameter direction
             dbParameter.ParameterName = name;
             dbParameter.Value = value;
             dbParameter.Direction = dbParameterAttribute.Direction;
 
-            // 设置参数数据库类型
+            // Set parameter database type
             if (dbParameterAttribute.DbType != null)
             {
                 var type = dbParameterAttribute.DbType.GetType();
                 if (type.IsEnum)
                 {
-                    // 处理通用 DbType 类型
+                    // handle generic DbType type
                     if (typeof(DbType).IsAssignableFrom(type)) dbParameter.DbType = (DbType)dbParameterAttribute.DbType;
 
-                    // 解决 Oracle 数据库游标类型参数
+                    // solve Oracle 数据库游标typeparameter
                     if (type.FullName.Equals("Oracle.ManagedDataAccess.Client.OracleDbType",
                         StringComparison.OrdinalIgnoreCase))
                     {
@@ -121,7 +121,7 @@ namespace Silky.EntityFrameworkCore.Helpers
                 }
             }
 
-            // 设置大小，解决NVarchar，Varchar 问题
+            // set size，solveNVarchar，Varchar question
             if (dbParameterAttribute.Size > 0)
             {
                 dbParameter.Size = dbParameterAttribute.Size;
@@ -131,17 +131,17 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 生成函数执行 sql 语句
+        /// Generate function execution sql statement
         /// </summary>
-        /// <param name="providerName">ADO.NET 数据库对象</param>
-        /// <param name="dbFunctionType">函数类型</param>
-        /// <param name="funcName">函数名词</param>
-        /// <param name="parameters">函数参数</param>
-        /// <returns>sql 语句</returns>
+        /// <param name="providerName">ADO.NET database object</param>
+        /// <param name="dbFunctionType">函数type</param>
+        /// <param name="funcName">function noun</param>
+        /// <param name="parameters">function parameter</param>
+        /// <returns>sql statement</returns>
         internal static string GenerateFunctionSql(string providerName, DbFunctionType dbFunctionType, string funcName,
             params DbParameter[] parameters)
         {
-            // 检查是否支持函数
+            // Check if a function is supported
             DbProvider.CheckFunctionSupported(providerName, dbFunctionType);
 
             parameters ??= Array.Empty<DbParameter>();
@@ -149,15 +149,15 @@ namespace Silky.EntityFrameworkCore.Helpers
             var stringBuilder = new StringBuilder();
             stringBuilder.Append($"SELECT{(dbFunctionType == DbFunctionType.Table ? " * FROM" : "")} {funcName}(");
 
-            // 生成函数参数
+            // 生成function parameter
             for (var i = 0; i < parameters.Length; i++)
             {
                 var sqlParameter = parameters[i];
 
-                // 处理不同数据库的占位符
+                // Handling placeholders for different databases
                 stringBuilder.Append(FixSqlParameterPlaceholder(providerName, sqlParameter.ParameterName));
 
-                // 处理最后一个参数逗号
+                // handle last argument comma
                 if (i != parameters.Length - 1)
                 {
                     stringBuilder.Append(", ");
@@ -170,25 +170,25 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 生成函数执行 sql 语句
+        /// Generate function execution sql statement
         /// </summary>
-        ///<param name="providerName">ADO.NET 数据库对象</param>
-        /// <param name="dbFunctionType">函数类型</param>
-        /// <param name="funcName">函数名词</param>
-        /// <param name="model">参数模型</param>
+        ///<param name="providerName">ADO.NET database object</param>
+        /// <param name="dbFunctionType">函数type</param>
+        /// <param name="funcName">function noun</param>
+        /// <param name="model">parametric model</param>
         /// <returns>(string sql, DbParameter[] parameters)</returns>
         internal static string GenerateFunctionSql(string providerName, DbFunctionType dbFunctionType, string funcName,
             object model)
         {
-            // 检查是否支持函数
+            // Check if a function is supported
             DbProvider.CheckFunctionSupported(providerName, dbFunctionType);
 
             var modelType = model?.GetType();
-            // 处理字典类型参数
+            // Handling dictionary type parameters
             if (modelType == typeof(Dictionary<string, object>))
                 return GenerateFunctionSql(providerName, dbFunctionType, funcName, (Dictionary<string, object>)model);
 
-            // 获取模型所有公开的属性
+            // Get all the exposed properties of the model
             var properities = model == null
                 ? Array.Empty<PropertyInfo>()
                 : modelType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
@@ -203,7 +203,7 @@ namespace Silky.EntityFrameworkCore.Helpers
 
                 stringBuilder.Append(FixSqlParameterPlaceholder(providerName, property.Name));
 
-                // 处理最后一个参数逗号
+                // handle last argument comma
                 if (i != properities.Length - 1)
                 {
                     stringBuilder.Append(", ");
@@ -216,17 +216,17 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 生成函数执行 sql 语句
+        /// Generate function execution sql statement
         /// </summary>
-        ///<param name="providerName">ADO.NET 数据库对象</param>
-        /// <param name="dbFunctionType">函数类型</param>
-        /// <param name="funcName">函数名词</param>
-        /// <param name="keyValues">字典类型参数</param>
+        ///<param name="providerName">ADO.NET database object</param>
+        /// <param name="dbFunctionType">函数type</param>
+        /// <param name="funcName">function noun</param>
+        /// <param name="keyValues">dictionarytypeparameter</param>
         /// <returns></returns>
         internal static string GenerateFunctionSql(string providerName, DbFunctionType dbFunctionType, string funcName,
             Dictionary<string, object> keyValues)
         {
-            // 检查是否支持函数
+            // Check if a function is supported
             DbProvider.CheckFunctionSupported(providerName, dbFunctionType);
 
             var stringBuilder = new StringBuilder();
@@ -239,7 +239,7 @@ namespace Silky.EntityFrameworkCore.Helpers
                 {
                     stringBuilder.Append(FixSqlParameterPlaceholder(providerName, key));
 
-                    // 处理最后一个参数逗号
+                    // handle last argument comma
                     if (i != keyValues.Count - 1)
                     {
                         stringBuilder.Append(", ");
@@ -255,16 +255,16 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 包裹存储过程返回结果集
+        /// Wrapped stored procedure returns result set
         /// </summary>
         /// <param name="providerName"></param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="dataSet">数据集</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="dataSet">data set</param>
         /// <returns>ProcedureOutput</returns>
         internal static ProcedureOutputResult WrapperProcedureOutput(string providerName, DbParameter[] parameters,
             DataSet dataSet)
         {
-            // 读取输出返回值
+            // read output return value
             ReadOuputValue(providerName, parameters, out var outputValues, out var returnValue);
 
             return new ProcedureOutputResult
@@ -276,17 +276,17 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 包裹存储过程返回结果集
+        /// Wrapped stored procedure returns result set
         /// </summary>
-        /// <typeparam name="TResult">数据集结果</typeparam>
+        /// <typeparam name="TResult">data set结果</typeparam>
         /// <param name="providerName"></param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="dataSet">数据集</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="dataSet">data set</param>
         /// <returns>ProcedureOutput</returns>
         internal static ProcedureOutputResult<TResult> WrapperProcedureOutput<TResult>(string providerName,
             DbParameter[] parameters, DataSet dataSet)
         {
-            // 读取输出返回值
+            // read output return value
             ReadOuputValue(providerName, parameters, out var outputValues, out var returnValue);
 
             return new ProcedureOutputResult<TResult>
@@ -298,12 +298,12 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 包裹存储过程返回结果集
+        /// Wrapped stored procedure returns result set
         /// </summary>
         /// <param name="providerName"></param>
-        /// <param name="parameters">命令参数</param>
-        /// <param name="dataSet">数据集</param>
-        /// <param name="type">返回类型</param>
+        /// <param name="parameters">Command parameters</param>
+        /// <param name="dataSet">data set</param>
+        /// <param name="type">返回type</param>
         /// <returns>ProcedureOutput</returns>
         internal static object WrapperProcedureOutput(string providerName, DbParameter[] parameters, DataSet dataSet,
             Type type)
@@ -317,7 +317,7 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 数据没找到异常
+        /// data not found exception
         /// </summary>
         /// <returns></returns>
         internal static InvalidOperationException DataNotFoundException()
@@ -326,7 +326,7 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 修正不同数据库命令参数前缀不一致问题
+        /// 修正不同Database command parameters前缀不一致question
         /// </summary>
         /// <param name="providerName"></param>
         /// <param name="parameterName"></param>
@@ -345,16 +345,16 @@ namespace Silky.EntityFrameworkCore.Helpers
         }
 
         /// <summary>
-        /// 读取输出返回值
+        /// read output return value
         /// </summary>
         /// <param name="providerName"></param>
-        /// <param name="parameters">参数</param>
-        /// <param name="outputValues">输出参数</param>
-        /// <param name="returnValue">返回值</param>
+        /// <param name="parameters">parameter</param>
+        /// <param name="outputValues">输出parameter</param>
+        /// <param name="returnValue">return value</param>
         private static void ReadOuputValue(string providerName, DbParameter[] parameters,
             out IEnumerable<ProcedureOutputValue> outputValues, out object returnValue)
         {
-            // 查询所有OUTPUT值
+            // query allOUTPUTvalue
             outputValues = parameters
                 .Where(u => u.Direction == ParameterDirection.Output)
                 .Select(u => new ProcedureOutputValue
@@ -363,7 +363,7 @@ namespace Silky.EntityFrameworkCore.Helpers
                     Value = u.Value
                 });
 
-            // 查询返回值
+            // 查询return value
             returnValue = parameters.FirstOrDefault(u => u.Direction == ParameterDirection.ReturnValue)?.Value;
         }
     }

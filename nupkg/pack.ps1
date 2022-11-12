@@ -45,7 +45,7 @@ if ($build) {
 
 if($push) {
     if ([string]::IsNullOrEmpty($apikey)){
-        Write-Warning -Message "未设置nuget仓库的APIKEY"
+        Write-Warning -Message "not setnugetwarehouseAPIKEY"
 		exit 1
 	}
 	[xml]$propsXml = Get-Content (Join-Path $rootFolder "common.props")

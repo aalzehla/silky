@@ -20,7 +20,7 @@ namespace TestApplication.AppService
 
         public async Task<TestOut> Create(TestInput input)
         {
-            throw new BusinessException("无法执行v2的服务");
+            throw new BusinessException("unable to executev2service");
             return new()
             {
                 Address = input.Address,
